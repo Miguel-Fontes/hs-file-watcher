@@ -33,7 +33,7 @@ listaArquivos :: String -> IO [Arquivo]
 listaArquivos dir = do
     files <-  map (\x -> dir ++ "/" ++ x) . filter (\x -> x /= "." && x /="..")  <$> getDirectoryContents dir
     modification <- getLastModified files []
-    return $ zipWith (Arquivo) files modification
+    return $ zipWith Arquivo files modification
 
 watch :: [Arquivo] -> (() -> IO()) -> Int -> IO()
 watch ultLista action delay = do
