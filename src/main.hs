@@ -11,7 +11,17 @@ type Arquivo = (String, String)
 getLastModified :: FilePath -> IO String
 getLastModified x = do
     time <- fmap (formatTime defaultTimeLocale "%d/%m/%Y %T") (getModificationTime x)
-    return $ force time
+    return time
+
+
+getLastModified' :: [FilePath] -> [String] -> IO [String]
+getLastModified' (f:fs) m = do
+    time <- fmap (formatTime defaultTimeLocale "%d/%m/%Y %T") (getModificationTime f)
+    if (length fs > 0)
+        then getLastModified' fs (time : m)
+        else return (time : m)
+
+
 
 compareFileLists :: [(FilePath, IO String)] -> [(FilePath, IO String)] -> IO Bool
 compareFileLists [] _ = return False -- Checamos todos, nenhum mudou
@@ -58,6 +68,8 @@ watch ultLista = do
     b <- return $ map peek lista
     b1 <- last b
     b2 <- head b
+
+    print $ (==) b2 a2
 
     changed <- compareFileLists lista ultLista
     if changed then print "Teve treta" else watch lista
