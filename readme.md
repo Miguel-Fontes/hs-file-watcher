@@ -9,4 +9,4 @@ Aplicação desenvolvida em Haskell.
 - Ação parametrizável quando alterações forem detectadas
 
 ## Log
-20/05/2016: Função core do aplicativo (identificar alterações em arquivos) concluído com sucesso.
+20/05/2016: Função core do aplicativo (identificar alterações em arquivos) concluída.
