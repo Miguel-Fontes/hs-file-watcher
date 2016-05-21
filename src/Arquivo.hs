@@ -1,10 +1,11 @@
-module Arquivo
-(
+module Arquivo where
+
+{-(
     listaArquivos
     ,peek
     ,watch
-)
-where
+    ,Arquivo
+)-}
 
 import Data.Time
 import System.Directory
@@ -14,14 +15,15 @@ import Action
 
 data Arquivo = Arquivo {
     nome :: String,
-    modificado :: String
+    modificado :: String,
+    dir :: String
 }
 
 instance Show Arquivo where
-    show (Arquivo n m) = "Arquivo: " ++ n ++ " - " ++ m
+    show (Arquivo n m d) = "Arquivo: " ++ n ++ " - Dir: " ++ d ++ " - Modificado:  " ++ m ++ "\n"
 
 instance Eq Arquivo where
-    (Arquivo n1 m1) == (Arquivo n2 m2) = (n1 == n2) && (m1 == m2)
+    (Arquivo n1 m1 d1) == (Arquivo n2 m2 d2) = (n1 == n2) && (m1 == m2) && (d1 == d2)
 
 watch :: [Arquivo] -> Action -> Int -> IO()
 watch ultLista action delay = do
@@ -44,9 +46,9 @@ getLastModified (f:fs) m = do
 
 listaArquivos :: String -> IO [Arquivo]
 listaArquivos dir = do
-    files <-  map (\x -> dir ++ "/" ++ x) . filter (\x -> x /= "." && x /="..")  <$> getDirectoryContents dir
+    files <-  filter (\x -> x /= "." && x /="..")  <$> getDirectoryContents dir
     modification <- getLastModified files []
-    return $ zipWith Arquivo files modification
+    return $ zipWith3 Arquivo files modification (repeat dir)
 
 peek :: String -> [Arquivo] -> IO [Arquivo]
 peek name fl = do
