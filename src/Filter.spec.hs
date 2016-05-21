@@ -8,7 +8,7 @@ import Arquivo.Watch
 main :: IO ()
 main = hspec $ do
   describe "applyFilters" $ do
-    it "returns only one .hs file" $ do
+    it "returns only .hs files" $ do
       applyFilters [onlyExtension "hs",
                     noPoints,
                     excludeDirectory ".",
@@ -22,6 +22,9 @@ main = hspec $ do
                       Arquivo "d.hs" "a" "src", Arquivo "d.exe" "a" "src"]
 
                     `shouldBe` ([Arquivo "d.hs" "a" "src"] :: [Arquivo])
+    it "should exclude a file by its name" $ do
+      applyFilter (excludeFile "filetoexclude.txt")
+                  [Arquivo {nome = "file.hs", dir = ".", modificado="21/05/2015"},
+                   Arquivo {nome = "filetoexclude.txt", dir = ".", modificado="21/05/2015"}]
 
--- Substituir a criação de arquivo para usar este padrão
--- Arquivo {dir = <>, nome = <>, modificado = <>}
+                   `shouldBe` ([Arquivo {nome = "file.hs", dir = ".", modificado="21/05/2015"}] :: [Arquivo])

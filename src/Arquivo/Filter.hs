@@ -20,6 +20,9 @@ customFilter = Filter
 noPoints :: Filter
 noPoints = Filter (\x -> nome x /="." && nome x /="..")
 
+excludeFile :: String -> Filter
+excludeFile name = Filter (\x -> nome x /= name)
+
 onlyExtension :: String -> Filter
 onlyExtension ext = Filter (\x -> ext == reverse (takeWhile (/= '.') (reverse (nome x))))
 
