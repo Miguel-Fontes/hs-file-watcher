@@ -1,5 +1,5 @@
 import Action
-import Arquivo
+import Arquivo.Watch
 
 main :: IO()
 main  = do

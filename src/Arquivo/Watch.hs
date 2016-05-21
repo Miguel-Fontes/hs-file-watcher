@@ -1,19 +1,15 @@
-module Arquivo where
-
-{-(
-    listaArquivos
-    ,peek
-    ,watch
-    ,Arquivo
-)-}
+module Arquivo.Watch where
 
 import Data.Time
 import System.Directory
 import Control.Monad
 import Control.Concurrent (threadDelay)
-import Action
 
-data Arquivo = Arquivo {
+import Action
+import Arquivo.Filter
+import Arquivo.Arquivo
+
+{-data Arquivo = Arquivo {
     nome :: String,
     modificado :: String,
     dir :: String
@@ -23,7 +19,7 @@ instance Show Arquivo where
     show (Arquivo n m d) = "Arquivo: " ++ n ++ " - Dir: " ++ d ++ " - Modificado:  " ++ m ++ "\n"
 
 instance Eq Arquivo where
-    (Arquivo n1 m1 d1) == (Arquivo n2 m2 d2) = (n1 == n2) && (m1 == m2) && (d1 == d2)
+    (Arquivo n1 m1 d1) == (Arquivo n2 m2 d2) = (n1 == n2) && (m1 == m2) && (d1 == d2)-}
 
 watch :: [Arquivo] -> Action -> Int -> IO()
 watch ultLista action delay = do
@@ -34,7 +30,7 @@ watch ultLista action delay = do
     lista <- listaArquivos "." >>= peek "--> Lista"
 
     if lista /= ultLista
-        then run action () >> watch lista action delay
+        then exec action () >> watch lista action delay
         else watch lista action delay
 
 getLastModified :: [FilePath] -> [String] -> IO [String]
@@ -46,9 +42,9 @@ getLastModified (f:fs) m = do
 
 listaArquivos :: String -> IO [Arquivo]
 listaArquivos dir = do
-    files <-  filter (\x -> x /= "." && x /="..")  <$> getDirectoryContents dir
+    files <- getDirectoryContents dir
     modification <- getLastModified files []
-    return $ zipWith3 Arquivo files modification (repeat dir)
+    return $ applyFilter noPoints (zipWith3 Arquivo files modification (repeat dir))
 
 peek :: String -> [Arquivo] -> IO [Arquivo]
 peek name fl = do

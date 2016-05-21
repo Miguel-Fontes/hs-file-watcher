@@ -1,7 +1,7 @@
 module Action where
 
 newtype Action = Action {
-    run :: () -> IO()
+    exec :: () -> IO()
 }
 
 textAction :: String -> Action
