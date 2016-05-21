@@ -15,3 +15,4 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 
 ## Log
 20/05/2016: Função core do aplicativo (identificar alterações em arquivos) concluída.
+21/05/2016: Módulos, primeiro arquivo para testes criado (ainda por organizar melhor), filtros e funções adequadas para sua execução.
