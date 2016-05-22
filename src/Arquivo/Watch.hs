@@ -9,6 +9,7 @@ import Control.Concurrent (threadDelay)
 import Action
 import Arquivo.Filter
 import Arquivo.Arquivo
+import Utils.IOFold
 
 watch :: FilePath -> [Arquivo] -> Action -> Int -> IO()
 watch dir ultLista action delay = do
@@ -22,37 +23,25 @@ watch dir ultLista action delay = do
         then exec action () >> watch dir lista action delay
         else watch dir lista action delay
 
-getLastModified :: [FilePath] -> [String] -> IO [String]
-getLastModified (f:fs) m = do
-    time <- fmap (formatTime defaultTimeLocale "%d/%m/%Y %T") (getModificationTime f)
-    if not $ null fs
-        then getLastModified fs (time : m)
-        else return $ reverse (time : m)
-
 listaArquivos :: FilePath -> IO [Arquivo]
 listaArquivos dir = do
     setCurrentDirectory dir
     files <- getDirectoryContents dir
-    modification <- getLastModified files []
-    isDirectory <- getDirectories files []
-    let parsedFiles = applyFilters [noPoints, excludeDirectories ["node_modules", ".git"]]
+    modification <- getLastModified files
+    isDirectory <- getDirectories files
+    let parsedFiles = applyFilters [noPoints, excludeDirectories ["node_modules", ".git", "bower_components"]]
                       $ zipWith4 Arquivo files modification (repeat dir) isDirectory
-    recurseSubdirectories parsedFiles []
+    recurseSubdirectories parsedFiles
 
-recurseSubdirectories :: [Arquivo] -> [Arquivo] -> IO [Arquivo]
-recurseSubdirectories [] m = return m
-recurseSubdirectories (f:fs) m = do
-    arquivos <- if isDirectory f then listaArquivos (dir f ++ nome f ++ "\\") else return [f]
-    if not $ null fs
-        then recurseSubdirectories fs (arquivos ++ m)
-        else return $ reverse (arquivos ++  m)
+getDirectories :: [FilePath] -> IO [Bool]
+getDirectories = ioFoldr doesDirectoryExist []
 
-getDirectories :: [FilePath] -> [Bool] -> IO [Bool]
-getDirectories (f:fs) m = do
-    isDir <- doesDirectoryExist f
-    if not $ null fs
-        then getDirectories fs (isDir : m)
-        else return $ reverse (isDir : m)
+getLastModified :: [FilePath] -> IO [String]
+getLastModified = ioFoldr (fmap (formatTime defaultTimeLocale "%d/%m/%Y %T") . getModificationTime) []
+
+recurseSubdirectories :: [Arquivo] -> IO [Arquivo]
+recurseSubdirectories = ioFoldr' step []
+   where step x = if isDirectory x then listaArquivos (dir x ++ nome x ++ "\\") else return [x]
 
 peek :: String -> [Arquivo] -> IO [Arquivo]
 peek name fl = do
