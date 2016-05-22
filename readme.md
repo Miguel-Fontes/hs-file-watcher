@@ -6,7 +6,7 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [x] Excluir arquivos por nome
 - [x] Excluir diretórios por nome
 - [x] Separar funcionalidades em módulos
-- [ ] Definir parâmetros de entrada e implementar
+- [ ] Definir parâmetros de entrada e seus formatos
 - [ ] Organização dos testes da aplicação
 - [ ] Recursão em todos os subdiretórios do diretório indicado
 - [ ] Ação parametrizável quando alterações forem detectadas
