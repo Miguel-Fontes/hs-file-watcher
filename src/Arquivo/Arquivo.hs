@@ -8,7 +8,7 @@ data Arquivo = Arquivo {
 }
 
 instance Show Arquivo where
-    show (Arquivo n m d isD) = "Arquivo: " ++ n ++ " - Dir: " ++ d ++ " - Modificado:  " ++ m ++ " - isDir: " ++ (show isD) ++ "\n"
+    show (Arquivo n m d isD) = "Arquivo: " ++ n ++ " - Dir: " ++ d ++ " - Modificado:  " ++ m ++ " - isDir: " ++ show isD ++ "\n"
 
 instance Eq Arquivo where
     (Arquivo n1 m1 d1 _) == (Arquivo n2 m2 d2 _) = (n1 == n2) && (m1 == m2) && (d1 == d2)
