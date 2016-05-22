@@ -29,7 +29,7 @@ listaArquivos filters dir = do
     files <- getDirectoryContents dir
     modification <- getLastModified files
     isDirectory <- getDirectories files
-    let parsedFiles = applyFilters filters
+    let parsedFiles = applyFilters (noPoints : filters)
                       $ zipWith4 Arquivo files modification (repeat dir) isDirectory
     recurseSubdirectories filters parsedFiles
 
