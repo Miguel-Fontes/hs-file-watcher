@@ -27,5 +27,7 @@ onlyExtension :: String -> Filter
 onlyExtension ext = Filter (\x -> ext == reverse (takeWhile (/= '.') (reverse (nome x))))
 
 excludeDirectory :: Directory -> Filter
-excludeDirectory directory = Filter (\x -> dir x /= directory)
+excludeDirectory directory = Filter (\x -> not (nome x == directory && isDirectory x))
 
+excludeDirectories :: [Directory] -> Filter
+excludeDirectories directories = Filter (\x -> all (\z -> not (nome x == z && isDirectory x)) directories)
