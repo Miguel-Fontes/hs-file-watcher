@@ -19,3 +19,4 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - 22/05/2016:
     - Recursão para obtenção de arquivos em subdiretórios e filtros de arquivos. Refatorar para remover os filtros que estão em hardcode e verificar a possibilidade de abstrair de execução de ações IO recursivamente.
     - Criado módulo Utils para conter funcionalidades genéricas. Submodulo IOFold foi criado para abstrair padrões de recursão executando ações IO.
+    - Next task: Entrada de parâmetros via linha de comando
