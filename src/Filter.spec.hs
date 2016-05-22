@@ -15,16 +15,16 @@ main = hspec $ do
                     customFilter (\x -> nome x /= "a"),
                     customFilter (\x -> nome x /= "c")]
 
-                     [Arquivo "." "a" "a", Arquivo "." ".." "a",
-                      Arquivo "a" "a" "a", Arquivo "." "a" "a",
-                      Arquivo "b" "a" "a", Arquivo "c" "a" "a",
-                      Arquivo "." "a" "a", Arquivo "d" "a" ".",
-                      Arquivo "d.hs" "a" "src", Arquivo "d.exe" "a" "src"]
+                     [Arquivo "." "a" "a" False, Arquivo "." ".." "a" False,
+                      Arquivo "a" "a" "a" False, Arquivo "." "a" "a" False,
+                      Arquivo "b" "a" "a" False, Arquivo "c" "a" "a" False,
+                      Arquivo "." "a" "a" False, Arquivo "d" "a" "." False,
+                      Arquivo "d.hs" "a" "src" False, Arquivo "d.exe" "a" "src" False]
 
-                    `shouldBe` ([Arquivo "d.hs" "a" "src"] :: [Arquivo])
+                    `shouldBe` ([Arquivo "d.hs" "a" "src" False] :: [Arquivo])
     it "should exclude a file by its name" $ do
       applyFilter (excludeFile "filetoexclude.txt")
-                  [Arquivo {nome = "file.hs", dir = ".", modificado="21/05/2015"},
-                   Arquivo {nome = "filetoexclude.txt", dir = ".", modificado="21/05/2015"}]
+                  [Arquivo {nome = "file.hs", dir = ".", modificado = "21/05/2015", isDirectory = False},
+                   Arquivo {nome = "filetoexclude.txt", dir = ".", modificado="21/05/2015", isDirectory = False}]
 
-                   `shouldBe` ([Arquivo {nome = "file.hs", dir = ".", modificado="21/05/2015"}] :: [Arquivo])
+                   `shouldBe` ([Arquivo {nome = "file.hs", dir = ".", modificado="21/05/2015", isDirectory = False}] :: [Arquivo])
