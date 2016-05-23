@@ -11,6 +11,7 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [x] Recursão em todos os subdiretórios do diretório indicado
 - [ ] Ação parametrizável quando alterações forem detectadas
 - [ ] Permitir que mais de uma ação seja executada por hook
+- [ ] Criar 'chave' para ativar e desativar log de execução no console
 
 
 ## Log
