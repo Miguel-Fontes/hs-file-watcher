@@ -12,7 +12,7 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [ ] Ação parametrizável quando alterações forem detectadas
 - [ ] Permitir que mais de uma ação seja executada por hook
 - [ ] Criar 'chave' para ativar e desativar log de execução no console
-
+- [ ] Criar script de build para projeto
 
 ## Log
 - 20/05/2016: Função core do aplicativo (identificar alterações em arquivos) concluída.
