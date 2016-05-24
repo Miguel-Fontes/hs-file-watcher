@@ -23,6 +23,9 @@ noPoints = Filter (\x -> nome x /="." && nome x /="..")
 excludeFile :: String -> Filter
 excludeFile name = Filter (\x -> not (nome x == name && not (isDirectory x)))
 
+excludeFiles :: [String] -> Filter
+excludeFiles names = Filter (\x -> all (\z -> not (nome x == z && not (isDirectory x))) names)
+
 onlyExtension :: String -> Filter
 onlyExtension ext = Filter (\x -> ext == reverse (takeWhile (/= '.') (reverse (nome x))))
 
