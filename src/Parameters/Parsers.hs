@@ -4,6 +4,8 @@ import Parameters.Parameters
 import Arquivo.Filter
 import Action
 
+import Data.List
+
 formatDir :: String -> String
 formatDir x = case takeWhile (=='\\') (reverse x) of
                   [] -> x ++ "\\"
@@ -17,10 +19,13 @@ parseFile x = case takeWhile (/='\\') (reverse x) of
 parseFilters :: (Parameters, [String]) -> Maybe (Parameters, [String])
 parseFilters (p, []) = Just (p, [])
 parseFilters (p, x:xs)
-    | fst fs == "-ed" = let fs' = getSection (snd fs)
-                         in parseFilters (p { filters = excludeDirectory (fst fs') : filters p }, xs)
+    | x == "--ed" = let dirs = takeWhile ((/='-') . head) xs
+                     in parseFilters (p{filters = excludeDirectories dirs : filters p}, drop (length dirs) xs)
+    | x == "--only-ext" = let ext = head xs
+                           in parseFilters (p{filters = onlyExtension ext : filters p}, drop 1 xs)
+    | x == "--ef" = let files = takeWhile ((/='-') . head) xs
+                     in parseFilters (p{filters = excludeFiles files : filters p}, drop (length files) xs)
     | otherwise = Nothing
-    where fs = getSection x
 
 parseAction :: (Parameters, [String]) -> Maybe (Parameters, [String])
 parseAction (p, x:xs) = Just (p { actions = x }, xs)
@@ -35,7 +40,7 @@ getSection xs = (section, drop (length section + 1) xs)
 parseParameters :: [String] -> Maybe (Parameters, [String])
 parseParameters xs = parseDir (emptyParams, xs) >>= parseAction >>= parseFilters
 
-
-
-
 -- -hs-watcher "C:\Desenv" "textAction arquivoAlterado!" -ed node_modules bower_components -ef readme.md -only-ext hs
+
+-- hs-file-watcher.exe C:\desenv\hs-file-watcher\ "Arquivos Alterados" -ef node_modules bower_components
+-- ["C:\\desenv\\hs-file-watcher\\","Printme","Arquivos Alterados","-ef","node_modules","bower_components"]
