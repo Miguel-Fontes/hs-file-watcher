@@ -7,5 +7,5 @@ data Parameters = Parameters {
     directory :: String,
     action :: [Action],
     filters :: [Filter]
-} deriving (Show, Eq)
+}
 
