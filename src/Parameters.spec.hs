@@ -10,6 +10,10 @@ filesData =  [Arquivo {nome = "file.hs", dir = "src", modificado = "21/05/2015",
              ,Arquivo {nome = "filetoexclude.txt", dir = ".", modificado="21/05/2015", isDirectory = False}
              ,Arquivo {nome = "directorytoexclude", dir = ".", modificado="21/05/2015", isDirectory = True}]
 
+
+command = "C:\\Desenv\\ textAction arquivoAlterado! -ed node_modules bower_components -ef readme.md -only-ext hs"
+
+
 main :: IO ()
 main = hspec $ do
   describe "Directory Parser" $ do
@@ -35,3 +39,8 @@ main = hspec $ do
         applyFilters [parseFilter "directorytoexclude"] filesData
         `shouldBe` ([Arquivo {nome = "file.hs", dir = "src", modificado = "21/05/2015", isDirectory = False}
                     ,Arquivo {nome = "filetoexclude.txt", dir = ".", modificado="21/05/2015", isDirectory = False}])
+
+  describe "Parameters Parser" $ do
+    it "Should return section from String" $ do
+        getSection command
+        `shouldBe` ("C:\\Desenv\\",  "textAction arquivoAlterado! -ed node_modules bower_components -ef readme.md -only-ext hs")

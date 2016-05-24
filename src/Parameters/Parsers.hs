@@ -2,6 +2,7 @@ module Parameters.Parsers where
 
 import Parameters.Parameters
 import Arquivo.Filter
+import Action
 
 parseDir :: String -> String
 parseDir x = case takeWhile (=='\\') (reverse x) of
@@ -19,10 +20,12 @@ parseFilter = excludeDirectories . words
 parseAction :: String -> Action
 parseAction = undefined
 
-parseParameters :: String -> Parameters
-parseParameters xs = parseDir =>> parseAction =>> parseFilter
+parseParameters :: String -> String
+parseParameters = undefined
 
-(=>>) :: (String -> (String, Parameter)) -> (String -> (String, Parameter)) -> (String, Parameter)
+getSection :: String -> (String, String)
+getSection xs = (section, drop (length section + 1) xs)
+    where section = takeWhile (/=' ') xs
 
 
 
