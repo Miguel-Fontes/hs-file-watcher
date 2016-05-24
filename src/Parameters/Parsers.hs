@@ -28,7 +28,11 @@ parseFilters (p, x:xs)
     | otherwise = Nothing
 
 parseAction :: (Parameters, [String]) -> Maybe (Parameters, [String])
-parseAction (p, x:xs) = Just (p { actions = x }, xs)
+parseAction (p, []) = Just (p, [])
+parseAction (p, x:xs)
+    | x == "--print" = let text = head xs
+                        in parseAction (p{actions = textAction text : actions p }, drop 1 xs)
+    | otherwise = Just (p, x:xs)
 
 parseDir :: (Parameters, [String]) -> Maybe (Parameters, [String])
 parseDir (p, x:xs) = Just (p { directory = formatDir x }, xs)
