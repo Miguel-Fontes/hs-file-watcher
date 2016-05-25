@@ -43,8 +43,3 @@ getSection xs = (section, drop (length section + 1) xs)
 
 parseParameters :: [String] -> Maybe (Parameters, [String])
 parseParameters xs = parseDir (emptyParams, xs) >>= parseAction >>= parseFilters
-
--- -hs-watcher "C:\Desenv" "textAction arquivoAlterado!" -ed node_modules bower_components -ef readme.md -only-ext hs
-
--- hs-file-watcher.exe C:\desenv\hs-file-watcher\ "Arquivos Alterados" -ef node_modules bower_components
--- ["C:\\desenv\\hs-file-watcher\\","Printme","Arquivos Alterados","-ef","node_modules","bower_components"]
