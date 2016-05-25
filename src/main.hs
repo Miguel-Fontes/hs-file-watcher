@@ -13,7 +13,7 @@ main = do
     params <- if null args
                   then return $ Parameters {directory = "C:\\Desenv\\hs-file-watcher\\"
                                            ,actions = [textAction "=====>>>>>>>> Arquivos Alterados!"]
-                                           ,filters = [excludeDirectories [".git", "dist"], onlyExtension "hs"]}
+                                           ,filters = [excludeDirectories [".git", "dist"], onlyExtensions ["hs"]]}
                   else return $ fst (fromJust (parseParameters args))
 
     let dir = directory params

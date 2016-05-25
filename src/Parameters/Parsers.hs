@@ -19,11 +19,11 @@ parseFile x = case takeWhile (/='\\') (reverse x) of
 parseFilters :: (Parameters, [String]) -> Maybe (Parameters, [String])
 parseFilters (p, []) = Just (p, [])
 parseFilters (p, x:xs)
-    | x == "--ed" = let dirs = takeWhile ((/='-') . head) xs
+    | x == "--ed" = let dirs = takeOptions xs
                      in parseFilters (p{filters = excludeDirectories dirs : filters p}, drop (length dirs) xs)
-    | x == "--only-ext" = let ext = head xs
-                           in parseFilters (p{filters = onlyExtension ext : filters p}, drop 1 xs)
-    | x == "--ef" = let files = takeWhile ((/='-') . head) xs
+    | x == "--only-ext" = let ext = takeOptions xs
+                           in parseFilters (p{filters = onlyExtensions ext : filters p}, drop 1 xs)
+    | x == "--ef" = let files = takeOptions xs
                      in parseFilters (p{filters = excludeFiles files : filters p}, drop (length files) xs)
     | otherwise = Nothing
 
@@ -43,3 +43,13 @@ getSection xs = (section, drop (length section + 1) xs)
 
 parseParameters :: [String] -> Maybe (Parameters, [String])
 parseParameters xs = parseDir (emptyParams, xs) >>= parseAction >>= parseFilters
+
+takeOptions :: [String] -> [String]
+takeOptions = takeWhile ((/='-') . head)
+{-
+--ed --exclude-directory excludeDirectories
+--ef --exclude-file excludeDirectories
+--ext --only-ext onlyExtension
+(["--ed", "--exclude-directoy"], excludeDirectory])
+
+-}

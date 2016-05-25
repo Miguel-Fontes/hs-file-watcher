@@ -39,6 +39,11 @@ onlyExtension :: String -> Filter
 onlyExtension ext = Filter ("onlyExtension: " ++ ext
                            ,\x -> isDirectory x || ext == reverse (takeWhile (/= '.') (reverse (nome x))))
 
+onlyExtensions :: [String] -> Filter
+onlyExtensions exts = Filter ("onlyExtension: " ++ show exts
+                           ,\x -> all (\ext -> isDirectory x || ext == reverse (takeWhile (/= '.') (reverse (nome x))))exts)
+
+
 excludeDirectory :: Directory -> Filter
 excludeDirectory directory = Filter ("excludeDirectory: " ++ directory
                                     ,\x -> not (nome x == directory && isDirectory x))
