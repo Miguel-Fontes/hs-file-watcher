@@ -8,22 +8,20 @@ import Data.Maybe
 
 main :: IO()
 main = do
-    -- BUG: Aplicação funcionando apenas com diretórios E quando o diretório é informado com um trailling \\
-    --      1 - Tratar argumento de entrada para identificar se é arquivo ou diretório
-    --      2a - Se for arquivo, obter o nome do arquivo e o caminho do diretório da String e construir o tipo Arquivo.
-    --      2b - Se for diretório, garantir que exista um trailling \\.
-    --      OBS: A necessidade do \\ é causada pelo uso da função setCurrentdirectory em Arquivo.Watch.listaArquivos
     args <- getArgs
-    print args
 
-    let --dir = "C:\\Desenv\\hs-file-watcher\\"
-        --f = [excludeDirectories ["node_modules", ".git", "bower_components"]]
-        p = fst $ fromJust (parseParameters args)
-        dir = directory p
-        fs = filters p
+    params <- if null args
+                  then return $ Parameters {directory = "C:\\Desenv\\hs-file-watcher\\"
+                                           ,actions = [textAction "=====>>>>>>>> Arquivos Alterados!"]
+                                           ,filters = [excludeDirectories [".git", "dist"], onlyExtension "hs"]}
+                  else return $ fst (fromJust (parseParameters args))
+
+    let dir = directory params
+        fs = filters params
+        act = head (actions params)
 
     lista <- listaArquivos fs dir
-    watch fs dir lista (textAction "############# ARQUIVOS ALTERADOS! ################") 3000000
+    watch fs dir lista act 3000000
     print "Complete!"
 
     -- Build ---> ghc -o ./../dist/hs-file-watcher main -odir ./../dist/ -hidir ./../dist/
