@@ -11,4 +11,4 @@ data Parameters = Parameters { directory :: FilePath
 emptyParams = Parameters {directory = "", actions = [], filters = []}
 
 instance Show Parameters where
-    show (Parameters d a f) = show (d ++ " - " )
+    show (Parameters d a f) = show (d ++ " - " ++ show f)
