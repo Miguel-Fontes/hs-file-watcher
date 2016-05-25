@@ -11,27 +11,27 @@ import Arquivo.Filter
 import Arquivo.Arquivo
 import Utils.IOFold
 
-watch :: FilePath -> [Arquivo] -> Action -> Int -> IO()
-watch dir ultLista action delay = do
+watch :: [Filter] -> FilePath  -> [Arquivo] -> Action -> Int -> IO()
+watch filters dir ultLista action delay = do
     threadDelay delay
     print "-- Iteracao -----------------------------------------------------------------------------"
 
     peek  "--> ultLista" ultLista
-    lista <- listaArquivos dir >>= peek "--> Lista"
+    lista <- listaArquivos filters dir >>= peek "--> Lista"
 
     if lista /= ultLista
-        then exec action () >> watch dir lista action delay
-        else watch dir lista action delay
+        then exec action () >> watch filters dir lista action delay
+        else watch filters dir lista action delay
 
-listaArquivos :: FilePath -> IO [Arquivo]
-listaArquivos dir = do
+listaArquivos :: [Filter] -> FilePath -> IO [Arquivo]
+listaArquivos filters dir = do
     setCurrentDirectory dir
     files <- getDirectoryContents dir
     modification <- getLastModified files
     isDirectory <- getDirectories files
-    let parsedFiles = applyFilters [noPoints, excludeDirectories ["node_modules", ".git", "bower_components"]]
+    let parsedFiles = applyFilters (noPoints : filters)
                       $ zipWith4 Arquivo files modification (repeat dir) isDirectory
-    recurseSubdirectories parsedFiles
+    recurseSubdirectories filters parsedFiles
 
 getDirectories :: [FilePath] -> IO [Bool]
 getDirectories = ioFoldr doesDirectoryExist []
@@ -39,9 +39,9 @@ getDirectories = ioFoldr doesDirectoryExist []
 getLastModified :: [FilePath] -> IO [String]
 getLastModified = ioFoldr (fmap (formatTime defaultTimeLocale "%d/%m/%Y %T") . getModificationTime) []
 
-recurseSubdirectories :: [Arquivo] -> IO [Arquivo]
-recurseSubdirectories = ioFoldr' step []
-   where step x = if isDirectory x then listaArquivos (dir x ++ nome x ++ "\\") else return [x]
+recurseSubdirectories :: [Filter] -> [Arquivo] -> IO [Arquivo]
+recurseSubdirectories filters = ioFoldr' step []
+   where step x = if isDirectory x then listaArquivos filters (dir x ++ nome x ++ "\\") else return [x]
 
 peek :: String -> [Arquivo] -> IO [Arquivo]
 peek name fl = do

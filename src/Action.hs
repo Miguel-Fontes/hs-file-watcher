@@ -1,8 +1,14 @@
 module Action where
 
-newtype Action = Action {
-    exec :: () -> IO()
-}
+newtype Action = Action (Tag,  () -> IO())
 
-textAction :: String -> Action
-textAction str = Action (\() -> print str)
+type Tag= String
+
+instance Show Action where
+    show (Action (tag, _)) = tag
+
+exec :: Action -> (() -> IO())
+exec (Action (_, a)) = a
+
+textAction :: [String] -> Action
+textAction str = Action ("textAction: " ++ show str, \() -> print (unwords str))
