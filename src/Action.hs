@@ -10,5 +10,5 @@ instance Show Action where
 exec :: Action -> (() -> IO())
 exec (Action (_, a)) = a
 
-textAction :: String -> Action
-textAction str = Action ("textAction: " ++ str, \() -> print str)
+textAction :: [String] -> Action
+textAction str = Action ("textAction: " ++ show str, \() -> print (unwords str))

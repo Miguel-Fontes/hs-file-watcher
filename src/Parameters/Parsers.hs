@@ -5,6 +5,7 @@ import Arquivo.Filter
 import Action
 
 import Data.List
+import Data.Maybe (isNothing, fromJust)
 
 formatDir :: String -> String
 formatDir x = case takeWhile (=='\\') (reverse x) of
@@ -19,37 +20,36 @@ parseFile x = case takeWhile (/='\\') (reverse x) of
 parseFilters :: (Parameters, [String]) -> Maybe (Parameters, [String])
 parseFilters (p, []) = Just (p, [])
 parseFilters (p, x:xs)
-    | x == "--ed" = let dirs = takeOptions xs
-                     in parseFilters (p{filters = excludeDirectories dirs : filters p}, drop (length dirs) xs)
-    | x == "--only-ext" = let ext = takeOptions xs
-                           in parseFilters (p{filters = onlyExtensions ext : filters p}, drop 1 xs)
-    | x == "--ef" = let files = takeOptions xs
-                     in parseFilters (p{filters = excludeFiles files : filters p}, drop (length files) xs)
-    | otherwise = Nothing
+    | isNothing f = Nothing
+    | otherwise = parseFilters (p{filters = fromJust f options : filters p}, drop (length options) xs)
+    where f = keyMatch x filtersList
+          options = takeOptions xs
 
 parseAction :: (Parameters, [String]) -> Maybe (Parameters, [String])
 parseAction (p, []) = Just (p, [])
 parseAction (p, x:xs)
-    | x == "--print" = let text = head xs
-                        in parseAction (p{actions = textAction text : actions p }, drop 1 xs)
-    | otherwise = Just (p, x:xs)
+    | isNothing f = Just (p, x:xs)
+    | otherwise = parseAction (p{actions = fromJust f options : actions p }, drop (length options) xs)
+    where f = keyMatch x actionsList
+          options = takeOptions xs
 
 parseDir :: (Parameters, [String]) -> Maybe (Parameters, [String])
 parseDir (p, x:xs) = Just (p { directory = formatDir x }, xs)
-
-getSection :: String -> (String, String)
-getSection xs = (section, drop (length section + 1) xs)
-    where section = takeWhile (/=' ') xs
 
 parseParameters :: [String] -> Maybe (Parameters, [String])
 parseParameters xs = parseDir (emptyParams, xs) >>= parseAction >>= parseFilters
 
 takeOptions :: [String] -> [String]
 takeOptions = takeWhile ((/='-') . head)
-{-
---ed --exclude-directory excludeDirectories
---ef --exclude-file excludeDirectories
---ext --only-ext onlyExtension
-(["--ed", "--exclude-directoy"], excludeDirectory])
 
--}
+filtersList :: [([String], [String] -> Filter)]
+filtersList = [(["--ed", "--exclude-directories"], excludeDirectories)
+              ,(["--ef", "--exclude-files"], excludeFiles)
+              ,(["--exts", "--only-exts"], onlyExtensions)]
+
+actionsList :: [([String], [String] -> Action)]
+actionsList = [(["--p", "--print"], textAction)]
+
+keyMatch :: String -> [([String], [String] -> a)] -> Maybe ([String] -> a)
+keyMatch _ [] = Nothing
+keyMatch op (f:fs) = if op `elem` fst f then Just (snd f) else keyMatch op fs
