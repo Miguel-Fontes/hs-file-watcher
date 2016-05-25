@@ -7,7 +7,7 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [x] Excluir diretórios por nome
 - [x] Separar funcionalidades em módulos
 - [x] Definir parâmetros de entrada e seus formatos
-- [ ] Refatorar módulo de parâmetros
+- [ ] Refatorar módulo parâmetros
 - [ ] Organização dos testes da aplicação
 - [x] Recursão em todos os subdiretórios do diretório indicado
 - [x] Ação parametrizável quando alterações forem detectadas
@@ -23,3 +23,13 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
     - Criado módulo Utils para conter funcionalidades genéricas. Submodulo IOFold foi criado para abstrair padrões de recursão executando ações IO.
     - Next task: Entrada de parâmetros via linha de comando
 - 24/05/2016: Parsers para funções da linha de comando funcional. Código precisa ser refatorado.
+- 25/05/2016:
+    - Adicionados tags em filters e actions possibilitando a impressão de texto descritivo usando um instance show
+    - Corrigido Bug no filtro por extensão onde os diretórios também eram filtrados
+    - Adicionado tratamento para argumentos no main
+    - Next task: Refatorar módulo parâmetros.
+
+## Exemplos
+    hs-file-watcher C:\meu-projeto\ --print "Arquivos Alterados" --only-ext hs
+    hs-file-watcher C:\meu-projeto\ --print "Arquivos Alterados" --only-ext hs --ed node_modules bower_components .git
+    hs-file-watcher C:\meu-projeto\ --print "Arquivos Alterados" --ef readme.md
