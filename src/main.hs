@@ -10,6 +10,7 @@ main :: IO()
 main = do
     args <- getArgs
 
+    -- Esta configuração abaixo é para testes. Deve ser removida em momento posterior.
     params <- if null args
                   then return $ Parameters {directory = "C:\\Desenv\\hs-file-watcher\\"
                                            ,actions = [textAction ["=====>>>>>>>> Arquivos Alterados!"]]
