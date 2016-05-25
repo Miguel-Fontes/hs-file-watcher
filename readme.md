@@ -6,11 +6,12 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [x] Excluir arquivos por nome
 - [x] Excluir diretórios por nome
 - [x] Separar funcionalidades em módulos
-- [ ] Definir parâmetros de entrada e seus formatos
+- [x] Definir parâmetros de entrada e seus formatos
+- [ ] Refatorar módulo de parâmetros
 - [ ] Organização dos testes da aplicação
 - [x] Recursão em todos os subdiretórios do diretório indicado
-- [ ] Ação parametrizável quando alterações forem detectadas
-- [ ] Permitir que mais de uma ação seja executada por hook
+- [x] Ação parametrizável quando alterações forem detectadas
+- [x] Permitir que mais de uma ação seja executada por hook
 - [ ] Criar 'chave' para ativar e desativar log de execução no console
 - [ ] Criar script de build para projeto
 
@@ -21,3 +22,4 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
     - Recursão para obtenção de arquivos em subdiretórios e filtros de arquivos. Refatorar para remover os filtros que estão em hardcode e verificar a possibilidade de abstrair de execução de ações IO recursivamente.
     - Criado módulo Utils para conter funcionalidades genéricas. Submodulo IOFold foi criado para abstrair padrões de recursão executando ações IO.
     - Next task: Entrada de parâmetros via linha de comando
+- 24/05/2016: Parsers para funções da linha de comando funcional. Código precisa ser refatorado.
