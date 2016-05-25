@@ -2,35 +2,47 @@ module Arquivo.Filter where
 
 import Arquivo.Arquivo
 
+type Tag = String
+
 newtype Filter = Filter {
-    run :: Arquivo -> Bool
+    value :: (Tag, Arquivo -> Bool)
 }
 
+instance Show Filter where
+    show (Filter (t, _)) = t
+
 type Directory = String
+
+run :: Filter -> (Arquivo -> Bool)
+run (Filter (_, f)) = f
 
 applyFilters :: [Filter] -> [Arquivo] -> [Arquivo]
 applyFilters fs = filter (\ a -> all (`run` a) fs)
 
 applyFilter :: Filter -> [Arquivo] -> [Arquivo]
-applyFilter f = filter (f `run`)
+applyFilter f = filter (run f)
 
 customFilter :: (Arquivo -> Bool) -> Filter
-customFilter = Filter
+customFilter f = Filter ("CustomFilter", f)
 
 noPoints :: Filter
-noPoints = Filter (\x -> nome x /="." && nome x /="..")
+noPoints = Filter ("noPoints", \x -> nome x /="." && nome x /="..")
 
 excludeFile :: String -> Filter
-excludeFile name = Filter (\x -> not (nome x == name && not (isDirectory x)))
+excludeFile name = Filter ("excludeFile: " ++ name, \x -> not (nome x == name && not (isDirectory x)))
 
 excludeFiles :: [String] -> Filter
-excludeFiles names = Filter (\x -> all (\z -> not (nome x == z && not (isDirectory x))) names)
+excludeFiles names = Filter ("excludeFiles: " ++ show names
+                            ,\x -> all (\z -> not (nome x == z && not (isDirectory x))) names)
 
 onlyExtension :: String -> Filter
-onlyExtension ext = Filter (\x -> ext == reverse (takeWhile (/= '.') (reverse (nome x))))
+onlyExtension ext = Filter ("onlyExtension: " ++ ext
+                           ,\x -> isDirectory x || ext == reverse (takeWhile (/= '.') (reverse (nome x))))
 
 excludeDirectory :: Directory -> Filter
-excludeDirectory directory = Filter (\x -> not (nome x == directory && isDirectory x))
+excludeDirectory directory = Filter ("excludeDirectory: " ++ directory
+                                    ,\x -> not (nome x == directory && isDirectory x))
 
 excludeDirectories :: [Directory] -> Filter
-excludeDirectories directories = Filter (\x -> all (\z -> not (nome x == z && isDirectory x)) directories)
+excludeDirectories directories = Filter ("excludeDirectories: " ++ show directories
+                                        ,\x -> all (\z -> not (nome x == z && isDirectory x)) directories)
