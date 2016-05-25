@@ -16,7 +16,7 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [ ] Criar script de build para projeto
 - [ ] Permitir que usuário não insira um diretório e, para este caso, considerar que o diretório a ser monitorado é o atual
 - [ ] Retornar mensagem descritiva quando algum problema ocorrer durante o processamento do input
-- [ ] Construir action para executar um programa externo
+- [x] Construir action para executar um programa externo
 
 ## Log
 - 20/05/2016: Função core do aplicativo (identificar alterações em arquivos) concluída.
@@ -31,8 +31,10 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
     - Corrigido Bug no filtro por extensão onde os diretórios também eram filtrados
     - Adicionado tratamento para argumentos no main
     - Modulo de parâmetros refatorado. A lógica para matching de options da linha de comando ainda pode ser melhorado. Na forma como está, a cada novo Action ou Filter o módulo Parametros.Parser deverá ser alterado também.
+    - Adicionada action para execução de programa externo. Opção --cmd ou --command
 
 ## Exemplos
     hs-file-watcher C:\meu-projeto\ --print "Arquivos Alterados" --only-ext hs
-    hs-file-watcher C:\meu-projeto\ --print "Arquivos Alterados" --only-ext hs --ed node_modules bower_components .git
+    hs-file-watcher C:\meu-projeto\ --print "Arquivos Alterados" --ed .git
     hs-file-watcher C:\meu-projeto\ --print "Arquivos Alterados" --ef readme.md
+    hs-file-watcher C:\meu-projeto\ --cmd "cd c:\meu-projeto\ && runhaskell modulo.spec.hs" --ef readme.md
