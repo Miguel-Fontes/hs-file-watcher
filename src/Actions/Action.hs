@@ -1,4 +1,4 @@
-module Action where
+module Actions.Action where
 
 import System.Process
 
