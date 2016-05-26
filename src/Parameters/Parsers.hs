@@ -43,7 +43,7 @@ keyMatch op (f:fs) = if op `elem` fst f then Just (snd f) else keyMatch op fs
 filtersList :: [([String], [String] -> Filter)]
 filtersList = [(["--ed", "--exclude-directories"], excludeDirectories)
               ,(["--ef", "--exclude-files"], excludeFiles)
-              ,(["--exts", "--only-exts"], onlyExtensions)]
+              ,(["--exts", "--only-extensions"], onlyExtensions)]
 
 actionsList :: [([String], [String] -> Action)]
 actionsList = [(["--p", "--print"], textAction)
