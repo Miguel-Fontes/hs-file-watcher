@@ -46,4 +46,5 @@ filtersList = [(["--ed", "--exclude-directories"], excludeDirectories)
               ,(["--exts", "--only-exts"], onlyExtensions)]
 
 actionsList :: [([String], [String] -> Action)]
-actionsList = [(["--p", "--print"], textAction)]
+actionsList = [(["--p", "--print"], textAction)
+              ,(["--cmd", "--command"], cmdAction)]
