@@ -6,13 +6,35 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [x] Excluir arquivos por nome
 - [x] Excluir diretórios por nome
 - [x] Separar funcionalidades em módulos
-- [ ] Definir parâmetros de entrada e seus formatos
+- [x] Definir parâmetros de entrada e seus formatos
+- [x] Refatorar módulo parâmetros
 - [ ] Organização dos testes da aplicação
-- [ ] Recursão em todos os subdiretórios do diretório indicado
-- [ ] Ação parametrizável quando alterações forem detectadas
-- [ ] Permitir que mais de uma ação seja executada por hook
-
+- [x] Recursão em todos os subdiretórios do diretório indicado
+- [x] Ação parametrizável quando alterações forem detectadas
+- [x] Permitir que mais de uma ação seja executada por hook
+- [ ] Criar 'chave' para ativar e desativar log de execução no console
+- [ ] Criar script de build para projeto
+- [ ] Permitir que usuário não insira um diretório e, para este caso, considerar que o diretório a ser monitorado é o atual
+- [ ] Retornar mensagem descritiva quando algum problema ocorrer durante o processamento do input
+- [x] Construir action para executar um programa externo
 
 ## Log
 - 20/05/2016: Função core do aplicativo (identificar alterações em arquivos) concluída.
 - 21/05/2016: Módulos, primeiro arquivo para testes criado (ainda por organizar melhor), filtros e funções adequadas para sua execução.
+- 22/05/2016:
+    - Recursão para obtenção de arquivos em subdiretórios e filtros de arquivos. Refatorar para remover os filtros que estão em hardcode e verificar a possibilidade de abstrair de execução de ações IO recursivamente.
+    - Criado módulo Utils para conter funcionalidades genéricas. Submodulo IOFold foi criado para abstrair padrões de recursão executando ações IO.
+    - Next task: Entrada de parâmetros via linha de comando
+- 24/05/2016: Parsers para funções da linha de comando funcional. Código precisa ser refatorado.
+- 25/05/2016:
+    - Adicionados tags em filters e actions possibilitando a impressão de texto descritivo usando um instance show
+    - Corrigido Bug no filtro por extensão onde os diretórios também eram filtrados
+    - Adicionado tratamento para argumentos no main
+    - Modulo de parâmetros refatorado. A lógica para matching de options da linha de comando ainda pode ser melhorado. Na forma como está, a cada novo Action ou Filter o módulo Parametros.Parser deverá ser alterado também.
+    - Adicionada action para execução de programa externo. Opção --cmd ou --command
+
+## Exemplos
+    hs-file-watcher C:\meu-projeto\ --print "Arquivos Alterados" --only-ext hs
+    hs-file-watcher C:\meu-projeto\ --print "Arquivos Alterados" --ed .git
+    hs-file-watcher C:\meu-projeto\ --print "Arquivos Alterados" --ef readme.md
+    hs-file-watcher C:\meu-projeto\ --cmd "cd c:\meu-projeto\ && runhaskell modulo.spec.hs" --ef readme.md
