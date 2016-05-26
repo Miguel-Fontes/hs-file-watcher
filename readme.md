@@ -8,12 +8,12 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [x] Separar funcionalidades em módulos
 - [x] Definir parâmetros de entrada e seus formatos
 - [x] Refatorar módulo parâmetros
-- [ ] Organização dos testes da aplicação
+- [ ] Organização e Integração dos testes da aplicação à ferramenta de build
 - [x] Recursão em todos os subdiretórios do diretório indicado
 - [x] Ação parametrizável quando alterações forem detectadas
 - [x] Permitir que mais de uma ação seja executada por hook
 - [ ] Criar 'chave' para ativar e desativar log de execução no console
-- [ ] Criar script de build para projeto
+- [x] Criar script de build para projeto
 - [ ] Permitir que usuário não insira um diretório e, para este caso, considerar que o diretório a ser monitorado é o atual
 - [ ] Retornar mensagem descritiva quando algum problema ocorrer durante o processamento do input
 - [x] Construir action para executar um programa externo
@@ -32,6 +32,10 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
     - Adicionado tratamento para argumentos no main
     - Modulo de parâmetros refatorado. A lógica para matching de options da linha de comando ainda pode ser melhorado. Na forma como está, a cada novo Action ou Filter o módulo Parametros.Parser deverá ser alterado também.
     - Adicionada action para execução de programa externo. Opção --cmd ou --command
+- 26/05/2015:
+    - Configurada a ferramenta de Build stack no projeto.
+    - Organização dos testes e módulo Action em diretórios específicos
+    - stack build e stack exec podem ser utilizados para construir e testar a aplicação
 
 ## Exemplos
     --print -> imprime o texto indicado quando alterações forem identificadas
