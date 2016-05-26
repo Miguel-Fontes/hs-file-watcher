@@ -34,7 +34,17 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
     - Adicionada action para execução de programa externo. Opção --cmd ou --command
 
 ## Exemplos
+    --print -> imprime o texto indicado quando alterações forem identificadas
+    hs-file-watcher C:\meu-projeto\ --print "Arquivos Alterados"
+
+    --only-ext ou --only-extensions -> filtra os arquivos que não sejam das extensões relacionadas
     hs-file-watcher C:\meu-projeto\ --print "Arquivos Alterados" --only-ext hs
+
+    --ed ou --exclude-directories -> exclui todos os diretórios relacionados do monitoramento
     hs-file-watcher C:\meu-projeto\ --print "Arquivos Alterados" --ed .git
+
+    --ef ou --exclude-files -> exclui os arquivos relacionados
     hs-file-watcher C:\meu-projeto\ --print "Arquivos Alterados" --ef readme.md
+
+    --cmd ou --command -> executa o comando quando alterações forem identificadas nos arquivos
     hs-file-watcher C:\meu-projeto\ --cmd "cd c:\meu-projeto\ && runhaskell modulo.spec.hs" --ef readme.md
