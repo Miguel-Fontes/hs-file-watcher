@@ -1,4 +1,4 @@
-import Action
+import Actions.Action
 import Arquivo.Watch
 import Arquivo.Filter
 import System.Environment
