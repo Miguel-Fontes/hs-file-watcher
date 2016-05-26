@@ -1,7 +1,7 @@
 module Parameters.Parameters where
 
 import Arquivo.Filter
-import Action
+import Actions.Action
 
 data Parameters = Parameters { directory :: FilePath
                               ,actions   :: [Action]

@@ -6,7 +6,7 @@ import Control.Monad
 import Data.List
 import Control.Concurrent (threadDelay)
 
-import Action
+import Actions.Action
 import Arquivo.Filter
 import Arquivo.Arquivo
 import Utils.IOFold

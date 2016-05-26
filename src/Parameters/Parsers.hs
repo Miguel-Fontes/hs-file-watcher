@@ -2,7 +2,7 @@ module Parameters.Parsers where
 
 import Parameters.Parameters
 import Arquivo.Filter
-import Action
+import Actions.Action
 
 import Data.List
 import Data.Maybe (isNothing, isJust, fromJust)
