@@ -35,6 +35,10 @@ test = hspec $ do
           parseDir (emptyParams, drop 1 command) >>= Just . directory . fst
           `shouldBe` Just (".")
 
+      it "should return the command untouched when there's no directory input" $ do
+          parseDir (emptyParams, drop 1 command) >>= Just . snd
+          `shouldBe` Just (drop 1 command)
+
     context "File Parser" $ do
       it "Should return a tuple (file, directory) when a file is received as Input" $ do
           parseFile "C:\\Desenv\\Prj\\File.hs"
