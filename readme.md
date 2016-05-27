@@ -15,7 +15,7 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [ ] Criar 'chave' para ativar e desativar log de execução no console
 - [x] Criar script de build para projeto
 - [ ] Permitir que usuário não insira um diretório e, para este caso, considerar que o diretório a ser monitorado é o atual
-- [ ] Retornar mensagem descritiva quando algum problema ocorrer durante o processamento do input
+- [ ] Retornar mensagem descritiva no caso de erros durante o processamento do input
 - [x] Construir action para executar um programa externo
 
 ## Log
@@ -36,6 +36,8 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
     - Configurada a ferramenta de Build stack no projeto.
     - Organização dos testes e módulo Action em diretórios específicos
     - stack build e stack exec podem ser utilizados para construir e testar a aplicação
+- 27/05/2015:
+    - Removida limitação na execução de apenas uma ação. Diversas ações podem ser definidas e serão executadas sequencialmente quando mudanças forem identificadas.
 
 ## Exemplos
     --print -> imprime o texto indicado quando alterações forem identificadas
