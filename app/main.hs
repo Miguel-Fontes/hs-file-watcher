@@ -24,5 +24,3 @@ main = do
     lista <- listaArquivos fs dir
     watch fs dir lista act 3000000
     print "Complete!"
-
-    -- Build ---> ghc -o ./../dist/hs-file-watcher main -odir ./../dist/ -hidir ./../dist/

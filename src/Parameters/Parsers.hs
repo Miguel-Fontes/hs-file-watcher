@@ -11,7 +11,9 @@ parseParameters :: [String] -> Maybe (Parameters, [String])
 parseParameters xs = parseDir (emptyParams, xs) >>= parseOptions
 
 parseDir :: (Parameters, [String]) -> Maybe (Parameters, [String])
-parseDir (p, x:xs) = Just (p { directory = formatDir x }, xs)
+parseDir (p, x:xs)
+    | head x == '-' = Just (p { directory = "." }, x:xs)
+    | otherwise = Just (p { directory = formatDir x }, xs)
 
 formatDir :: String -> String
 formatDir x = case takeWhile (=='\\') (reverse x) of

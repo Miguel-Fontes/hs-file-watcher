@@ -11,6 +11,9 @@ newtype Filter = Filter {
 instance Show Filter where
     show (Filter (t, _)) = t
 
+instance Eq Filter where
+    Filter (t1, _) == Filter (t2, _) = t1 == t2
+
 type Directory = String
 
 run :: Filter -> (Arquivo -> Bool)
@@ -40,7 +43,7 @@ onlyExtension ext = Filter ("onlyExtension: " ++ ext
                            ,\x -> isDirectory x || ext == reverse (takeWhile (/= '.') (reverse (nome x))))
 
 onlyExtensions :: [String] -> Filter
-onlyExtensions exts = Filter ("onlyExtension: " ++ show exts
+onlyExtensions exts = Filter ("onlyExtensions: " ++ show exts
                            ,\x -> all (\ext -> isDirectory x || ext == reverse (takeWhile (/= '.') (reverse (nome x))))exts)
 
 excludeDirectory :: Directory -> Filter
