@@ -14,10 +14,12 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [x] Permitir que mais de uma ação seja executada por hook
 - [x] Construir action para executar um programa externo
 - [x] Criar script de build para projeto
-- [ ] Criar 'chave' para ativar e desativar log de execução no console
-- [ ] Permitir que usuário não insira um diretório e, para este caso, considerar que o diretório a ser monitorado é o atual
-- [ ] Retornar mensagem descritiva no caso de erros durante o processamento do input
+- [x] Retornar mensagem descritiva no caso de erros durante o processamento do input
+- [x] Remover a lista vazia da tupla de saída da função Parameters.Parsers.parseParameters
 - [x] Escrever testes faltantes
+- [ ] Criar 'chave' para ativar e desativar log de execução no console
+- [ ] Retornar mensagem formatada com as opções disponíveis para uso no caso de erros
+- [ ] Permitir que usuário não insira um diretório e, para este caso, considerar que o diretório a ser monitorado é o atual
 
 
 ## Log
