@@ -31,24 +31,13 @@ customFilter f = Filter ("CustomFilter", f)
 noPoints :: Filter
 noPoints = Filter ("noPoints", \x -> nome x /="." && nome x /="..")
 
-excludeFile :: String -> Filter
-excludeFile name = Filter ("excludeFile: " ++ name, \x -> not (nome x == name && not (isDirectory x)))
-
 excludeFiles :: [String] -> Filter
 excludeFiles names = Filter ("excludeFiles: " ++ show names
                             ,\x -> all (\z -> not (nome x == z && not (isDirectory x))) names)
 
-onlyExtension :: String -> Filter
-onlyExtension ext = Filter ("onlyExtension: " ++ ext
-                           ,\x -> isDirectory x || ext == reverse (takeWhile (/= '.') (reverse (nome x))))
-
 onlyExtensions :: [String] -> Filter
 onlyExtensions exts = Filter ("onlyExtensions: " ++ show exts
                            ,\x -> all (\ext -> isDirectory x || ext == reverse (takeWhile (/= '.') (reverse (nome x))))exts)
-
-excludeDirectory :: Directory -> Filter
-excludeDirectory directory = Filter ("excludeDirectory: " ++ directory
-                                    ,\x -> not (nome x == directory && isDirectory x))
 
 excludeDirectories :: [Directory] -> Filter
 excludeDirectories directories = Filter ("excludeDirectories: " ++ show directories

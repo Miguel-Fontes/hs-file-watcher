@@ -17,9 +17,11 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [x] Retornar mensagem descritiva no caso de erros durante o processamento do input
 - [x] Remover a lista vazia da tupla de saída da função Parameters.Parsers.parseParameters
 - [x] Escrever testes faltantes
-- [ ] Criar 'chave' para ativar e desativar log de execução no console
-- [ ] Retornar mensagem formatada com as opções disponíveis para uso no caso de erros
 - [x] Permitir que usuário não insira um diretório e, para este caso, considerar que o diretório a ser monitorado é o atual
+- [ ] Implementar log de execução
+- [ ] Retornar mensagem formatada com as opções disponíveis para uso no caso de erros
+- [ ] Executar ações na ordem em que são informadas no input
+- [ ] Melhorar texto descrevendo os arquivos alterados impresso no console via action de impressão de arquivos alterados
 
 
 ## Log
@@ -50,6 +52,7 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
     - Finalização de construção e organização do módulo de testes e adição de testes.
     - Adição de mensagens indicando que o input é inválido para os casos em que nenhuma ação é definida e onde a opção informada não existe.
     - Usuário poderá omitir o diretório e definir apenas os filtros e ações - o diretório corrente será utilizado como alvo.
+    - Alterado o tipo Action para que este receba os arquivos que sofreram alterações, possibilitando ações especificamente sobre eles.
 
 
 ## Exemplos
