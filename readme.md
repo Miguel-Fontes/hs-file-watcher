@@ -17,7 +17,7 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [ ] Criar 'chave' para ativar e desativar log de execução no console
 - [ ] Permitir que usuário não insira um diretório e, para este caso, considerar que o diretório a ser monitorado é o atual
 - [ ] Retornar mensagem descritiva no caso de erros durante o processamento do input
-- [ ] Escrever testes faltantes
+- [x] Escrever testes faltantes
 
 
 ## Log
@@ -44,6 +44,9 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
     - Executar stack tests agora testa a aplicação utilizando os módulos de teste definidos.
     - Modulos de teste devem exportar uma função test que executa todos os testes.
     - Cada módulo de teste deve importado em test\spec e executado no chain do bloco do.
+- 28/05/2015:
+    - Finalização de construção e organização do módulo de testes e adição de testes.
+
 
 ## Exemplos
     --print -> imprime o texto indicado quando alterações forem identificadas
