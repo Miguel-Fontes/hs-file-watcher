@@ -7,25 +7,26 @@ import Actions.Action
 import Data.List
 import Data.Maybe (isNothing, isJust, fromJust)
 
-parseParameters :: [String] -> Maybe (Parameters, [String])
-parseParameters xs = parseDir (emptyParams, xs) >>= parseOptions
+parseParameters :: [String] -> Either String Parameters
+parseParameters xs = parseDir (emptyParams, xs) >>= parseOptions >>= validateParameters
 
-parseDir :: (Parameters, [String]) -> Maybe (Parameters, [String])
+
+parseDir :: (Parameters, [String]) -> Either String (Parameters, [String])
 parseDir (p, x:xs)
-    | head x == '-' = Just (p { directory = "." }, x:xs)
-    | otherwise = Just (p { directory = formatDir x }, xs)
+    | head x == '-' = Right (p { directory = "." }, x:xs)
+    | otherwise = Right (p { directory = formatDir x }, xs)
 
 formatDir :: String -> String
 formatDir x = case takeWhile (=='\\') (reverse x) of
                   [] -> x ++ "\\"
                   (_:_) -> x
 
-parseOptions :: (Parameters, [String]) -> Maybe (Parameters, [String])
-parseOptions (p, []) = Just (p, [])
+parseOptions :: (Parameters, [String]) -> Either String Parameters
+parseOptions (p, []) = Right p
 parseOptions (p, x:xs)
     | isJust a = parseOptions (p{actions = fromJust a options : actions p }, drop (length options) xs)
     | isJust f = parseOptions (p{filters = fromJust f options : filters p }, drop (length options) xs)
-    | otherwise = Nothing
+    | otherwise = Left ("O comando \'" ++ x ++ "\' nao existe!")
     where a = keyMatch x actionsList
           f = keyMatch x filtersList
           options = takeOptions xs
@@ -34,6 +35,12 @@ parseFile :: String -> (String, String)
 parseFile x = case takeWhile (/='\\') (reverse x) of
                   [] -> ("", x)
                   xs -> (reverse xs, reverse $ drop (length xs) (reverse x))
+
+validateParameters :: Parameters -> Either String Parameters
+validateParameters p
+    | actions p == [] = Left "Não foram definidas acões!"
+    | directory p == "" = Left "Diretorio não definido!"
+    | otherwise = Right p
 
 takeOptions :: [String] -> [String]
 takeOptions = takeWhile ((/='-') . head)
