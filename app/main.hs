@@ -12,15 +12,15 @@ main = do
 
     -- Esta configuração abaixo é para testes. Deve ser removida em momento posterior.
     params <- if null args
-                  then return Parameters {directory = "C:\\Desenv\\hs-file-watcher\\"
-                                         ,actions = [textAction ["=====>>>>>>>> Arquivos Alterados!"]]
-                                         ,filters = [excludeDirectories [".git", "dist"], onlyExtensions ["hs"]]}
-                  else return $ fst (fromJust (parseParameters args))
+                  then return $ Right Parameters {directory = "C:\\Desenv\\hs-file-watcher\\"
+                                                 ,actions = [textAction ["=====>>>>>>>> Arquivos Alterados!"]]
+                                                 ,filters = [excludeDirectories [".git", "dist"]
+                                                            ,onlyExtensions ["hs"]]}
+                  else return $ parseParameters args
 
-    let dir = directory params
-        fs = filters params
-        act = actions params
-
-    lista <- listaArquivos fs dir
-    watch fs dir lista act 3000000
-    print "Complete!"
+    case params of
+        Left msg -> print msg
+        Right p -> do
+            lista <- listaArquivos (filters p) (directory p)
+            watch (filters p) (directory p) lista (actions p) 3000000
+            print "Complete!"
