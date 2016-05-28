@@ -1,10 +1,13 @@
 module Parameters.Parameters where
 
+import Arquivo.Arquivo
 import Arquivo.Filter
 import Actions.Action
 
+-- Para generalizar completamente este módulo, pode-se adicionar um parâmetro em parameters e passa-lo para o atributo
+-- Action.
 data Parameters = Parameters { directory :: FilePath
-                              ,actions   :: [Action]
+                              ,actions   :: [Action Arquivo]
                               ,filters   :: [Filter] }
 
 

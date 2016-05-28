@@ -2,7 +2,9 @@ module Parameters.Parsers where
 
 import Parameters.Parameters
 import Arquivo.Filter
+import Arquivo.Arquivo
 import Actions.Action
+import Actions.Arquivos
 
 import Data.List
 import Data.Maybe (isNothing, isJust, fromJust)
@@ -54,6 +56,7 @@ filtersList = [(["--ed", "--exclude-directories"], excludeDirectories)
               ,(["--ef", "--exclude-files"], excludeFiles)
               ,(["--exts", "--only-extensions"], onlyExtensions)]
 
-actionsList :: [([String], [String] -> Action)]
+actionsList :: [([String], [String] -> Action Arquivo)]
 actionsList = [(["--p", "--print"], textAction)
+              ,(["--pc", "--print-changed"], printChangedAction)
               ,(["--cmd", "--command"], cmdAction)]

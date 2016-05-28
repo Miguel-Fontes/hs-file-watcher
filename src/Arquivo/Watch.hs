@@ -11,7 +11,7 @@ import Arquivo.Filter
 import Arquivo.Arquivo
 import Utils.IOFold
 
-watch :: [Filter] -> FilePath  -> [Action] -> Int -> IO()
+watch :: [Filter] -> FilePath  -> [Action Arquivo] -> Int -> IO()
 watch filters dir actions delay = do
     directory <- if dir == "."
                      then fmap (++ "\\") getCurrentDirectory
@@ -24,16 +24,17 @@ watch filters dir actions delay = do
 
     watchFiles filters directory lista actions delay
 
-watchFiles :: [Filter] -> FilePath  -> [Arquivo] -> [Action] -> Int -> IO()
+watchFiles :: [Filter] -> FilePath  -> [Arquivo] -> [Action Arquivo] -> Int -> IO()
 watchFiles filters dir ultLista actions delay = do
     threadDelay delay
-    putStrLn "-- Iteracao -----------------------------------------------------------------------------"
 
-    peek  "--> ultLista" ultLista
-    lista <- listaArquivos filters dir >>= peek "--> Lista"
+    --peek  "--> ultLista" ultLista
+    lista <- listaArquivos filters dir -- >>= peek "--> Lista"
 
     if lista /= ultLista
-        then mapM_ (`exec` ()) actions >> watchFiles filters dir lista actions delay
+        then putStrLn "-> Mudanças identificadas..." >>
+             mapM_ (`exec` (ultLista \\ lista)) actions >>
+             watchFiles filters dir lista actions delay
         else watchFiles filters dir lista actions delay
 
 listaArquivos :: [Filter] -> FilePath -> IO [Arquivo]
