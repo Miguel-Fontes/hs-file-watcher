@@ -4,20 +4,23 @@ import Test.Hspec
 import Test.QuickCheck
 
 import Arquivo.Watch
-import Parameters.Parameters
-import Parameters.Parsers
 import Arquivo.Filter
 import Arquivo.Arquivo
+import Parameters.Parameters
+import Parameters.Parsers
+import Actions.Action
 
---tests = []
+import Data.Maybe
 
 filesData =  [Arquivo {nome = "file.hs", dir = "src", modificado = "21/05/2015", isDirectory = False}
              ,Arquivo {nome = "filetoexclude.txt", dir = ".", modificado="21/05/2015", isDirectory = False}
              ,Arquivo {nome = "directorytoexclude", dir = ".", modificado="21/05/2015", isDirectory = True}]
 
 command =
-    ["C:\\Desenv\\",  "--print", "arquivoAlterado!", "--ed", "node_modules",
-     "bower_components", "--ef", "readme.md", "--only-extensions", "hs"]
+    ["C:\\Desenv\\",  "--print", "arquivoAlterado!", "--cmd", "dir", "--ed", ".stack-work", "--ef", "readme.md", "--only-extensions", "hs"]
+
+commandOneArg =
+    ["C:\\Desenv\\",  "--print", "arquivoAlterado!", "--ed", ".stack-work"]
 
 test :: IO ()
 test = hspec $ do
@@ -48,13 +51,38 @@ test = hspec $ do
           parseFile "C:\\Desenv\\Prj\\"
           `shouldBe` ("","C:\\Desenv\\Prj\\")
 
-    context "Filter Parser" $ do
-      it "Should create and apply a excludeDirectories Filter" $ do
-          applyFilters [excludeDirectories ["directorytoexclude"]] filesData
-          `shouldBe` ([Arquivo {nome = "file.hs", dir = "src", modificado = "21/05/2015", isDirectory = False}
-                      ,Arquivo {nome = "filetoexclude.txt", dir = ".", modificado="21/05/2015", isDirectory = False}])
+    context "Options Parser" $ do
+        context "Filters" $ do
+           it "should create a list with just one filter" $ do
+               parseOptions (emptyParams, drop 1 commandOneArg) >>= Just . filters . fst
+               `shouldBe` Just [excludeDirectories [".stack-work"]]
 
-    context "Parameters Parser" $ do
-      it "Should return section from String" $ do
+           it "should create a list with several filterss" $ do
+               parseOptions (emptyParams, drop 1 command) >>= Just . filters . fst
+               `shouldBe` Just [onlyExtensions ["hs"], excludeFiles ["readme.md"], excludeDirectories [".stack-work"]]
+
+        context "Actions" $ do
+           it "should create a list with just one Action"$ do
+                parseOptions (emptyParams, drop 1 commandOneArg) >>= Just . actions . fst
+               `shouldBe` Just [textAction ["arquivoAlterado!"]]
+
+           it "should create a list with several Actions"$ do
+                parseOptions (emptyParams, drop 1 command) >>= Just . actions . fst
+               `shouldBe` Just [cmdAction ["dir"], textAction ["arquivoAlterado!"]]
+
+    context "Parameters Parser Utils" $ do
+      it "takeOptions should return section from String" $ do
           takeOptions command
           `shouldBe` (["C:\\Desenv\\"])
+
+      it "keyMatch should find the correct value from command map" $ do
+          keyMatch "--ed" [(["--ed", "--exclude-directories"], excludeDirectories)] >>= \x -> Just $ x [".stack-work"]
+          `shouldBe` Just (excludeDirectories [".stack-work"])
+
+      it "keyMatch should find the correct value using the alternative option name" $ do
+          keyMatch "--exclude-directories" [(["--ed", "--exclude-directories"], excludeDirectories)] >>= \x -> Just $ x [".stack-work"]
+          `shouldBe` Just (excludeDirectories [".stack-work"])
+
+      it "KeyMatch should return nothing when command does not exist" $ do
+          keyMatch "-xxy" [(["--ed", "--exclude-directories"], excludeDirectories)] >>= \x -> Just $ x [".stack-work"]
+          `shouldBe` Nothing
