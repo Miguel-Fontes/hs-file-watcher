@@ -26,7 +26,7 @@ test = hspec $ do
   describe "Modulo Arquivo" $ do
     context "Filters" $ do
       it "Filter by extension returns only .hs files" $ do
-        applyFilters [onlyExtension "hs", noPoints] filesData
+        applyFilters [onlyExtensions ["hs"], noPoints] filesData
 
         `shouldBe` ([Arquivo {nome = "file.hs", dir = "src", modificado = "21/05/2015", isDirectory = False}
                     ,Arquivo {nome = "d.hs", dir = "src", modificado = "21/05/2015", isDirectory = False}
@@ -47,6 +47,6 @@ test = hspec $ do
                        ,Arquivo {nome = "d.hs", dir = "src", modificado = "21/05/2015", isDirectory = False}])
 
       it "should exclude a file by its name" $ do
-        applyFilters ([excludeFile "d.hs", onlyExtension "hs"]) filesData
+        applyFilters ([excludeFiles ["d.hs"], onlyExtensions ["hs"]]) filesData
         `shouldBe` ([Arquivo {nome = "file.hs", dir = "src", modificado="21/05/2015", isDirectory = False}
                     ,Arquivo {nome = "directorytoexclude", dir = ".", modificado = "a", isDirectory = True}])
