@@ -38,7 +38,7 @@ parseFile x = case takeWhile (/='\\') (reverse x) of
 
 validateParameters :: Parameters -> Either String Parameters
 validateParameters p
-    | actions p == [] = Left "Não foram definidas acões!"
+    | null (actions p) = Left "Não foram definidas acões!"
     | directory p == "" = Left "Diretorio não definido!"
     | otherwise = Right p
 
