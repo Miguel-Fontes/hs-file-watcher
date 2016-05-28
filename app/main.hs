@@ -20,5 +20,5 @@ main = do
                   else return $ parseParameters args
 
     case params of
-        Left msg -> print msg
+        Left msg -> putStrLn msg
         Right p -> watch (filters p) (directory p) (actions p) 3000000

@@ -17,15 +17,17 @@ watch filters dir actions delay = do
                      then fmap (++ "\\") getCurrentDirectory
                      else return dir
 
+    putStrLn ("-> Monitorando o diretório " ++ directory ++ ".")
+    putStrLn "-> Pressione CTRL+C à qualquer momento para interrompeter a execução.....\n"
+
     lista <- listaArquivos filters directory
 
-    print directory
     watchFiles filters directory lista actions delay
 
 watchFiles :: [Filter] -> FilePath  -> [Arquivo] -> [Action] -> Int -> IO()
 watchFiles filters dir ultLista actions delay = do
     threadDelay delay
-    print "-- Iteracao -----------------------------------------------------------------------------"
+    putStrLn "-- Iteracao -----------------------------------------------------------------------------"
 
     peek  "--> ultLista" ultLista
     lista <- listaArquivos filters dir >>= peek "--> Lista"
@@ -56,6 +58,6 @@ recurseSubdirectories filters = ioFoldr' step []
 
 peek :: String -> [Arquivo] -> IO [Arquivo]
 peek name fl = do
-    when (name /= "") $ print name
+    when (name /= "") $ putStrLn name
     print fl
     return fl
