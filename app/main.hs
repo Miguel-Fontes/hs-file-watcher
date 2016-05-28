@@ -19,10 +19,8 @@ main = do
 
     let dir = directory params
         fs = filters params
-        act = head (actions params)
+        act = actions params
 
     lista <- listaArquivos fs dir
     watch fs dir lista act 3000000
     print "Complete!"
-
-    -- Build ---> ghc -o ./../dist/hs-file-watcher main -odir ./../dist/ -hidir ./../dist/

@@ -8,15 +8,17 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [x] Separar funcionalidades em módulos
 - [x] Definir parâmetros de entrada e seus formatos
 - [x] Refatorar módulo parâmetros
-- [ ] Organização e Integração dos testes da aplicação à ferramenta de build
+- [x] Organização e Integração dos testes da aplicação e integração à ferramenta de build
 - [x] Recursão em todos os subdiretórios do diretório indicado
 - [x] Ação parametrizável quando alterações forem detectadas
 - [x] Permitir que mais de uma ação seja executada por hook
-- [ ] Criar 'chave' para ativar e desativar log de execução no console
-- [x] Criar script de build para projeto
-- [ ] Permitir que usuário não insira um diretório e, para este caso, considerar que o diretório a ser monitorado é o atual
-- [ ] Retornar mensagem descritiva quando algum problema ocorrer durante o processamento do input
 - [x] Construir action para executar um programa externo
+- [x] Criar script de build para projeto
+- [ ] Criar 'chave' para ativar e desativar log de execução no console
+- [ ] Permitir que usuário não insira um diretório e, para este caso, considerar que o diretório a ser monitorado é o atual
+- [ ] Retornar mensagem descritiva no caso de erros durante o processamento do input
+- [x] Escrever testes faltantes
+
 
 ## Log
 - 20/05/2016: Função core do aplicativo (identificar alterações em arquivos) concluída.
@@ -36,6 +38,15 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
     - Configurada a ferramenta de Build stack no projeto.
     - Organização dos testes e módulo Action em diretórios específicos
     - stack build e stack exec podem ser utilizados para construir e testar a aplicação
+- 27/05/2015:
+    - Removida limitação na execução de apenas uma ação. Diversas ações podem ser definidas e serão executadas sequencialmente quando mudanças forem identificadas.
+    - Modularizada aplicação em modulos library, executavel e tests via cabal.
+    - Executar stack tests agora testa a aplicação utilizando os módulos de teste definidos.
+    - Modulos de teste devem exportar uma função test que executa todos os testes.
+    - Cada módulo de teste deve importado em test\spec e executado no chain do bloco do.
+- 28/05/2015:
+    - Finalização de construção e organização do módulo de testes e adição de testes.
+
 
 ## Exemplos
     --print -> imprime o texto indicado quando alterações forem identificadas

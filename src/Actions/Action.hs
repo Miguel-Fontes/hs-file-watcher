@@ -9,6 +9,9 @@ type Tag= String
 instance Show Action where
     show (Action (tag, _)) = tag
 
+instance Eq Action where
+    Action (t1, _) == Action (t2, _) = t1 == t2
+
 exec :: Action -> (() -> IO())
 exec (Action (_, a)) = a
 

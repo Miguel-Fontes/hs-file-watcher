@@ -10,18 +10,25 @@ import Data.Maybe (isNothing, isJust, fromJust)
 parseParameters :: [String] -> Maybe (Parameters, [String])
 parseParameters xs = parseDir (emptyParams, xs) >>= parseOptions
 
+parseDir :: (Parameters, [String]) -> Maybe (Parameters, [String])
+parseDir (p, x:xs)
+    | head x == '-' = Just (p { directory = "." }, x:xs)
+    | otherwise = Just (p { directory = formatDir x }, xs)
+
+formatDir :: String -> String
+formatDir x = case takeWhile (=='\\') (reverse x) of
+                  [] -> x ++ "\\"
+                  (_:_) -> x
+
 parseOptions :: (Parameters, [String]) -> Maybe (Parameters, [String])
 parseOptions (p, []) = Just (p, [])
 parseOptions (p, x:xs)
-    | isJust f = parseOptions (p{filters = fromJust f options : filters p }, drop (length options) xs)
     | isJust a = parseOptions (p{actions = fromJust a options : actions p }, drop (length options) xs)
+    | isJust f = parseOptions (p{filters = fromJust f options : filters p }, drop (length options) xs)
     | otherwise = Nothing
-    where f = keyMatch x filtersList
-          a = keyMatch x actionsList
+    where a = keyMatch x actionsList
+          f = keyMatch x filtersList
           options = takeOptions xs
-
-parseDir :: (Parameters, [String]) -> Maybe (Parameters, [String])
-parseDir (p, x:xs) = Just (p { directory = formatDir x }, xs)
 
 parseFile :: String -> (String, String)
 parseFile x = case takeWhile (/='\\') (reverse x) of
@@ -30,11 +37,6 @@ parseFile x = case takeWhile (/='\\') (reverse x) of
 
 takeOptions :: [String] -> [String]
 takeOptions = takeWhile ((/='-') . head)
-
-formatDir :: String -> String
-formatDir x = case takeWhile (=='\\') (reverse x) of
-                  [] -> x ++ "\\"
-                  (_:_) -> x
 
 keyMatch :: String -> [([String], [String] -> a)] -> Maybe ([String] -> a)
 keyMatch _ [] = Nothing
