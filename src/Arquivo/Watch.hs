@@ -11,8 +11,19 @@ import Arquivo.Filter
 import Arquivo.Arquivo
 import Utils.IOFold
 
-watch :: [Filter] -> FilePath  -> [Arquivo] -> [Action] -> Int -> IO()
-watch filters dir ultLista actions delay = do
+watch :: [Filter] -> FilePath  -> [Action] -> Int -> IO()
+watch filters dir actions delay = do
+    directory <- if dir == "."
+                     then fmap (++ "\\") getCurrentDirectory
+                     else return dir
+
+    lista <- listaArquivos filters directory
+
+    print directory
+    watchFiles filters directory lista actions delay
+
+watchFiles :: [Filter] -> FilePath  -> [Arquivo] -> [Action] -> Int -> IO()
+watchFiles filters dir ultLista actions delay = do
     threadDelay delay
     print "-- Iteracao -----------------------------------------------------------------------------"
 
@@ -20,8 +31,8 @@ watch filters dir ultLista actions delay = do
     lista <- listaArquivos filters dir >>= peek "--> Lista"
 
     if lista /= ultLista
-        then mapM_ (`exec` ()) actions >> watch filters dir lista actions delay
-        else watch filters dir lista actions delay
+        then mapM_ (`exec` ()) actions >> watchFiles filters dir lista actions delay
+        else watchFiles filters dir lista actions delay
 
 listaArquivos :: [Filter] -> FilePath -> IO [Arquivo]
 listaArquivos filters dir = do

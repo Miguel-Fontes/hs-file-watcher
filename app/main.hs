@@ -1,10 +1,11 @@
+import System.Environment
+import Data.Maybe
+
+import Parameters.Parameters
+import Parameters.Parsers
 import Actions.Action
 import Arquivo.Watch
 import Arquivo.Filter
-import System.Environment
-import Parameters.Parameters
-import Parameters.Parsers
-import Data.Maybe
 
 main :: IO()
 main = do
@@ -20,7 +21,4 @@ main = do
 
     case params of
         Left msg -> print msg
-        Right p -> do
-            lista <- listaArquivos (filters p) (directory p)
-            watch (filters p) (directory p) lista (actions p) 3000000
-            print "Complete!"
+        Right p -> watch (filters p) (directory p) (actions p) 3000000

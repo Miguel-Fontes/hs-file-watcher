@@ -19,7 +19,7 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [x] Escrever testes faltantes
 - [ ] Criar 'chave' para ativar e desativar log de execução no console
 - [ ] Retornar mensagem formatada com as opções disponíveis para uso no caso de erros
-- [ ] Permitir que usuário não insira um diretório e, para este caso, considerar que o diretório a ser monitorado é o atual
+- [x] Permitir que usuário não insira um diretório e, para este caso, considerar que o diretório a ser monitorado é o atual
 
 
 ## Log
@@ -48,6 +48,8 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
     - Cada módulo de teste deve importado em test\spec e executado no chain do bloco do.
 - 28/05/2015:
     - Finalização de construção e organização do módulo de testes e adição de testes.
+    - Adição de mensagens indicando que o input é inválido para os casos em que nenhuma ação é definida e onde a opção informada não existe.
+    - Usuário poderá omitir o diretório e definir apenas os filtros e ações - o diretório corrente será utilizado como alvo.
 
 
 ## Exemplos
