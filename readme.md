@@ -22,7 +22,7 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [ ] Retornar mensagem formatada com as opções disponíveis para uso no caso de erros
 - [x] Executar ações na ordem em que são informadas no input
 - [ ] Melhorar texto descrevendo os arquivos alterados impresso no console via action de impressão de arquivos alterados
-- [ ] Incluir controle de possíveis exceções na execução de programas externos via actions
+- [x] Incluir controle de possíveis exceções na execução de programas externos via actions <- CURRENT
 - [ ] Criar / mover dispatcher de filtros e actions para seus respectivos módulos (atualmente, há uma lista em Parameters.Parsers.hs)
 
 ## Log

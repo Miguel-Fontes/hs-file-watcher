@@ -1,6 +1,8 @@
 module Actions.Action where
 
 import System.Process
+import Control.Exception
+
 import Arquivo.Arquivo
 
 newtype Action a = Action (Tag,  [a] -> IO())
@@ -20,7 +22,11 @@ textAction :: [String] -> Action a
 textAction str = Action ("textAction: " ++ show str, \_ -> print (unwords str))
 
 cmdAction :: [String] -> Action a
-cmdAction cmd = Action ("cmdAction: " ++ show cmd, \_ -> callCommand (concat cmd))
+cmdAction cmd = Action ("cmdAction: " ++ show cmd, \_ -> catch (callCommand (concat cmd))
+                                                               (\e -> putStrLn $ "\n-> Erro ao executar o comando \'"
+                                                                      ++ concat cmd ++ "\':\n"
+                                                                      ++ show (e :: IOException)
+                                                                      ++ "\nPressione CTRL+C para interromper a execução..."))
 
 printChangedAction :: [String] -> Action Arquivo
 printChangedAction _ = Action ("printChangedAction", mapM_ print)
