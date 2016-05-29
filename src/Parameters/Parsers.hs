@@ -24,7 +24,7 @@ formatDir x = case takeWhile (=='\\') (reverse x) of
                   (_:_) -> x
 
 parseOptions :: (Parameters, [String]) -> Either String Parameters
-parseOptions (p, []) = Right p
+parseOptions (p, []) = Right $ p { actions = reverse (actions p), filters = reverse (filters p) }
 parseOptions (p, x:xs)
     | isJust a = parseOptions (p{actions = fromJust a options : actions p }, drop (length options) xs)
     | isJust f = parseOptions (p{filters = fromJust f options : filters p }, drop (length options) xs)

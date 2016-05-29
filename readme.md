@@ -20,10 +20,10 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [x] Permitir que usuário não insira um diretório e, para este caso, considerar que o diretório a ser monitorado é o atual
 - [ ] Implementar log de execução
 - [ ] Retornar mensagem formatada com as opções disponíveis para uso no caso de erros
-- [ ] Executar ações na ordem em que são informadas no input
+- [x] Executar ações na ordem em que são informadas no input
 - [ ] Melhorar texto descrevendo os arquivos alterados impresso no console via action de impressão de arquivos alterados
 - [ ] Incluir controle de possíveis exceções na execução de programas externos via actions
-
+- [ ] Criar / mover dispatcher de filtros e actions para seus respectivos módulos (atualmente, há uma lista em Parameters.Parsers.hs)
 
 ## Log
 - 20/05/2016: Função core do aplicativo (identificar alterações em arquivos) concluída.

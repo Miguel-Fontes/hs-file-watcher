@@ -58,7 +58,7 @@ test = hspec $ do
 
            it "should create a list with several filterss" $ do
                parseOptions (emptyParams, drop 1 command) >>= Right . filters
-               `shouldBe` Right [onlyExtensions ["hs"], excludeFiles ["readme.md"], excludeDirectories [".stack-work"]]
+               `shouldBe` Right [excludeDirectories [".stack-work"], excludeFiles ["readme.md"], onlyExtensions ["hs"]]
 
         context "Actions" $ do
            it "should create a list with just one Action"$ do
@@ -67,7 +67,7 @@ test = hspec $ do
 
            it "should create a list with several Actions"$ do
                 parseOptions (emptyParams, drop 1 command) >>= Right . actions
-               `shouldBe` Right [cmdAction ["dir"], textAction ["arquivoAlterado!"]]
+               `shouldBe` Right [textAction ["arquivoAlterado!"], cmdAction ["dir"]]
 
     context "Parameters Parser Utils" $ do
       it "takeOptions should return section from String" $ do
