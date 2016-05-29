@@ -54,6 +54,9 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
     - Adição de mensagens indicando que o input é inválido para os casos em que nenhuma ação é definida e onde a opção informada não existe.
     - Usuário poderá omitir o diretório e definir apenas os filtros e ações - o diretório corrente será utilizado como alvo.
     - Alterado o tipo Action para que este receba os arquivos que sofreram alterações, possibilitando ações especificamente sobre eles.
+- 29/05/2015:
+    - Inversão da ordem dos campos filter e actions dos parâmetros para que eles representem a ordem que as opções foram inputadas.
+    - Adição de um módulo para testes de Actions.
 
 
 ## Exemplos
