@@ -4,7 +4,6 @@ import Test.Hspec
 import Test.QuickCheck
 
 import Actions.Action
-import Actions.Arquivos
 
 test :: IO ()
 test = hspec $ do

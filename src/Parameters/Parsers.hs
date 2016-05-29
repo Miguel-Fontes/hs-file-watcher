@@ -4,7 +4,6 @@ import Parameters.Parameters
 import Arquivo.Filter
 import Arquivo.Arquivo
 import Actions.Action
-import Actions.Arquivos
 
 import Data.List
 import Data.Maybe (isNothing, isJust, fromJust)

@@ -21,3 +21,6 @@ textAction str = Action ("textAction: " ++ show str, \_ -> print (unwords str))
 
 cmdAction :: [String] -> Action a
 cmdAction cmd = Action ("cmdAction: " ++ show cmd, \_ -> callCommand (concat cmd))
+
+printChangedAction :: [String] -> Action Arquivo
+printChangedAction _ = Action ("printChangedAction", mapM_ print)
