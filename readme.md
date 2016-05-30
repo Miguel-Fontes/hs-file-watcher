@@ -58,7 +58,8 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
     - Inversão da ordem dos campos filter e actions dos parâmetros para que eles representem a ordem que as opções foram inputadas.
     - Adição de um módulo para testes de Actions.
     - Adicionado tratamento para interceptar exceções na execução de comandos externos, exibicão de uma mensagem informativa e permitir a continuidade da execução da aplicação.
-
+- 30/05/2015:
+    - Implementação inicial do texto de ajuda a ser exibido via opção --help ou no caso de algum erro de parsing. O código inicial está funcional mas precisa ser refatorado.
 
 ## Exemplos
     --print -> imprime o texto indicado quando alterações forem identificadas
