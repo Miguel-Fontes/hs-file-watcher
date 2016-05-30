@@ -10,8 +10,13 @@ import Data.List
 import Data.Maybe (isNothing, isJust, fromJust)
 
 parseParameters :: [String] -> Either String Parameters
-parseParameters xs = parseDir (emptyParams, xs) >>= parseOptions >>= validateParameters
+parseParameters xs = parseHelp (emptyParams, xs) >>= parseDir >>= parseOptions >>= validateParameters
 
+
+parseHelp :: (Parameters, [String]) -> Either String (Parameters, [String])
+parseHelp (p, xs) = if "--help" `elem` xs
+                        then Left ""
+                        else Right (p, xs)
 
 parseDir :: (Parameters, [String]) -> Either String (Parameters, [String])
 parseDir (p, x:xs)

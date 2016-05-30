@@ -21,7 +21,6 @@ details :: Layout -> [OptionGroup] -> String
 details l = concat . foldr step []
     where step x acc = (identation 2 ++ groupName x ++ "\n" ++ concat (mapGroup (optionsDetail l) x) ++ "\n") : acc
 
-
 optionsDetail :: Layout -> Option -> String
 optionsDetail _ (FixedText x) = ""
 optionsDetail _ (Single x d) = x ++ " - " ++ d ++ "\n"

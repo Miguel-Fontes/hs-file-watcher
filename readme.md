@@ -18,12 +18,13 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [x] Remover a lista vazia da tupla de saída da função Parameters.Parsers.parseParameters
 - [x] Escrever testes faltantes
 - [x] Permitir que usuário não insira um diretório e, para este caso, considerar que o diretório a ser monitorado é o atual
-- [ ] Implementar log de execução
-- [ ] Retornar mensagem formatada com as opções disponíveis para uso no caso de erros
+- [x] Retornar mensagem formatada com as opções disponíveis para uso no caso de erros
 - [x] Executar ações na ordem em que são informadas no input
-- [ ] Melhorar texto descrevendo os arquivos alterados impresso no console via action de impressão de arquivos alterados
 - [x] Incluir controle de possíveis exceções na execução de programas externos via actions <- CURRENT
-- [ ] Criar / mover dispatcher de filtros e actions para seus respectivos módulos (atualmente, há uma lista em Parameters.Parsers.hs)
+- [x] Criar / mover dispatcher de filtros e actions para seus respectivos módulos (atualmente, há uma lista em Parameters.Parsers.hs)
+- [x] Criar comando --help para exibição da ajuda quando desejado pelo usuário
+- [ ] Implementar log de execução
+- [ ] Melhorar texto descrevendo os arquivos alterados impresso no console via action de impressão de arquivos alterados
 - [ ] Refatorar testes que utilizam as listas de Actions e Filters
 
 ## Log
@@ -62,6 +63,8 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - 30/05/2015:
     - Implementação inicial do texto de ajuda a ser exibido via opção --help ou no caso de algum erro de parsing. O código inicial está funcional mas precisa ser refatorado.
     - Executada generalização do layout para printing no console através de tipo Layout. Refatorado código do módulo Help.Printer.
+    - Criado módulo Comando contendo tipos para definição de um comando. Este tipo é o ponto de partida para os parsers e para construção de mensagem de ajuda.
+    - Adicionada função para identificar se foi inputado --help pelo usuário e, neste caso, imprimir o texto de ajuda.
 
 ## Exemplos
     --print -> imprime o texto indicado quando alterações forem identificadas
