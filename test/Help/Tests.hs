@@ -4,6 +4,7 @@ import Test.Hspec
 import Test.QuickCheck
 
 import Help.Comando
+import Help.Printer
 
 test :: IO ()
 test = hspec $ do
@@ -35,6 +36,15 @@ test = hspec $ do
                                                  ,OptionGroup "Filters"  filtersList
                                                  ,OptionGroup "Actions"  actionsList]
                 `shouldBe` "hs-file-wacher [Caminho] [--ed] [--ef] [--exts] [--p] [--pc] [--cmd]"
+      context "Printer" $ do
+            it "should print the description of all commands " $ do
+                printHelp hsCommand
+                `shouldBe` "meh"
+
+
+hsCommand = Comando "hs-file-wacher" [OptionGroup "Título" [FixedText "[Caminho] "]
+                                     ,OptionGroup "Filters"  filtersList
+                                     ,OptionGroup "Actions"  actionsList]
 
 filtersList :: [Option]
 filtersList = [Extended ["--ed", "--exclude-directories"]

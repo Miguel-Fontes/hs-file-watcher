@@ -34,6 +34,7 @@ library
                      , Parameters.Parsers
                      , Parameters.Parameters
                      , Help.Comando
+                     , Help.Printer
                      , Utils.IOFold
                      , Utils.String
                      , Actions.Action
