@@ -5,8 +5,11 @@ import Data.List
 import Help.Comando
 import Utils.String
 
-printHelp :: Comando -> String
-printHelp c = "\n" ++ identation 1 ++ "Uso: " ++  usage c ++ details (grupos c)
+data Layout = TwoColumns (Int, Int)
+larguras (TwoColumns l) = l
+
+printHelp :: Layout -> Comando -> String
+printHelp l c = "\n" ++ identation 1 ++ "Uso: " ++  usage c ++ details l (grupos c)
 
 usage :: Comando -> String
 usage c = comando c ++ " " ++ rtrim (concatMap (concat . mapGroup parseOption) (grupos c))
@@ -14,28 +17,31 @@ usage c = comando c ++ " " ++ rtrim (concatMap (concat . mapGroup parseOption) (
           parseOption (Single x _) = "[" ++ x ++ "] "
           parseOption (Extended xs _) =  "[" ++ head xs ++ "] "
 
-details :: [OptionGroup] -> String
-details = concat . foldr step []
-    where step x acc = (identation 2 ++ nome x ++ "\n" ++ concat (mapGroup optionsDetail x) ++ "\n") : acc
+details :: Layout -> [OptionGroup] -> String
+details l = concat . foldr step []
+    where step x acc = (identation 2 ++ nome x ++ "\n" ++ concat (mapGroup (optionsDetail l) x) ++ "\n") : acc
 
-optionsDetail :: Option -> String
-optionsDetail (FixedText x) = ""
-optionsDetail (Single x d) = x ++ " - " ++ d ++ "\n"
-optionsDetail (Extended xs d) = formatColumn 3 38 (unwords xs) ++ formatColumn 0 90 d ++ "\n"
 
-formatColumn :: Int -> Int -> String -> String
-formatColumn i x s
-    | length s + length (identation i) > x = breakline x (identation i ++ s)
-    | otherwise = rpad x (identation i ++ s)
+optionsDetail :: Layout -> Option -> String
+optionsDetail _ (FixedText x) = ""
+optionsDetail _ (Single x d) = x ++ " - " ++ d ++ "\n"
+optionsDetail (TwoColumns (a, b)) (Extended xs d) =
+    formatColumn 0 3 a (unwords xs) ++ formatColumn (a + length (identation 3)) 0 b d ++ "\n"
 
-breakline :: Int -> String -> String
-breakline 0 _ = " Erro "
-breakline x s
-    | s !! x == ' ' = take x s ++ "\n" ++ margin 38 ++ rpad 90 (drop (x + 1) s)
-    | otherwise = breakline (x-1) s
+formatColumn :: Int -> Int -> Int -> String -> String
+formatColumn m i col s
+    | length s > col = breakline m i col s
+    | otherwise = identation i ++ rpad col s
 
-identation :: Int -> String
-identation x = replicate (x * 2) ' '
+breakline :: Int -> Int -> Int -> String -> String
+breakline _ i 0 _ = " Erro "
+breakline m i col s = breaklineIter m i col s
+    where breaklineIter m i x s
+              | length s <= col = s
+              | s !! x == ' ' = take x s ++ "\n" ++ margin m
+                                         ++ identation i
+                                         ++ breakline m i col (rpad col (drop (x + 1) s))
+              | otherwise = breakline m i (x-1) s
 
 -- REMOVER ISSO AQUI PLZ
 hsCommand1 = Comando "hs-file-wacher" [OptionGroup "" [FixedText "[Caminho] "]
