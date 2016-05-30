@@ -17,13 +17,13 @@ optionsDetail (Extended xs d) = formatColumn 3 38 (unwords xs) ++ formatColumn 0
 
 formatColumn :: Int -> Int -> String -> String
 formatColumn i x s
-    | length s + length (identation i) > x = breakline x s
+    | length s + length (identation i) > x = breakline x (identation i ++ s)
     | otherwise = rpad x (identation i ++ s)
 
 breakline :: Int -> String -> String
 breakline 0 _ = " Erro "
 breakline x s
-    | s !! x == ' ' = take x s ++ "\n" ++ lpad 100 (drop x s)
+    | s !! x == ' ' = take x s ++ "\n" ++ margin 38 ++ rpad 90 (drop (x + 1) s)
     | otherwise = breakline (x-1) s
 
 identation :: Int -> String
@@ -35,6 +35,8 @@ rpad x s = s ++ replicate (x - length s) ' '
 lpad :: Int -> String -> String
 lpad x s = replicate (x - length s) ' ' ++ s
 
+margin :: Int -> String
+margin x = replicate x ' '
 
 
 hsCommand1 = Comando "hs-file-wacher" [OptionGroup "" [FixedText "[Caminho] "]
