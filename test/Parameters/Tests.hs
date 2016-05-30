@@ -75,15 +75,15 @@ test = hspec $ do
           `shouldBe` (["C:\\Desenv\\"])
 
       it "keyMatch should find the correct value from command map" $ do
-          keyMatch "--ed" [(["--ed", "--exclude-directories"], excludeDirectories)] >>= \x -> Just $ x [".stack-work"]
+          keyMatch "--ed" filtersList >>= \x -> Just $ x [".stack-work"]
           `shouldBe` Just (excludeDirectories [".stack-work"])
 
       it "keyMatch should find the correct value using the alternative option name" $ do
-          keyMatch "--exclude-directories" [(["--ed", "--exclude-directories"], excludeDirectories)] >>= \x -> Just $ x [".stack-work"]
+          keyMatch "--exclude-directories" filtersList >>= \x -> Just $ x [".stack-work"]
           `shouldBe` Just (excludeDirectories [".stack-work"])
 
       it "KeyMatch should return nothing when command does not exist" $ do
-          keyMatch "-xxy" [(["--ed", "--exclude-directories"], excludeDirectories)] >>= \x -> Just $ x [".stack-work"]
+          keyMatch "-xxy" filtersList >>= \x -> Just $ x [".stack-work"]
           `shouldBe` Nothing
 
     context "Errors" $ do

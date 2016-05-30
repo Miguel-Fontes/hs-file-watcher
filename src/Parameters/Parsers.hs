@@ -4,13 +4,19 @@ import Parameters.Parameters
 import Arquivo.Filter
 import Arquivo.Arquivo
 import Actions.Action
+import Comando.Comando
 
 import Data.List
 import Data.Maybe (isNothing, isJust, fromJust)
 
 parseParameters :: [String] -> Either String Parameters
-parseParameters xs = parseDir (emptyParams, xs) >>= parseOptions >>= validateParameters
+parseParameters xs = parseHelp (emptyParams, xs) >>= parseDir >>= parseOptions >>= validateParameters
 
+
+parseHelp :: (Parameters, [String]) -> Either String (Parameters, [String])
+parseHelp (p, xs) = if "--help" `elem` xs
+                        then Left ""
+                        else Right (p, xs)
 
 parseDir :: (Parameters, [String]) -> Either String (Parameters, [String])
 parseDir (p, x:xs)
@@ -46,16 +52,7 @@ validateParameters p
 takeOptions :: [String] -> [String]
 takeOptions = takeWhile ((/='-') . head)
 
-keyMatch :: String -> [([String], [String] -> a)] -> Maybe ([String] -> a)
+keyMatch :: String -> [(Option, [String] -> a)] -> Maybe ([String] -> a)
 keyMatch _ [] = Nothing
-keyMatch op (f:fs) = if op `elem` fst f then Just (snd f) else keyMatch op fs
+keyMatch op (f:fs) = if op `elem` getKey (fst f) then Just (snd f) else keyMatch op fs
 
-filtersList :: [([String], [String] -> Filter)]
-filtersList = [(["--ed", "--exclude-directories"], excludeDirectories)
-              ,(["--ef", "--exclude-files"], excludeFiles)
-              ,(["--exts", "--only-extensions"], onlyExtensions)]
-
-actionsList :: [([String], [String] -> Action Arquivo)]
-actionsList = [(["--p", "--print"], textAction)
-              ,(["--pc", "--print-changed"], printChangedAction)
-              ,(["--cmd", "--command"], cmdAction)]
