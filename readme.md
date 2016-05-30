@@ -24,6 +24,7 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [ ] Melhorar texto descrevendo os arquivos alterados impresso no console via action de impressão de arquivos alterados
 - [x] Incluir controle de possíveis exceções na execução de programas externos via actions <- CURRENT
 - [ ] Criar / mover dispatcher de filtros e actions para seus respectivos módulos (atualmente, há uma lista em Parameters.Parsers.hs)
+- [ ] Refatorar testes que utilizam as listas de Actions e Filters
 
 ## Log
 - 20/05/2016: Função core do aplicativo (identificar alterações em arquivos) concluída.
@@ -60,6 +61,7 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
     - Adicionado tratamento para interceptar exceções na execução de comandos externos, exibicão de uma mensagem informativa e permitir a continuidade da execução da aplicação.
 - 30/05/2015:
     - Implementação inicial do texto de ajuda a ser exibido via opção --help ou no caso de algum erro de parsing. O código inicial está funcional mas precisa ser refatorado.
+    - Executada generalização do layout para printing no console através de tipo Layout. Refatorado código do módulo Help.Printer.
 
 ## Exemplos
     --print -> imprime o texto indicado quando alterações forem identificadas

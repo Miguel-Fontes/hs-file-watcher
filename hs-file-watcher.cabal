@@ -33,7 +33,8 @@ library
                      , Arquivo.Watch
                      , Parameters.Parsers
                      , Parameters.Parameters
-                     , Help.Comando
+                     , Comando.Comando
+                     , Comando.FileWatcher
                      , Help.Printer
                      , Utils.IOFold
                      , Utils.String

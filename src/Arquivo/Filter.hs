@@ -1,6 +1,7 @@
 module Arquivo.Filter where
 
 import Arquivo.Arquivo
+import qualified Comando.Comando as C
 
 type Tag = String
 
@@ -42,3 +43,14 @@ onlyExtensions exts = Filter ("onlyExtensions: " ++ show exts
 excludeDirectories :: [Directory] -> Filter
 excludeDirectories directories = Filter ("excludeDirectories: " ++ show directories
                                         ,\x -> all (\z -> not (nome x == z && isDirectory x)) directories)
+
+filtersList :: [(C.Option, ([String] -> Filter))]
+filtersList = [(C.Extended ["--ed", "--exclude-directories"]
+                            "Exclui os diretórios listado do monitoramento. Os argumentos de entrada são os nomes dos   diretórios. Ex: -ed .stack-work dist log"
+                            , excludeDirectories)
+              ,(C.Extended ["--ef", "--exclude-files"]
+                            "Exclui os arquivos indicados do monitoramento. Os argumentos de entrada são os nomes dos   arquivos. Ex: --ef readme.md myprj.cabal log.txt"
+                            , excludeFiles)
+              ,(C.Extended ["--exts", "--only-extensions"]
+                            "Limita o monitoramento à apenas às extensões listadas. Os argumentos de entrada são as    extensões. Ex: --exts hs"
+                            , onlyExtensions)]

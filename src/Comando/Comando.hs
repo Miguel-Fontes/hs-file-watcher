@@ -1,7 +1,6 @@
-module Help.Comando where
+module Comando.Comando where
 
 import Data.List
-import Utils.String(rtrim)
 
 data Comando = Comando {
     comando :: String,
@@ -12,7 +11,7 @@ instance Show Comando where
     show (Comando c o) = c ++ " " ++ show o
 
 data OptionGroup = OptionGroup {
-    nome :: String,
+    groupName :: String,
     options :: [Option]
 }
 
@@ -31,3 +30,6 @@ instance Show Option where
     show (Single c d) = c ++ " - " ++ d
     show (Extended xs c) = show xs ++ " - " ++ c
 
+getKey (Single k _) = [k]
+getKey (Extended k _) = k
+getKey (FixedText _ ) = []
