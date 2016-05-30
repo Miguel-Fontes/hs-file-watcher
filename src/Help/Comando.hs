@@ -31,8 +31,3 @@ instance Show Option where
     show (Single c d) = c ++ " - " ++ d
     show (Extended xs c) = show xs ++ " - " ++ c
 
-usage :: Comando -> String
-usage c = comando c ++ " " ++ rtrim (concatMap (concat . mapGroup parseOption) (grupos c))
-    where parseOption (FixedText x) = x
-          parseOption (Single x _) = "[" ++ x ++ "] "
-          parseOption (Extended xs _) =  "[" ++ head xs ++ "] "

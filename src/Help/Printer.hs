@@ -1,10 +1,18 @@
 module Help.Printer where
 
-import Help.Comando
 import Data.List
+
+import Help.Comando
+import Utils.String
 
 printHelp :: Comando -> String
 printHelp c = "\n" ++ identation 1 ++ "Uso: " ++  usage c ++ details (grupos c)
+
+usage :: Comando -> String
+usage c = comando c ++ " " ++ rtrim (concatMap (concat . mapGroup parseOption) (grupos c))
+    where parseOption (FixedText x) = x
+          parseOption (Single x _) = "[" ++ x ++ "] "
+          parseOption (Extended xs _) =  "[" ++ head xs ++ "] "
 
 details :: [OptionGroup] -> String
 details = concat . foldr step []
@@ -29,16 +37,7 @@ breakline x s
 identation :: Int -> String
 identation x = replicate (x * 2) ' '
 
-rpad :: Int -> String -> String
-rpad x s = s ++ replicate (x - length s) ' '
-
-lpad :: Int -> String -> String
-lpad x s = replicate (x - length s) ' ' ++ s
-
-margin :: Int -> String
-margin x = replicate x ' '
-
-
+-- REMOVER ISSO AQUI PLZ
 hsCommand1 = Comando "hs-file-wacher" [OptionGroup "" [FixedText "[Caminho] "]
                                      ,OptionGroup "Filters"  filtersList1
                                      ,OptionGroup "Actions"  actionsList1]

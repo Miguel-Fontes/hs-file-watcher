@@ -38,8 +38,9 @@ test = hspec $ do
                 `shouldBe` "hs-file-wacher [Caminho] [--ed] [--ef] [--exts] [--p] [--pc] [--cmd]"
       context "Printer" $ do
             it "should print the description of all commands " $ do
-                printHelp hsCommand
-                `shouldBe` "meh"
+                --printHelp hsCommand
+                --`shouldBe` "meh"
+                pendingWith "Refatoring"
 
 
 hsCommand = Comando "hs-file-wacher" [OptionGroup "Título" [FixedText "[Caminho] "]
