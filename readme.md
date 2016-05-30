@@ -14,11 +14,18 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [x] Permitir que mais de uma ação seja executada por hook
 - [x] Construir action para executar um programa externo
 - [x] Criar script de build para projeto
-- [ ] Criar 'chave' para ativar e desativar log de execução no console
-- [ ] Permitir que usuário não insira um diretório e, para este caso, considerar que o diretório a ser monitorado é o atual
-- [ ] Retornar mensagem descritiva no caso de erros durante o processamento do input
+- [x] Retornar mensagem descritiva no caso de erros durante o processamento do input
+- [x] Remover a lista vazia da tupla de saída da função Parameters.Parsers.parseParameters
 - [x] Escrever testes faltantes
-
+- [x] Permitir que usuário não insira um diretório e, para este caso, considerar que o diretório a ser monitorado é o atual
+- [x] Retornar mensagem formatada com as opções disponíveis para uso no caso de erros
+- [x] Executar ações na ordem em que são informadas no input
+- [x] Incluir controle de possíveis exceções na execução de programas externos via actions <- CURRENT
+- [x] Criar / mover dispatcher de filtros e actions para seus respectivos módulos (atualmente, há uma lista em Parameters.Parsers.hs)
+- [x] Criar comando --help para exibição da ajuda quando desejado pelo usuário
+- [ ] Implementar log de execução
+- [ ] Melhorar texto descrevendo os arquivos alterados impresso no console via action de impressão de arquivos alterados
+- [ ] Refatorar testes que utilizam as listas de Actions e Filters
 
 ## Log
 - 20/05/2016: Função core do aplicativo (identificar alterações em arquivos) concluída.
@@ -46,7 +53,18 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
     - Cada módulo de teste deve importado em test\spec e executado no chain do bloco do.
 - 28/05/2015:
     - Finalização de construção e organização do módulo de testes e adição de testes.
-
+    - Adição de mensagens indicando que o input é inválido para os casos em que nenhuma ação é definida e onde a opção informada não existe.
+    - Usuário poderá omitir o diretório e definir apenas os filtros e ações - o diretório corrente será utilizado como alvo.
+    - Alterado o tipo Action para que este receba os arquivos que sofreram alterações, possibilitando ações especificamente sobre eles.
+- 29/05/2015:
+    - Inversão da ordem dos campos filter e actions dos parâmetros para que eles representem a ordem que as opções foram inputadas.
+    - Adição de um módulo para testes de Actions.
+    - Adicionado tratamento para interceptar exceções na execução de comandos externos, exibicão de uma mensagem informativa e permitir a continuidade da execução da aplicação.
+- 30/05/2015:
+    - Implementação inicial do texto de ajuda a ser exibido via opção --help ou no caso de algum erro de parsing. O código inicial está funcional mas precisa ser refatorado.
+    - Executada generalização do layout para printing no console através de tipo Layout. Refatorado código do módulo Help.Printer.
+    - Criado módulo Comando contendo tipos para definição de um comando. Este tipo é o ponto de partida para os parsers e para construção de mensagem de ajuda.
+    - Adicionada função para identificar se foi inputado --help pelo usuário e, neste caso, imprimir o texto de ajuda.
 
 ## Exemplos
     --print -> imprime o texto indicado quando alterações forem identificadas

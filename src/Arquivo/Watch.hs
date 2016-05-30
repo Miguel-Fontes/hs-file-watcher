@@ -11,17 +11,31 @@ import Arquivo.Filter
 import Arquivo.Arquivo
 import Utils.IOFold
 
-watch :: [Filter] -> FilePath  -> [Arquivo] -> [Action] -> Int -> IO()
-watch filters dir ultLista actions delay = do
-    threadDelay delay
-    print "-- Iteracao -----------------------------------------------------------------------------"
+watch :: [Filter] -> FilePath  -> [Action Arquivo] -> Int -> IO()
+watch filters dir actions delay = do
+    directory <- if dir == "."
+                     then fmap (++ "\\") getCurrentDirectory
+                     else return dir
 
-    peek  "--> ultLista" ultLista
-    lista <- listaArquivos filters dir >>= peek "--> Lista"
+    putStrLn ("-> Monitorando o diretório " ++ directory ++ ".")
+    putStrLn "-> Pressione CTRL+C à qualquer momento para interrompeter a execução.....\n"
+
+    lista <- listaArquivos filters directory
+
+    watchFiles filters directory lista actions delay
+
+watchFiles :: [Filter] -> FilePath  -> [Arquivo] -> [Action Arquivo] -> Int -> IO()
+watchFiles filters dir ultLista actions delay = do
+    threadDelay delay
+
+    --peek  "--> ultLista" ultLista
+    lista <- listaArquivos filters dir -- >>= peek "--> Lista"
 
     if lista /= ultLista
-        then mapM_ (`exec` ()) actions >> watch filters dir lista actions delay
-        else watch filters dir lista actions delay
+        then putStrLn "-> Mudanças identificadas..." >>
+             mapM_ (`exec` (ultLista \\ lista)) actions >>
+             watchFiles filters dir lista actions delay
+        else watchFiles filters dir lista actions delay
 
 listaArquivos :: [Filter] -> FilePath -> IO [Arquivo]
 listaArquivos filters dir = do
@@ -45,6 +59,6 @@ recurseSubdirectories filters = ioFoldr' step []
 
 peek :: String -> [Arquivo] -> IO [Arquivo]
 peek name fl = do
-    when (name /= "") $ print name
+    when (name /= "") $ putStrLn name
     print fl
     return fl
