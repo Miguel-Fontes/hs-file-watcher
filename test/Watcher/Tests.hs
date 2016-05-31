@@ -1,11 +1,12 @@
-module Arquivo.Tests (test) where
+module Watcher.Tests (test) where
 
 import Test.Hspec
 import Test.QuickCheck
 
-import Arquivo.Filter
-import Arquivo.Arquivo
-import Arquivo.Watch
+import Watcher.Filter
+import Watcher.Arquivo
+import Watcher.Watch
+import Watcher.Action
 
 filesData =  [Arquivo {nome = "file.hs", dir = "src", modificado = "21/05/2015", isDirectory = False}
              ,Arquivo {nome = "filetoexclude.txt", dir = "src", modificado="21/05/2015", isDirectory = False}
@@ -50,3 +51,17 @@ test = hspec $ do
         applyFilters ([excludeFiles ["d.hs"], onlyExtensions ["hs"]]) filesData
         `shouldBe` ([Arquivo {nome = "file.hs", dir = "src", modificado="21/05/2015", isDirectory = False}
                     ,Arquivo {nome = "directorytoexclude", dir = ".", modificado = "a", isDirectory = True}])
+      context "Tag" $ do
+        it "should be tagged with onlyExtensions hs" $ do
+           show $ onlyExtensions ["hs"]
+           `shouldBe` "onlyExtensions: [\"hs\"]"
+
+        it "should be tagged with noPoints" $ do
+           show noPoints
+           `shouldBe` "noPoints"
+
+    context "Actions" $ do
+      context "Tag" $ do
+        it "should be tagged with tag printChangedAction" $ do
+            show $ printChangedAction []
+            `shouldBe` "printChangedAction"

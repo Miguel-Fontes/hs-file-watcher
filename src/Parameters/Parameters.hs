@@ -1,8 +1,11 @@
-module Parameters.Parameters where
+module Parameters.Parameters (
+      emptyParams
+    , Parameters (directory, actions, filters)
+) where
 
-import Arquivo.Arquivo
-import Arquivo.Filter
-import Actions.Action
+import Watcher.Arquivo
+import Watcher.Filter
+import Watcher.Action
 
 data Parameters = Parameters { directory :: FilePath
                               ,actions   :: [Action Arquivo]

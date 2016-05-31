@@ -2,9 +2,9 @@ import System.Environment
 
 import Parameters.Parameters
 import Parameters.Parsers
-import Arquivo.Watch
+import Watcher.Watch
+import Watcher.FileWatcher
 import Help.Printer
-import Comando.FileWatcher
 
 main :: IO()
 main = do

@@ -1,9 +1,16 @@
-module Actions.Action where
+module Watcher.Action (
+    exec
+  , textAction
+  , cmdAction
+  , printChangedAction
+  , actionsList
+  , Action
+  ) where
 
 import System.Process
 import Control.Exception
 
-import Arquivo.Arquivo
+import Watcher.Arquivo
 import Comando.Comando
 
 newtype Action a = Action (Tag,  [a] -> IO())
@@ -35,11 +42,11 @@ printChangedAction _ = Action ("printChangedAction", mapM_ print)
 
 actionsList :: [(Option, [String] -> Action Arquivo)]
 actionsList = [(Extended ["--p", "--print"]
-                         "Imprime o texto indicado quando mudanças forem identificadas. O argumento de entrada é o texto a ser impresso Ex: hs-file-watcher --p \"Alterações!\""
+                         "Imprime o texto indicado quando mudanças forem identificadas. O argumento de entrada é o texto a ser impresso. Ex: hs-file-watcher --p \"Alterações!\""
                          , textAction)
               ,(Extended ["--pc", "--print-changed"]
-                         "Exibe lista de arquivos que sofreram alterações. Comando não contém argumentos de entrada Ex: hs-file-watcher --pc"
+                         "Exibe lista de arquivos que sofreram alterações. Comando não contém argumentos de entrada.           Ex: hs-file-watcher --pc"
                          , printChangedAction)
               ,(Extended ["--cmd", "--command"]
-                         "Executa um conjunto de comandos a cada modificação detectada. Os argumentos de entrada são os comandos à executar separados por espaços (Usar \" para comandos que contenham espaços). Ex: hs-file-watcher --cmd \"stack build\" \"stack install\" "
+                         "Executa um conjunto de comandos a cada modificação detectada. Os argumentos de entrada são os comandos à executar separados por espaços (Usar \" para comandos que contenham espaços).    Ex: hs-file-watcher --cmd \"stack build\" \"stack install\" "
                          , cmdAction)]
