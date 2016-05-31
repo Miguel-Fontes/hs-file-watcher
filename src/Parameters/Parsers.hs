@@ -2,7 +2,6 @@ module Parameters.Parsers where
 
 import Parameters.Parameters
 import Watcher.Filter
-import Watcher.Arquivo
 import Watcher.Action
 import Comando.Comando
 
