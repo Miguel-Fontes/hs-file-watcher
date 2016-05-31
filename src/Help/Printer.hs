@@ -12,11 +12,11 @@ printHelp :: Layout -> Comando -> String
 printHelp l c = "\n" ++ identation 1 ++ "Uso: " ++  usage c ++ details l (grupos c)
 
 usage :: Comando -> String
-usage c = comando c ++ " " ++ rtrim (concatMap (concat . mapGroup parseOption) (grupos c)) ++ "\n\n"
+usage c = comando c ++ " " ++ rtrim (concatMap (enbracket . concat . mapGroup parseOption) (grupos c)) ++ "\n\n"
     where parseOption (FixedText x) = x
-          parseOption (Single x _) = "[" ++ x ++ "] "
-          parseOption (Extended xs _) =  "[" ++ head xs ++ "] "
-          enbracket x = "[" ++ x "]"
+          parseOption (Single x _) = "[" ++ x ++ "]"
+          parseOption (Extended xs _) =  "[" ++ head xs ++ "]"
+          enbracket x = "[" ++ x ++ "] "
 
 details :: Layout -> [OptionGroup] -> String
 details l = concat . foldr step []

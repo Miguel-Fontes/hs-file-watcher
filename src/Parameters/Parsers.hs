@@ -12,7 +12,8 @@ import Data.Maybe (isNothing, isJust, fromJust)
 parseParameters :: [String] -> Either String Parameters
 parseParameters xs = parseHelp (emptyParams, xs) >>= parseDir >>= parseOptions >>= validateParameters
 
-
+-- Levemente Tricky essa implementação. No caso de erro, o texto de ajuda sempre é impresso pelo módulo Main,
+-- portanto, não preciso me preocupar em chamar o módulo de impressão de ajuda aqui, retornando apenas um Left.
 parseHelp :: (Parameters, [String]) -> Either String (Parameters, [String])
 parseHelp (p, xs) = if "--help" `elem` xs
                         then Left ""

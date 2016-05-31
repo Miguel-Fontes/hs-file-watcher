@@ -20,22 +20,22 @@ test = hspec $ do
             it "Should return a formatted string with command usage information" $ do
                 usage $ Comando "hs-file-wacher" [OptionGroup "Teste" [Single "--ef" ""]
                                                  ,OptionGroup "Teste" [Single "--exts" ""]]
-                `shouldBe` "hs-file-wacher [--ef] [--exts]\n\n"
+                `shouldBe` "hs-file-wacher [[--ef]] [[--exts]]\n\n"
           context "Extended Option" $ do
             it "Should return a formatted string with command usage information" $ do
                 usage $ Comando "hs-file-wacher" [OptionGroup "Teste" [Extended ["--ef", "--exclude-files"] ""]                                         ,OptionGroup "Teste" [Extended ["--exts", "--only-extensions"] ""]]
-                `shouldBe` "hs-file-wacher [--ef] [--exts]\n\n"
+                `shouldBe` "hs-file-wacher [[--ef]] [[--exts]]\n\n"
           context "Mixed Option" $ do
             it "Should return a formatted string with command usage information" $ do
                 usage $ Comando "hs-file-wacher" [OptionGroup "Teste" [Extended ["--ef", "--exclude-files"] ""]
                                                  ,OptionGroup "Teste"  [Single "--exts" ""]]
-                `shouldBe` "hs-file-wacher [--ef] [--exts]\n\n"
+                `shouldBe` "hs-file-wacher [[--ef]] [[--exts]]\n\n"
           context "Several Options" $ do
             it "Should return a formatted string with command usage information" $ do
-                usage $ Comando "hs-file-wacher" [OptionGroup "Título" [FixedText "[Caminho] "]
+                usage $ Comando "hs-file-wacher" [OptionGroup "Título" [FixedText "[Caminho]"]
                                                  ,OptionGroup "Filters"  filtersList
                                                  ,OptionGroup "Actions"  actionsList]
-                `shouldBe` "hs-file-wacher [Caminho] [--ed] [--ef] [--exts] [--p] [--pc] [--cmd]\n\n"
+                `shouldBe` "hs-file-wacher [[Caminho]] [[--ed][--ef][--exts]] [[--p][--pc][--cmd]]\n\n"
       context "Printer" $ do
             it "should print the description of all commands " $ do
                 --printHelp (TwoColumns (40,100)) hsCommand

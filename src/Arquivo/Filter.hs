@@ -63,5 +63,5 @@ filtersList = [(C.Extended ["--ed", "--exclude-directories"]
                             "Exclui os arquivos listados do monitoramento. Os argumentos de entrada são os nomes dos arquivos separados por espaços. Ex: hs-file-watcher --ef readme.md myprj.cabal log.txt"
                             , excludeFiles)
               ,(C.Extended ["--exts", "--only-extensions"]
-                            "Limita o monitoramento aos arquivos com as extensões listadas. Os argumentos de entrada são as extensões seaparadas por espaços. Ex: hs-file-watcher --exts hs md cabal"
+                            "Limita o monitoramento aos arquivos com as extensões listadas. Os argumentos de entrada são as extensões separadas por espaços. Ex: hs-file-watcher --exts hs md cabal"
                             , onlyExtensions)]
