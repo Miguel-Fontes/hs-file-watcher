@@ -20,7 +20,7 @@ usage c = comando c ++ " " ++ rtrim (concatMap (enbracket . concat . mapGroup pa
 
 details :: Layout -> [OptionGroup] -> String
 details l = concat . foldr step []
-    where step x acc = (identation 2 ++ groupName x ++ "\n" ++ concat (mapGroup (optionsDetail l) x) ++ "\n") : acc
+    where step x acc = (identation 2 ++ groupName x ++ "\n" ++ concat (mapGroup (optionsDetail l) x)) : acc
 
 optionsDetail :: Layout -> Option -> String
 optionsDetail _ (FixedText x) = ""
