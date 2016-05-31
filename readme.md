@@ -25,6 +25,7 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 - [x] Criar comando --help para exibição da ajuda quando desejado pelo usuário
 - [ ] Implementar log de execução
 - [ ] Melhorar texto descrevendo os arquivos alterados impressos no console via action --pc
+- [ ] Avaliar possibilidades de generalização do módulo Parameters.Parsers Parsers
 
 ## Log
 - 20/05/2016: Função core do aplicativo (identificar alterações em arquivos) concluída.
@@ -68,7 +69,7 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
     - Novos testes para o módulo Utils.String
     - Definição de funções exportadas de cada módulo. Merece revisão futura, principalmente no caso de tipos e construtores exportados.
     - Incluso separador de grupo no texto de help
-    - Correções em textos
+    - Correções em textos de descrição de opções
 
 
 ## Exemplos
