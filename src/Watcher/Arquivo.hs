@@ -1,4 +1,4 @@
-module Watch.Arquivo where
+module Watcher.Arquivo where
 
 data Arquivo = Arquivo {
     nome :: String,

@@ -28,14 +28,14 @@ executable hs-file-watcher
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Watch.Filter
-                     , Watch.Arquivo
-                     , Watch.Watch
-                     , Watch.Action
+  exposed-modules:     Watcher.Filter
+                     , Watcher.Action
+                     , Watcher.Arquivo
+                     , Watcher.FileWatcher
                      , Parameters.Parsers
                      , Parameters.Parameters
+                     , Watcher.Watch
                      , Comando.Comando
-                     , Comando.FileWatcher
                      , Help.Printer
                      , Utils.IOFold
                      , Utils.String
@@ -53,7 +53,7 @@ test-suite hs-file-watcher-test
                      , hspec
                      , QuickCheck
                      , hs-file-watcher
-  other-modules:       Watch.Tests
+  other-modules:       Watcher.Tests
                      , Parameters.Tests
                      , Help.Tests
                      , Utils.String.Tests

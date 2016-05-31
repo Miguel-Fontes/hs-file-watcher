@@ -4,10 +4,10 @@ import Test.Hspec
 import Test.QuickCheck
 import Data.Maybe
 
-import Watch.Watch
-import Watch.Filter
-import Watch.Arquivo
-import Watch.Action
+import Watcher.Watch
+import Watcher.Filter
+import Watcher.Arquivo
+import Watcher.Action
 import Parameters.Parameters
 import Parameters.Parsers
 

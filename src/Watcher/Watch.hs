@@ -1,4 +1,4 @@
-module Watch.Watch (watch) where
+module Watcher.Watch (watch) where
 
 import Data.Time
 import System.Directory
@@ -6,9 +6,9 @@ import Control.Monad
 import Data.List
 import Control.Concurrent (threadDelay)
 
-import Watch.Action
-import Watch.Filter
-import Watch.Arquivo
+import Watcher.Action
+import Watcher.Filter
+import Watcher.Arquivo
 import Utils.IOFold
 
 watch :: [Filter] -> FilePath  -> [Action Arquivo] -> Int -> IO()

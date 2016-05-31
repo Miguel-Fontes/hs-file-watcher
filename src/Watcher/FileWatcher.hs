@@ -1,8 +1,8 @@
-module Comando.FileWatcher where
+module Watcher.FileWatcher where
 
 import Comando.Comando
-import Watch.Action (actionsList)
-import Watch.Filter (filtersList)
+import Watcher.Action (actionsList)
+import Watcher.Filter (filtersList)
 
 fileWatcher = Comando "hs-file-wacher" [OptionGroup "Gerais" generalOptions
                                        ,OptionGroup "Filters" (getOptions filtersList)

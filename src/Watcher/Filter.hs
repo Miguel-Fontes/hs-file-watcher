@@ -1,4 +1,4 @@
-module Watch.Filter (
+module Watcher.Filter (
       Filter
     , run
     , applyFilters
@@ -11,7 +11,7 @@ module Watch.Filter (
     , filtersList
 ) where
 
-import Watch.Arquivo
+import Watcher.Arquivo
 import qualified Comando.Comando as C
 
 type Tag = String

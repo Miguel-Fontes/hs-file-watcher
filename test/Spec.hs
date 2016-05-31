@@ -1,4 +1,4 @@
-import Watch.Tests as A
+import Watcher.Tests as A
 import Parameters.Tests as P
 import Help.Tests as H
 import Utils.String.Tests as US

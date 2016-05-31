@@ -3,9 +3,9 @@ module Parameters.Parameters (
     , Parameters (directory, actions, filters)
 ) where
 
-import Watch.Arquivo
-import Watch.Filter
-import Watch.Action
+import Watcher.Arquivo
+import Watcher.Filter
+import Watcher.Action
 
 data Parameters = Parameters { directory :: FilePath
                               ,actions   :: [Action Arquivo]
