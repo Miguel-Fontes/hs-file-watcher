@@ -4,12 +4,12 @@ import Test.Hspec
 import Test.QuickCheck
 import Data.Maybe
 
-import Arquivo.Watch
-import Arquivo.Filter
-import Arquivo.Arquivo
+import Watch.Watch
+import Watch.Filter
+import Watch.Arquivo
+import Watch.Action
 import Parameters.Parameters
 import Parameters.Parsers
-import Actions.Action
 
 filesData =  [Arquivo {nome = "file.hs", dir = "src", modificado = "21/05/2015", isDirectory = False}
              ,Arquivo {nome = "filetoexclude.txt", dir = ".", modificado="21/05/2015", isDirectory = False}

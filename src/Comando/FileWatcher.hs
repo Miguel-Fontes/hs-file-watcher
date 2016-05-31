@@ -1,8 +1,8 @@
 module Comando.FileWatcher where
 
 import Comando.Comando
-import Actions.Action (actionsList)
-import Arquivo.Filter (filtersList)
+import Watch.Action (actionsList)
+import Watch.Filter (filtersList)
 
 fileWatcher = Comando "hs-file-wacher" [OptionGroup "Gerais" generalOptions
                                        ,OptionGroup "Filters" (getOptions filtersList)

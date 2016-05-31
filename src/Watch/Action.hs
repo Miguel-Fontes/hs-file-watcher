@@ -1,4 +1,4 @@
-module Actions.Action (
+module Watch.Action (
     exec
   , textAction
   , cmdAction
@@ -10,7 +10,7 @@ module Actions.Action (
 import System.Process
 import Control.Exception
 
-import Arquivo.Arquivo
+import Watch.Arquivo
 import Comando.Comando
 
 newtype Action a = Action (Tag,  [a] -> IO())

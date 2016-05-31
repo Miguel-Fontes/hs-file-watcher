@@ -1,9 +1,9 @@
 module Parameters.Parsers where
 
 import Parameters.Parameters
-import Arquivo.Filter
-import Arquivo.Arquivo
-import Actions.Action
+import Watch.Filter
+import Watch.Arquivo
+import Watch.Action
 import Comando.Comando
 
 import Data.List

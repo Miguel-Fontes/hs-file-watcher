@@ -28,9 +28,10 @@ executable hs-file-watcher
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Arquivo.Filter
-                     , Arquivo.Arquivo
-                     , Arquivo.Watch
+  exposed-modules:     Watch.Filter
+                     , Watch.Arquivo
+                     , Watch.Watch
+                     , Watch.Action
                      , Parameters.Parsers
                      , Parameters.Parameters
                      , Comando.Comando
@@ -38,7 +39,6 @@ library
                      , Help.Printer
                      , Utils.IOFold
                      , Utils.String
-                     , Actions.Action
   build-depends:       base >= 4.7 && < 5
                      , process >=1.2 && <1.3
                      , time >=1.5 && <1.6
@@ -53,9 +53,8 @@ test-suite hs-file-watcher-test
                      , hspec
                      , QuickCheck
                      , hs-file-watcher
-  other-modules:       Arquivo.Tests
+  other-modules:       Watch.Tests
                      , Parameters.Tests
-                     , Actions.Tests
                      , Help.Tests
                      , Utils.String.Tests
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N

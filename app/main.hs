@@ -2,7 +2,7 @@ import System.Environment
 
 import Parameters.Parameters
 import Parameters.Parsers
-import Arquivo.Watch
+import Watch.Watch
 import Help.Printer
 import Comando.FileWatcher
 

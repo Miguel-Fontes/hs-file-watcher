@@ -1,11 +1,12 @@
-module Arquivo.Tests (test) where
+module Watch.Tests (test) where
 
 import Test.Hspec
 import Test.QuickCheck
 
-import Arquivo.Filter
-import Arquivo.Arquivo
-import Arquivo.Watch
+import Watch.Filter
+import Watch.Arquivo
+import Watch.Watch
+import Watch.Action
 
 filesData =  [Arquivo {nome = "file.hs", dir = "src", modificado = "21/05/2015", isDirectory = False}
              ,Arquivo {nome = "filetoexclude.txt", dir = "src", modificado="21/05/2015", isDirectory = False}
@@ -58,3 +59,9 @@ test = hspec $ do
       it "should be tagged with noPoints" $ do
          show noPoints
          `shouldBe` "noPoints"
+
+    context "Actions" $ do
+      context "Tag" $ do
+        it "should be tagged with tag printChangedAction" $ do
+            show $ printChangedAction []
+            `shouldBe` "printChangedAction"
