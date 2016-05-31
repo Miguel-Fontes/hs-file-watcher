@@ -1,4 +1,4 @@
-module Arquivo.Watch where
+module Arquivo.Watch (watch) where
 
 import Data.Time
 import System.Directory

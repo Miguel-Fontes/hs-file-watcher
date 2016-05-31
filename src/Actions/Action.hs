@@ -1,4 +1,11 @@
-module Actions.Action where
+module Actions.Action (
+    exec
+  , textAction
+  , cmdAction
+  , printChangedAction
+  , actionsList
+  , Action
+  ) where
 
 import System.Process
 import Control.Exception

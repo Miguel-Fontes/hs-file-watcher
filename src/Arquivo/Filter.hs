@@ -1,4 +1,15 @@
-module Arquivo.Filter where
+module Arquivo.Filter (
+      Filter
+    , run
+    , applyFilters
+    , applyFilter
+    , customFilter
+    , noPoints
+    , excludeFiles
+    , onlyExtensions
+    , excludeDirectories
+    , filtersList
+) where
 
 import Arquivo.Arquivo
 import qualified Comando.Comando as C

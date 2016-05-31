@@ -1,4 +1,7 @@
-module Parameters.Parameters where
+module Parameters.Parameters (
+      emptyParams
+    , Parameters (directory, actions, filters)
+) where
 
 import Arquivo.Arquivo
 import Arquivo.Filter
