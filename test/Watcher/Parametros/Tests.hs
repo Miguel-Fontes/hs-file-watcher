@@ -10,7 +10,7 @@ import Watcher.Action
 import Watcher.Parametros
 import Watcher.Arquivo
 
-import Parameters.Parsers
+import Input.Parsers
 
 command =
     ["C:\\Desenv\\",  "--print", "arquivoAlterado!", "--cmd", "dir", "--ed", ".stack-work", "--ef", "readme.md", "--only-extensions", "hs"]
