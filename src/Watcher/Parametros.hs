@@ -4,11 +4,11 @@ import Watcher.Arquivo
 import Watcher.Filter
 import Watcher.Action
 
-import Comando.Comando
+import Command.Command
 
 import Data.List
 import Data.Maybe (isNothing, isJust, fromJust)
-import Parameters.Parsers
+import Input.Parsers
 
 data Parametros = Parametros { directory :: FilePath
                               ,actions   :: [Action Arquivo]

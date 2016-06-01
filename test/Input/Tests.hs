@@ -1,10 +1,10 @@
-module Parameters.Tests (test) where
+module Input.Tests (test) where
 
 import Test.Hspec
 import Test.QuickCheck
 import Data.Maybe
 
-import Parameters.Parsers
+import Input.Parsers
 
 command =
     ["C:\\Desenv\\",  "--print", "arquivoAlterado!", "--cmd", "dir", "--ed", ".stack-work", "--ef", "readme.md", "--only-extensions", "hs"]

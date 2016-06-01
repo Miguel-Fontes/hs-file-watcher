@@ -11,7 +11,7 @@ import System.Process
 import Control.Exception
 
 import Watcher.Arquivo
-import Comando.Comando
+import Command.Command
 
 newtype Action a = Action (Tag,  [a] -> IO())
 

@@ -1,6 +1,6 @@
 import System.Environment
 
-import Parameters.Parsers
+import Input.Parsers
 import Watcher.Parametros
 import Watcher.Watch
 import Watcher.FileWatcher

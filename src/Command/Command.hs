@@ -1,14 +1,14 @@
-module Comando.Comando where
+module Command.Command where
 
 import Data.List
 
-data Comando = Comando {
-    comando :: String,
+data Command = Command {
+    cmd :: String,
     grupos :: [OptionGroup]
 }
 
-instance Show Comando where
-    show (Comando c o) = c ++ " " ++ show o
+instance Show Command where
+    show (Command c o) = c ++ " " ++ show o
 
 data OptionGroup = OptionGroup {
     groupName :: String,

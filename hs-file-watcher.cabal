@@ -34,8 +34,8 @@ library
                      , Watcher.FileWatcher
                      , Watcher.Parametros
                      , Watcher.Watch
-                     , Parameters.Parsers
-                     , Comando.Comando
+                     , Input.Parsers
+                     , Command.Command
                      , Help.Printer
                      , Utils.IOFold
                      , Utils.String

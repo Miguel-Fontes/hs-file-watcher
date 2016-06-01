@@ -12,7 +12,7 @@ module Watcher.Filter (
 ) where
 
 import Watcher.Arquivo
-import qualified Comando.Comando as C
+import qualified Command.Command as C
 
 type Tag = String
 

@@ -1,4 +1,4 @@
-module Parameters.Parsers where
+module Input.Parsers where
 
 class Parameters a where
     addOption :: (Parameters a) => a -> String -> [String] -> Either String a
