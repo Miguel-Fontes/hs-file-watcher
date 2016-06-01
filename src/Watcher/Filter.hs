@@ -49,7 +49,7 @@ excludeFiles names = Filter ("excludeFiles: " ++ show names
 
 onlyExtensions :: [String] -> Filter
 onlyExtensions exts = Filter ("onlyExtensions: " ++ show exts
-                           ,\x -> all (\ext -> isDirectory x || ext == reverse (takeWhile (/= '.') (reverse (nome x))))exts)
+                             ,\x -> any (\ext -> isDirectory x || ext == reverse (takeWhile (/= '.') (reverse (nome x)))) exts)
 
 excludeDirectories :: [Directory] -> Filter
 excludeDirectories directories = Filter ("excludeDirectories: " ++ show directories

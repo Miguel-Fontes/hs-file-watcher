@@ -33,6 +33,14 @@ test = hspec $ do
                     ,Arquivo {nome = "d.hs", dir = "src", modificado = "21/05/2015", isDirectory = False}
                     ,Arquivo {nome = "directorytoexclude", dir = ".", modificado = "a", isDirectory = True}])
 
+      it "Filter by extension shoul return hs and md files" $ do
+        applyFilters [onlyExtensions ["hs", "txt"], noPoints] filesData
+
+        `shouldBe` ([Arquivo {nome = "file.hs", dir = "src", modificado = "21/05/2015", isDirectory = False}
+                    ,Arquivo {nome = "filetoexclude.txt", dir = "src", modificado="21/05/2015", isDirectory = False}
+                    ,Arquivo {nome = "d.hs", dir = "src", modificado = "21/05/2015", isDirectory = False}
+                    ,Arquivo {nome = "directorytoexclude", dir = ".", modificado = "a", isDirectory = True}])
+
       it "Should create and apply a excludeDirectories Filter" $ do
           applyFilters [excludeDirectories ["directorytoexclude", "a"]] filesData
           `shouldBe` ([Arquivo {nome = "file.hs", dir = "src", modificado = "21/05/2015", isDirectory = False}
