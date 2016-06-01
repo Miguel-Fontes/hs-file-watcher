@@ -28,8 +28,7 @@ watchFiles :: [Filter] -> FilePath  -> [Arquivo] -> [Action Arquivo] -> Int -> I
 watchFiles filters dir ultLista actions delay = do
     threadDelay delay
 
-    --peek  "--> ultLista" ultLista
-    lista <- listaArquivos filters dir -- >>= peek "--> Lista"
+    lista <- listaArquivos filters dir
 
     if lista /= ultLista
         then putStrLn "-> Mudanças identificadas..." >>
