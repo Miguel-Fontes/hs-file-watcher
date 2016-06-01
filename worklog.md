@@ -20,9 +20,12 @@
 - [x] Incluir controle de possíveis exceções na execução de programas externos via actions <- CURRENT
 - [x] Criar / mover dispatcher de filtros e actions para seus respectivos módulos (atualmente, há uma lista em Parameters.Parsers.hs)
 - [x] Criar comando --help para exibição da ajuda quando desejado pelo usuário
+- [x] Generalização do módulo Parameters.Parsers Parsers
 - [ ] Implementar log de execução
 - [ ] Melhorar texto descrevendo os arquivos alterados impressos no console via action --pc
-- [ ] Avaliar possibilidades de generalização do módulo Parameters.Parsers Parsers
+- [ ] Avaliar / Refatorar Módulo Comando.Comando
+- [ ] Avaliar / Refatorar Módulo Help.Printer
+- [ ] Separar código Watcher da Library CLI via Cabal
 
 ## Log
 - 20/05/2016: Função core do aplicativo (identificar alterações em arquivos) concluída.
@@ -67,3 +70,4 @@
     - Definição de funções exportadas de cada módulo. Merece revisão futura, principalmente no caso de tipos e construtores exportados.
     - Incluso separador de grupo no texto de help
     - Correções em textos de descrição de opções
+    - Adicionado typeclass Parameters no módulo Parametros.Parsers. Desta forma, é necessário criar um módulo parâmetros cliente como instância deste typeclass. Isto permite que este módulo seja generalizado e reutilizado posteriormente.

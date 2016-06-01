@@ -32,9 +32,9 @@ library
                      , Watcher.Action
                      , Watcher.Arquivo
                      , Watcher.FileWatcher
-                     , Parameters.Parsers
-                     , Parameters.Parameters
+                     , Watcher.Parametros
                      , Watcher.Watch
+                     , Parameters.Parsers
                      , Comando.Comando
                      , Help.Printer
                      , Utils.IOFold
