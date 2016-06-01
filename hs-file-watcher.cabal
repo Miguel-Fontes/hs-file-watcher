@@ -33,6 +33,7 @@ library
                      , Watcher.Arquivo
                      , Watcher.FileWatcher
                      , Watcher.Parametros
+                     , Watcher.Modificadores
                      , Watcher.Watch
                      , Input.Parsers
                      , Command.Command

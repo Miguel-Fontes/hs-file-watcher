@@ -3,22 +3,24 @@ module Watcher.Parametros where
 import Watcher.Arquivo
 import Watcher.Filter
 import Watcher.Action
-
+import Watcher.Modificadores
+import Input.Parsers
 import Command.Command
 
 import Data.List
 import Data.Maybe (isNothing, isJust, fromJust)
-import Input.Parsers
+
 
 data Parametros = Parametros { directory :: FilePath
                               ,actions   :: [Action Arquivo]
-                              ,filters   :: [Filter] }
+                              ,filters   :: [Filter]
+                              ,delay     :: Int}
 
 instance Show Parametros where
-    show (Parametros d a f) = "Dir: " ++ d ++ " - Actions: " ++ show a ++  " - Filters: " ++ show f
+    show (Parametros d a f dl) = "Dir: " ++ d ++ " - Actions: " ++ show a ++  " - Filters: " ++ show f ++ " - Delay: " ++ show dl
 
 instance Eq Parametros where
-    Parametros d1 a1 f1 == Parametros d2 a2 f2 = d1 == d2 && a1 == a2 && f1 == f2
+    Parametros d1 a1 f1 dl1 == Parametros d2 a2 f2 dl2 = d1 == d2 && a1 == a2 && f1 == f2 && dl1 == dl2
 
 instance Parameters Parametros where
     firstOption = parseDir
@@ -26,14 +28,16 @@ instance Parameters Parametros where
     validate = validate'
 
 emptyParams :: Parametros
-emptyParams = Parametros {directory = "", actions = [], filters = []}
+emptyParams = Parametros {directory = "", actions = [], filters = [], delay = 3000000}
 
--- Rever implementação abaixo.
 addAction :: Parametros -> ([String] -> Action Arquivo) -> [String] -> Parametros
 addAction p a args = p { actions =  actions p ++ [a args] }
 
 addFilter :: Parametros -> ([String] -> Filter) -> [String] -> Parametros
 addFilter p f args = p { filters = filters p ++ [f args] }
+
+addModificador :: Parametros -> ([String] -> Int) -> [String] -> Parametros
+addModificador p f args = p { delay = (f args) * 1000000 }
 
 keyMatch :: String -> [(Option, [String] -> a)] -> Maybe ([String] -> a)
 keyMatch _ [] = Nothing
@@ -43,9 +47,11 @@ addOption' :: Parametros -> String -> [String] -> Either String Parametros
 addOption' p k ks
     | isJust a = Right $ addAction p (fromJust a) ks
     | isJust f = Right $ addFilter p (fromJust f) ks
+    | isJust m = Right $ addModificador p (fromJust m) ks
     | otherwise = Left ("O comando \'" ++ k ++ "\' nao existe!")
     where a = keyMatch k actionsList
           f = keyMatch k filtersList
+          m = keyMatch k modificadoresList
 
 validate' :: Parametros -> Either String Parametros
 validate' p

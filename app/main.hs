@@ -1,3 +1,5 @@
+module Main where
+
 import System.Environment
 
 import Input.Parsers
@@ -13,5 +15,4 @@ main = do
     case params of
         Left msg -> putStrLn msg >>
                     putStrLn (printHelp (TwoColumns (35,100)) fileWatcher)
-        Right p -> watch (filters p) (directory p) (actions p) 3000000
-
+        Right p -> watch (filters p) (directory p) (actions p) (delay p)
