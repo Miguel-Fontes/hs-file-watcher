@@ -12,7 +12,7 @@ module Watcher.Filter (
 ) where
 
 import Watcher.Arquivo
-import qualified Command.Command as C
+import Command.Command
 
 type Tag = String
 
@@ -55,13 +55,13 @@ excludeDirectories :: [Directory] -> Filter
 excludeDirectories directories = Filter ("excludeDirectories: " ++ show directories
                                         ,\x -> all (\z -> not (nome x == z && isDirectory x)) directories)
 
-filtersList :: [(C.Option, [String] -> Filter)]
-filtersList = [(C.Extended ["--ed", "--exclude-directories"]
+filtersList :: [(Option, [String] -> Filter)]
+filtersList = [(Extended ["--ed", "--exclude-directories"]
                             "Exclui os diretórios listados do monitoramento. Os argumentos de entrada são os nomes dos diretórios separados por espaços. Ex: hs-file-watcher --ed .stack-work dist log"
                             , excludeDirectories)
-              ,(C.Extended ["--ef", "--exclude-files"]
+              ,(Extended ["--ef", "--exclude-files"]
                             "Exclui os arquivos listados do monitoramento. Os argumentos de entrada são os nomes dos arquivos separados por espaços. Ex: hs-file-watcher --ef readme.md myprj.cabal log.txt"
                             , excludeFiles)
-              ,(C.Extended ["--exts", "--only-extensions"]
+              ,(Extended ["--exts", "--only-extensions"]
                             "Limita o monitoramento aos arquivos com as extensões listadas. Os argumentos de entrada são as extensões separadas por espaços. Ex: hs-file-watcher --exts hs md cabal"
                             , onlyExtensions)]
