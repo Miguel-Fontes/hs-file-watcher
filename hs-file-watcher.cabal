@@ -36,7 +36,7 @@ library
                      , Watcher.Modificadores
                      , Watcher.Watch
                      , Input.Parsers
-                     , Command.Command
+                     , Help.Command
                      , Help.Printer
                      , Utils.IOFold
                      , Utils.String

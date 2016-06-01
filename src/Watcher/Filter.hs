@@ -12,7 +12,7 @@ module Watcher.Filter (
 ) where
 
 import Watcher.Arquivo
-import Command.Command
+import Help.Command
 
 type Tag = String
 

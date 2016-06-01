@@ -1,6 +1,6 @@
 module Watcher.FileWatcher where
 
-import Command.Command
+import Help.Command
 import Watcher.Action (actionsList)
 import Watcher.Filter (filtersList)
 import Watcher.Modificadores (modificadoresList)

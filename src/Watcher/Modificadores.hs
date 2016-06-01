@@ -1,6 +1,6 @@
 module Watcher.Modificadores (delayM, modificadoresList) where
 
-import Command.Command
+import Help.Command
 
 delayM :: [String] -> Int
 delayM x = read (head x)

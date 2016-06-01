@@ -5,7 +5,7 @@ import Watcher.Filter
 import Watcher.Action
 import Watcher.Modificadores
 import Input.Parsers
-import Command.Command
+import Help.Command
 
 import Data.List
 import Data.Maybe (isNothing, isJust, fromJust)

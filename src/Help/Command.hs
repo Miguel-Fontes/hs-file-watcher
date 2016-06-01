@@ -1,4 +1,4 @@
-module Command.Command where
+module Help.Command where
 
 import Data.List
 

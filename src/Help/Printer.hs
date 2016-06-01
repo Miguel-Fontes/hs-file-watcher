@@ -2,7 +2,7 @@ module Help.Printer (printHelp, usage, Layout (TwoColumns)) where
 
 import Data.List
 
-import Command.Command
+import Help.Command
 import Utils.String
 
 data Layout = TwoColumns (Int, Int)

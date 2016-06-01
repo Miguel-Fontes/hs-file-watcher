@@ -3,7 +3,7 @@ module Help.Tests where
 import Test.Hspec
 import Test.QuickCheck
 
-import Command.Command
+import Help.Command
 import Help.Printer
 
 test :: IO ()
