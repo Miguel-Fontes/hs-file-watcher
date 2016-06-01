@@ -71,3 +71,5 @@
     - Incluso separador de grupo no texto de help
     - Correções em textos de descrição de opções
     - Adicionado typeclass Parameters no módulo Parametros.Parsers. Desta forma, é necessário criar um módulo parâmetros cliente como instância deste typeclass. Isto permite que este módulo seja generalizado e reutilizado posteriormente.
+ - 01/06/2016:
+    - Correção de bug no Filter onlyExtensions: estava utilizando all e não any. Com all, apenas arquivos que fossem de todas as extensões informadas seriam retornados, um predicado que talvez seja verdadeiro apenas para arquivos de Schrodinger.
