@@ -9,7 +9,7 @@ data Layout = TwoColumns (Int, Int)
 larguras (TwoColumns l) = l
 
 printHelp :: Layout -> Command -> String
-printHelp l c = "\n" ++ identation 1 ++ "Uso: " ++  usage c ++ details l (grupos c)
+printHelp l c = identation 1 ++ "Uso: " ++  usage c ++ details l (grupos c)
 
 usage :: Command -> String
 usage c = cmd c ++ " " ++ rtrim (concatMap (enbracket . concat . mapGroup parseOption) (grupos c)) ++ "\n\n"
