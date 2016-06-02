@@ -21,10 +21,10 @@
 - [x] Criar / mover dispatcher de filtros e actions para seus respectivos módulos (atualmente, há uma lista em Parameters.Parsers.hs)
 - [x] Criar comando --help para exibição da ajuda quando desejado pelo usuário
 - [x] Generalização do módulo Parameters.Parsers Parsers
+- [x] Melhorar texto descrevendo os arquivos alterados impressos no console via action --pc
+- [x] Avaliar / Refatorar Módulo Comando.Comando
+- [x] Avaliar / Refatorar Módulo Help.Printer
 - [ ] Implementar log de execução
-- [ ] Melhorar texto descrevendo os arquivos alterados impressos no console via action --pc
-- [ ] Avaliar / Refatorar Módulo Comando.Comando
-- [ ] Avaliar / Refatorar Módulo Help.Printer
 - [ ] Separar código Watcher da Library CLI via Cabal
 
 ## Log
@@ -73,3 +73,7 @@
     - Adicionado typeclass Parameters no módulo Parametros.Parsers. Desta forma, é necessário criar um módulo parâmetros cliente como instância deste typeclass. Isto permite que este módulo seja generalizado e reutilizado posteriormente.
  - 01/06/2016:
     - Correção de bug no Filter onlyExtensions: estava utilizando all e não any. Com all, apenas arquivos que fossem de todas as extensões informadas seriam retornados, um predicado que talvez seja verdadeiro apenas para arquivos de Schrodinger.
+    - Ajustes em nomes de módulos.
+    - Ajustes em texto impresso na ação --pc
+    - Adicionada opção --d --delay para parametrização da frequência de verificação de mudanças
+    - Módulo Command.Command tornou-se parte do módulo Help como Help.Command
