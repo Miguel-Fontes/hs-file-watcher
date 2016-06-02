@@ -28,14 +28,13 @@ watchFiles :: [Filter] -> FilePath  -> [Arquivo] -> [Action Arquivo] -> Int -> I
 watchFiles filters dir ultLista actions delay = do
     threadDelay delay
 
-    --peek  "--> ultLista" ultLista
-    lista <- listaArquivos filters dir -- >>= peek "--> Lista"
+    lista <- listaArquivos filters dir
 
-    if lista /= ultLista
-        then putStrLn "-> Mudanças identificadas..." >>
-             mapM_ (`exec` (ultLista \\ lista)) actions >>
-             watchFiles filters dir lista actions delay
-        else watchFiles filters dir lista actions delay
+    when (lista /= ultLista) $
+        putStrLn "-> Mudanças identificadas..." >>
+        mapM_ (`exec` (ultLista \\ lista)) actions
+
+    watchFiles filters dir lista actions delay
 
 listaArquivos :: [Filter] -> FilePath -> IO [Arquivo]
 listaArquivos filters dir = do

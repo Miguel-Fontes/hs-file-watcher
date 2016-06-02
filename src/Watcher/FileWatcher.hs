@@ -1,10 +1,12 @@
 module Watcher.FileWatcher where
 
-import Comando.Comando
+import Help.Command
 import Watcher.Action (actionsList)
 import Watcher.Filter (filtersList)
+import Watcher.Modificadores (modificadoresList)
 
-fileWatcher = Comando "hs-file-wacher" [OptionGroup "Gerais" generalOptions
+fileWatcher = Command "hs-file-wacher" [OptionGroup "Gerais" generalOptions
+                                       ,OptionGroup "Modificadores" (getOptions modificadoresList)
                                        ,OptionGroup "Filters" (getOptions filtersList)
                                        ,OptionGroup "Actions" (getOptions actionsList)]
     where getOptions = fst . unzip

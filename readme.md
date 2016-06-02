@@ -9,6 +9,9 @@ Aplicativo simples com a proposta de monitorar os arquivos contidos em um diret�
 
 Path => Indica o diretório a ser monitorado. Ainda que seja opcional, quando informado deve ser o primeiro item. Caso não seja informado, o diretório atual será utilizado como alvo. Ex: hs-file-watcher c:\myprj
 
+**Modificadores**
+--d --delay => Especifica a frequência das checagem por modificações (em segundos). Caso não seja informado, o valor default de 3 segundos será utilizado. Ex: hs-file-watcher --d 3
+
 **Filters**
 
 --ed --exclude-directories => Exclui os diretórios listados do monitoramento. Os argumentos de entrada são os nomes dos diretórios separados por espaços. Ex: hs-file-watcher --ed .stack-work dist log

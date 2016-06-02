@@ -32,10 +32,11 @@ library
                      , Watcher.Action
                      , Watcher.Arquivo
                      , Watcher.FileWatcher
-                     , Parameters.Parsers
-                     , Parameters.Parameters
+                     , Watcher.Parametros
+                     , Watcher.Modificadores
                      , Watcher.Watch
-                     , Comando.Comando
+                     , Input.Parsers
+                     , Help.Command
                      , Help.Printer
                      , Utils.IOFold
                      , Utils.String
@@ -54,7 +55,7 @@ test-suite hs-file-watcher-test
                      , QuickCheck
                      , hs-file-watcher
   other-modules:       Watcher.Tests
-                     , Parameters.Tests
+                     , Input.Tests
                      , Help.Tests
                      , Utils.String.Tests
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N

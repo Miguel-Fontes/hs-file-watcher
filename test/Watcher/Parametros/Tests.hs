@@ -1,4 +1,4 @@
-module Parameters.Tests (test) where
+module Watcher.Parametros.Tests (test) where
 
 import Test.Hspec
 import Test.QuickCheck
@@ -6,14 +6,11 @@ import Data.Maybe
 
 import Watcher.Watch
 import Watcher.Filter
-import Watcher.Arquivo
 import Watcher.Action
-import Parameters.Parameters
-import Parameters.Parsers
+import Watcher.Parametros
+import Watcher.Arquivo
 
-filesData =  [Arquivo {nome = "file.hs", dir = "src", modificado = "21/05/2015", isDirectory = False}
-             ,Arquivo {nome = "filetoexclude.txt", dir = ".", modificado="21/05/2015", isDirectory = False}
-             ,Arquivo {nome = "directorytoexclude", dir = ".", modificado="21/05/2015", isDirectory = True}]
+import Input.Parsers
 
 command =
     ["C:\\Desenv\\",  "--print", "arquivoAlterado!", "--cmd", "dir", "--ed", ".stack-work", "--ef", "readme.md", "--only-extensions", "hs"]
@@ -53,27 +50,15 @@ test = hspec $ do
     context "Options Parser" $ do
         context "Filters" $ do
            it "should create a list with just one filter" $ do
-               parseOptions (emptyParams, drop 1 commandOneArg) >>= Right . filters
+               addOption'  emptyParams "--ed" [".stack-work"] >>= Right . filters
                `shouldBe` Right [excludeDirectories [".stack-work"]]
-
-           it "should create a list with several filterss" $ do
-               parseOptions (emptyParams, drop 1 command) >>= Right . filters
-               `shouldBe` Right [excludeDirectories [".stack-work"], excludeFiles ["readme.md"], onlyExtensions ["hs"]]
 
         context "Actions" $ do
            it "should create a list with just one Action"$ do
-                parseOptions (emptyParams, drop 1 commandOneArg) >>= Right . actions
+                addOption'  emptyParams "--p" ["arquivoAlterado!"] >>= Right . actions
                `shouldBe` Right [textAction ["arquivoAlterado!"]]
 
-           it "should create a list with several Actions"$ do
-                parseOptions (emptyParams, drop 1 command) >>= Right . actions
-               `shouldBe` Right [textAction ["arquivoAlterado!"], cmdAction ["dir"]]
-
-    context "Parameters Parser Utils" $ do
-      it "takeOptions should return section from String" $ do
-          takeOptions command
-          `shouldBe` (["C:\\Desenv\\"])
-
+    context "Utils" $ do
       it "keyMatch should find the correct value from command map" $ do
           keyMatch "--ed" filtersList >>= \x -> Just $ x [".stack-work"]
           `shouldBe` Just (excludeDirectories [".stack-work"])
@@ -88,9 +73,9 @@ test = hspec $ do
 
     context "Errors" $ do
       it "should return a message when input contains a command that doesnt exist" $ do
-          parseParameters ["C:\\Desenv\\",  "--prt", "arquivoAlterado!", "--ed", ".stack-work"]
+          parseParameters emptyParams ["C:\\Desenv\\",  "--prt", "arquivoAlterado!", "--ed", ".stack-work"]
           `shouldBe` Left ("O comando \'--prt\' nao existe!")
 
       it "should return a meessage when there's no actions defined on input" $ do
-           parseParameters (drop 3 commandOneArg)
+           parseParameters emptyParams (drop 3 commandOneArg)
            `shouldBe` Left "Não foram definidas acões!"
