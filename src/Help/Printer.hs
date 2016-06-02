@@ -2,17 +2,17 @@ module Help.Printer (printHelp, usage, Layout (TwoColumns)) where
 
 import Data.List
 
-import Comando.Comando
+import Help.Command
 import Utils.String
 
 data Layout = TwoColumns (Int, Int)
 larguras (TwoColumns l) = l
 
-printHelp :: Layout -> Comando -> String
-printHelp l c = "\n" ++ identation 1 ++ "Uso: " ++  usage c ++ details l (grupos c)
+printHelp :: Layout -> Command -> String
+printHelp l c = identation 1 ++ "Uso: " ++  usage c ++ details l (grupos c)
 
-usage :: Comando -> String
-usage c = comando c ++ " " ++ rtrim (concatMap (enbracket . concat . mapGroup parseOption) (grupos c)) ++ "\n\n"
+usage :: Command -> String
+usage c = cmd c ++ " " ++ rtrim (concatMap (enbracket . concat . mapGroup parseOption) (grupos c)) ++ "\n\n"
     where parseOption (FixedText x) = x
           parseOption (Single x _) = "[" ++ x ++ "]"
           parseOption (Extended xs _) =  "[" ++ head xs ++ "]"
@@ -24,7 +24,8 @@ details l = concat . foldr step []
 
 optionsDetail :: Layout -> Option -> String
 optionsDetail _ (FixedText x) = ""
-optionsDetail _ (Single x d) = x ++ " - " ++ d ++ "\n"
+optionsDetail (TwoColumns (a, b)) (Single x d) =
+    formatColumn 0 3 a x ++ formatColumn (a + length (identation 3)) 0 b d ++ "\n\n"
 optionsDetail (TwoColumns (a, b)) (Extended xs d) =
     formatColumn 0 3 a (unwords xs) ++ formatColumn (a + length (identation 3)) 0 b d ++ "\n\n"
 

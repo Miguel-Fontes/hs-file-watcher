@@ -3,7 +3,7 @@ module Help.Tests where
 import Test.Hspec
 import Test.QuickCheck
 
-import Comando.Comando
+import Help.Command
 import Help.Printer
 
 test :: IO ()
@@ -11,28 +11,28 @@ test = hspec $ do
   describe "Modulo Help" $ do
       context "Show Instance" $ do
         it "should print the object" $ do
-            show $ Comando "hs-file-wacher" [OptionGroup "Teste" [Single "--ef" "Exclui arquivos"]
+            show $ Command "hs-file-wacher" [OptionGroup "Teste" [Single "--ef" "Exclui arquivos"]
                                             ,OptionGroup "Teste" [Single "--exts" "Limita exts"]]
             `shouldBe`  "hs-file-wacher [Teste - [--ef - Exclui arquivos],Teste - [--exts - Limita exts]]"
 
       context "Usage" $ do
           context "Single Option" $ do
             it "Should return a formatted string with command usage information" $ do
-                usage $ Comando "hs-file-wacher" [OptionGroup "Teste" [Single "--ef" ""]
+                usage $ Command "hs-file-wacher" [OptionGroup "Teste" [Single "--ef" ""]
                                                  ,OptionGroup "Teste" [Single "--exts" ""]]
                 `shouldBe` "hs-file-wacher [[--ef]] [[--exts]]\n\n"
           context "Extended Option" $ do
             it "Should return a formatted string with command usage information" $ do
-                usage $ Comando "hs-file-wacher" [OptionGroup "Teste" [Extended ["--ef", "--exclude-files"] ""]                                         ,OptionGroup "Teste" [Extended ["--exts", "--only-extensions"] ""]]
+                usage $ Command "hs-file-wacher" [OptionGroup "Teste" [Extended ["--ef", "--exclude-files"] ""]                                         ,OptionGroup "Teste" [Extended ["--exts", "--only-extensions"] ""]]
                 `shouldBe` "hs-file-wacher [[--ef]] [[--exts]]\n\n"
           context "Mixed Option" $ do
             it "Should return a formatted string with command usage information" $ do
-                usage $ Comando "hs-file-wacher" [OptionGroup "Teste" [Extended ["--ef", "--exclude-files"] ""]
+                usage $ Command "hs-file-wacher" [OptionGroup "Teste" [Extended ["--ef", "--exclude-files"] ""]
                                                  ,OptionGroup "Teste"  [Single "--exts" ""]]
                 `shouldBe` "hs-file-wacher [[--ef]] [[--exts]]\n\n"
           context "Several Options" $ do
             it "Should return a formatted string with command usage information" $ do
-                usage $ Comando "hs-file-wacher" [OptionGroup "Título" [FixedText "[Caminho]"]
+                usage $ Command "hs-file-wacher" [OptionGroup "Título" [FixedText "[Caminho]"]
                                                  ,OptionGroup "Filters"  filtersList
                                                  ,OptionGroup "Actions"  actionsList]
                 `shouldBe` "hs-file-wacher [[Caminho]] [[--ed][--ef][--exts]] [[--p][--pc][--cmd]]\n\n"
@@ -43,7 +43,7 @@ test = hspec $ do
                 pendingWith "Checar a documentação e identificar como construir uma condicional para percorrer a string e avaliar se esta possui todos os comandos em seu conteúdo."
 
 
-hsCommand = Comando "hs-file-wacher" [OptionGroup "Título" [FixedText "[Caminho] "]
+hsCommand = Command "hs-file-wacher" [OptionGroup "Título" [FixedText "[Caminho] "]
                                      ,OptionGroup "Filters"  filtersList
                                      ,OptionGroup "Actions"  actionsList]
 
