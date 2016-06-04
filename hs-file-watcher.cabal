@@ -31,6 +31,7 @@ library
   exposed-modules:     Watcher.Filter
                      , Watcher.Action
                      , Watcher.Arquivo
+                     , Watcher.Arguments
                      , Watcher.FileWatcher
                      , Watcher.Parametros
                      , Watcher.Modificadores
