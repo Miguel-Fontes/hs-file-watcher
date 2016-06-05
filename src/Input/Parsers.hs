@@ -22,7 +22,6 @@ parseOptions (p, x:xs) = case addOption p x options of
     Left msg -> Left msg
     where options = takeOptions xs
 
-
 takeOptions :: [String] -> [String]
 takeOptions = takeWhile ((/='-') . head)
 
