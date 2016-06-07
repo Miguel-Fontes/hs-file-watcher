@@ -25,6 +25,8 @@
 - [x] Avaliar / Refatorar Módulo Comando.Comando
 - [x] Avaliar / Refatorar Módulo Help.Printer
 - [x] Adicionar parser de arquivo de configuração
+- [x] Atualizar Readme.md
+- [ ] Avaliar se é possível criar action genérica que passe os arquivos alterados para um aplicaivo arbitrário
 - [ ] Separar código Watcher da Library CLI via Cabal
 
 
@@ -82,3 +84,6 @@
     - Adicionado módulo para obtenção de argumentos de entrada chamado Watcher.Arguments
     - O módulo irá buscar um arquivo chamado .watcher-config no diretório atual, obter seu conteúdo e parsear da mesma forma que o comando getArgs de System.Environment
     - A sintaxe do arquivo é a mesma sintaxe usada na linha de comando
+- 06/06/2016:
+    - Readme.md atualizado. How cool is dat?
+    -
