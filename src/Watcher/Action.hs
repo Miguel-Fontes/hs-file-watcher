@@ -40,6 +40,14 @@ cmdAction cmd = Action ("cmdAction: " ++ show cmd
 printChangedAction :: [String] -> Action Arquivo
 printChangedAction _ = Action ("printChangedAction", mapM_ print)
 
+cmdWithParametersAction :: [String] -> Action Arquivo
+cmdWithParametersAction cmd = Action ("cmdWithParametersAction",
+                                     (\fs -> catch (callCommand (concat cmd ++ " " ++ show fs))
+                                                   (\e -> putStrLn $ "\n-> Erro ao executar o comando \'"
+                                                          ++ concat cmd ++ "\':\n"
+                                                          ++ show (e :: IOException)
+                                                          ++ "\nPressione CTRL+C para interromper a execução...")))
+
 stackTestAction :: [String] -> Action a
 stackTestAction _ = cmdAction ["stack test"]
 
@@ -53,6 +61,9 @@ actionsList = [(Extended ["--p", "--print"]
               ,(Extended ["--cmd", "--command"]
                          "Executa um conjunto de comandos a cada modificação detectada. Os argumentos de entrada são os comandos à executar separados por espaços (Usar \" para comandos que contenham espaços).    Ex: hs-file-watcher --cmd \"stack build\" \"stack install\" "
                          , cmdAction)
+              ,(Extended ["--cmd-p", "--command-params"]
+                         "Executa um conjunto de comandos a cada modificação detectada. O comando receberá como parâmetro uma lista dos arquivos alterados no padrão [x, y, z]. Os argumentos de entrada são os comandos à executar separados por espaços (Usar \" para comandos que contenham espaços).    Ex: hs-file-watcher --cmd \"stack build\" \"stack install\" "
+                         , cmdWithParametersAction)
               ,(Extended ["--st", "--stack-test"]
                          "Executa o comando stack test. Não há argumentos de entrada. Ex: hs-file-watcher --st"
                          , stackTestAction)]
