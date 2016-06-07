@@ -37,7 +37,7 @@ addFilter :: Parametros -> ([String] -> Filter) -> [String] -> Parametros
 addFilter p f args = p { filters = filters p ++ [f args] }
 
 addModificador :: Parametros -> ([String] -> Int) -> [String] -> Parametros
-addModificador p f args = p { delay = (f args) * 1000000 }
+addModificador p f args = p { delay = f args * 1000000 }
 
 keyMatch :: String -> [(Option, [String] -> a)] -> Maybe ([String] -> a)
 keyMatch _ [] = Nothing
@@ -60,6 +60,7 @@ validate' p
     | otherwise = Right p
 
 parseDir :: (Parametros, [String]) -> Either String (Parametros, [String])
+parseDir (p, []) = Right (p { directory = "." }, [])
 parseDir (p, x:xs)
     | head x == '-' = Right (p { directory = "." }, x:xs)
     | otherwise = Right (p { directory = formatDir x }, xs)

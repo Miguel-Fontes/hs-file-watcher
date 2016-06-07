@@ -2,7 +2,7 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                hs-file-watcher
-version:             0.0.4
+version:             0.0.5
 synopsis:            Aplicação simples para monitoramento de arquivos e execução de ações
 -- description:
 homepage:            https://github.com/Miguel-Fontes/hs-file-watcher/
@@ -31,6 +31,7 @@ library
   exposed-modules:     Watcher.Filter
                      , Watcher.Action
                      , Watcher.Arquivo
+                     , Watcher.Arguments
                      , Watcher.FileWatcher
                      , Watcher.Parametros
                      , Watcher.Modificadores

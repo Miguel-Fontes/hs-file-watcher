@@ -24,8 +24,11 @@
 - [x] Melhorar texto descrevendo os arquivos alterados impressos no console via action --pc
 - [x] Avaliar / Refatorar Módulo Comando.Comando
 - [x] Avaliar / Refatorar Módulo Help.Printer
-- [ ] Implementar log de execução
+- [x] Adicionar parser de arquivo de configuração
+- [x] Atualizar Readme.md
+- [ ] Avaliar se é possível criar action genérica que passe os arquivos alterados para um aplicaivo arbitrário
 - [ ] Separar código Watcher da Library CLI via Cabal
+
 
 ## Log
 - 20/05/2016: Função core do aplicativo (identificar alterações em arquivos) concluída.
@@ -77,3 +80,10 @@
     - Ajustes em texto impresso na ação --pc
     - Adicionada opção --d --delay para parametrização da frequência de verificação de mudanças
     - Módulo Command.Command tornou-se parte do módulo Help como Help.Command
+ - 04/06/2016:
+    - Adicionado módulo para obtenção de argumentos de entrada chamado Watcher.Arguments
+    - O módulo irá buscar um arquivo chamado .watcher-config no diretório atual, obter seu conteúdo e parsear da mesma forma que o comando getArgs de System.Environment
+    - A sintaxe do arquivo é a mesma sintaxe usada na linha de comando
+- 06/06/2016:
+    - Readme.md atualizado. How cool is dat?
+    -
