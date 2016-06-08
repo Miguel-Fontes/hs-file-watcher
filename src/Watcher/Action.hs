@@ -9,6 +9,7 @@ module Watcher.Action (
 
 import System.Process
 import Control.Exception
+import Data.List
 
 import Watcher.Arquivo
 import Help.Command
@@ -31,7 +32,7 @@ textAction str = Action ("textAction: " ++ show str, \_ -> print (unwords str))
 
 cmdAction :: [String] -> Action a
 cmdAction cmd = Action ("cmdAction: " ++ show cmd
-                       , \_ -> catch (callCommand (concat cmd))
+                       , \_ -> catch (callCommand (formatCmd "" cmd))
                                      (\e -> putStrLn $ "\n-> Erro ao executar o comando \'"
                                             ++ concat cmd ++ "\':\n"
                                             ++ show (e :: IOException)
@@ -42,7 +43,7 @@ printChangedAction _ = Action ("printChangedAction", mapM_ print)
 
 cmdWithParametersAction :: [String] -> Action Arquivo
 cmdWithParametersAction cmd = Action ("cmdWithParametersAction",
-                                     (\fs -> catch (callCommand (concat cmd ++ " " ++ show fs))
+                                     (\fs -> catch (callCommand (formatCmd (show fs) cmd))
                                                    (\e -> putStrLn $ "\n-> Erro ao executar o comando \'"
                                                           ++ concat cmd ++ "\':\n"
                                                           ++ show (e :: IOException)
@@ -50,6 +51,11 @@ cmdWithParametersAction cmd = Action ("cmdWithParametersAction",
 
 stackTestAction :: [String] -> Action a
 stackTestAction _ = cmdAction ["stack test"]
+
+formatCmd :: String -> [String] -> String
+formatCmd p = unwords . intersperse "&&" . foldl step []
+    where step acc x = strAppend x p : acc
+          strAppend a b = a ++ " " ++ b
 
 actionsList :: [(Option, [String] -> Action Arquivo)]
 actionsList = [(Extended ["--p", "--print"]
