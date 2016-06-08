@@ -13,6 +13,7 @@ import Data.List
 
 import Watcher.Arquivo
 import Help.Command
+import Utils.JSON
 
 newtype Action a = Action (Tag,  [a] -> IO())
 
@@ -43,7 +44,7 @@ printChangedAction _ = Action ("printChangedAction", mapM_ print)
 
 cmdWithParametersAction :: [String] -> Action Arquivo
 cmdWithParametersAction cmd = Action ("cmdWithParametersAction",
-                                     (\fs -> catch (mapM_ callCommand (formatCmd (show fs) cmd))
+                                     (\fs -> catch (mapM_ callCommand (formatCmd (jStringfyList fs) cmd))
                                                    (\e -> putStrLn $ "\n-> Erro ao executar o comando \'"
                                                           ++ concat cmd ++ "\':\n"
                                                           ++ show (e :: IOException)
