@@ -86,4 +86,5 @@
     - A sintaxe do arquivo é a mesma sintaxe usada na linha de comando
 - 06/06/2016:
     - Readme.md atualizado. How cool is dat?
-    -
+- 07/06/2015
+    - Primeira implementação de um action que passe os arquivos alterados para um comando recebido como parâmetro. Action merece atenção pois, provavelmente, não é a melhor implementação.
