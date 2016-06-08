@@ -40,6 +40,7 @@ library
                      , Help.Command
                      , Help.Printer
                      , Utils.IOFold
+                     , Utils.JSON
                      , Utils.String
   build-depends:       base >= 4.7 && < 5
                      , process >=1.2 && <1.3
