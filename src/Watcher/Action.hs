@@ -32,7 +32,7 @@ textAction str = Action ("textAction: " ++ show str, \_ -> print (unwords str))
 
 cmdAction :: [String] -> Action a
 cmdAction cmd = Action ("cmdAction: " ++ show cmd
-                       , \_ -> catch (callCommand (formatCmd "" cmd))
+                       , \_ -> catch (mapM_ callCommand cmd)
                                      (\e -> putStrLn $ "\n-> Erro ao executar o comando \'"
                                             ++ concat cmd ++ "\':\n"
                                             ++ show (e :: IOException)
@@ -43,7 +43,7 @@ printChangedAction _ = Action ("printChangedAction", mapM_ print)
 
 cmdWithParametersAction :: [String] -> Action Arquivo
 cmdWithParametersAction cmd = Action ("cmdWithParametersAction",
-                                     (\fs -> catch (callCommand (formatCmd (show fs) cmd))
+                                     (\fs -> catch (mapM_ callCommand (formatCmd (show fs) cmd))
                                                    (\e -> putStrLn $ "\n-> Erro ao executar o comando \'"
                                                           ++ concat cmd ++ "\':\n"
                                                           ++ show (e :: IOException)
@@ -52,10 +52,9 @@ cmdWithParametersAction cmd = Action ("cmdWithParametersAction",
 stackTestAction :: [String] -> Action a
 stackTestAction _ = cmdAction ["stack test"]
 
-formatCmd :: String -> [String] -> String
-formatCmd p = unwords . intersperse "&&" . foldl step []
-    where step acc x = strAppend x p : acc
-          strAppend a b = a ++ " " ++ b
+formatCmd :: String -> [String] -> [String]
+formatCmd p = foldl step []
+    where step acc x = (x ++ " " ++ p) : acc
 
 actionsList :: [(Option, [String] -> Action Arquivo)]
 actionsList = [(Extended ["--p", "--print"]
@@ -68,7 +67,7 @@ actionsList = [(Extended ["--p", "--print"]
                          "Executa um conjunto de comandos a cada modificação detectada. Os argumentos de entrada são os comandos à executar separados por espaços (Usar \" para comandos que contenham espaços).    Ex: hs-file-watcher --cmd \"stack build\" \"stack install\" "
                          , cmdAction)
               ,(Extended ["--cmd-p", "--command-params"]
-                         "Executa um conjunto de comandos a cada modificação detectada. O comando receberá como parâmetro uma lista dos arquivos alterados no padrão [x, y, z]. Os argumentos de entrada são os comandos à executar separados por espaços (Usar \" para comandos que contenham espaços).    Ex: hs-file-watcher --cmd \"stack build\" \"stack install\" "
+                         "Executa um conjunto de comandos a cada modificação detectada. O comando receberá como parâmetro uma lista dos arquivos alterados no formato JSON. Os argumentos de entrada são os comandos à executar separados por espaços (Usar \" para comandos que contenham espaços).    Ex: hs-file-watcher --cmd \"stack build\" \"stack install\" "
                          , cmdWithParametersAction)
               ,(Extended ["--st", "--stack-test"]
                          "Executa o comando stack test. Não há argumentos de entrada. Ex: hs-file-watcher --st"
