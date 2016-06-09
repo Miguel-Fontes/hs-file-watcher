@@ -17,9 +17,13 @@ getConfigFile = do
     fExist <- doesFileExist ".watcher-config"
 
     if fExist
-        then fmap (concatMap toArgsList . lines) (readFile ".watcher-config")
+        then fmap (concatMap toArgsList . lines) (readFile ".watcher-config") >>= logArgs
         else return []
 
+logArgs :: [String] -> IO [String]
+logArgs xs = do
+    putStrLn ("-> Obtidos parâmetros do arquivo .watcher-config e construído comando: hs-file-watcher " ++ unwords xs)
+    return xs
 
 toArgsList :: String -> [String]
 toArgsList [] = []
