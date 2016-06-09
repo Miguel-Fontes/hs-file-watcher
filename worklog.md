@@ -30,6 +30,7 @@
 - [x] Adicionar módulo para transformar dados do tipo arquivo para formato JSON
 - [ ] Separar código Watcher da Library CLI via Cabal
 - [ ] Adicionar mensagem informando que foram lidas opções do arquivo de configuração e, talvez, quais foram estas opções ao iniciar a execução
+- [ ] Adicionar Token de quebra de linha no módulo de print do texto help
 
 
 ## Log
@@ -96,3 +97,4 @@
 - 08/06/2015:
     - Ajuste no formato da execução de diversos comandos via --cmd. Ao invés de executa-los com && agora estes serão executados um a um sequencialmente.
     - Módulo Utils.JSON para transformar objetos para formato JSON. Um bom candidato para ser refatorado posteriormente.
+    - Configurado novos textos para comando --cmd-p e atualizado o readme.md
