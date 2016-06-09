@@ -1,3 +1,3 @@
---cmd "stack test"
+--st
 --exts hs md
 --ed .stack-work

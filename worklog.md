@@ -26,8 +26,11 @@
 - [x] Avaliar / Refatorar Módulo Help.Printer
 - [x] Adicionar parser de arquivo de configuração
 - [x] Atualizar Readme.md
-- [ ] Avaliar se é possível criar action genérica que passe os arquivos alterados para um aplicaivo arbitrário
+- [x] Criar action genérica que passe os arquivos alterados para um aplicativo arbitrário
+- [x] Adicionar módulo para transformar dados do tipo arquivo para formato JSON
 - [ ] Separar código Watcher da Library CLI via Cabal
+- [ ] Adicionar mensagem informando que foram lidas opções do arquivo de configuração e, talvez, quais foram estas opções ao iniciar a execução
+- [ ] Adicionar Token de quebra de linha no módulo de print do texto help
 
 
 ## Log
@@ -86,4 +89,12 @@
     - A sintaxe do arquivo é a mesma sintaxe usada na linha de comando
 - 06/06/2016:
     - Readme.md atualizado. How cool is dat?
-    -
+- 07/06/2015:
+    - Primeira implementação de um action que passe os arquivos alterados para um comando recebido como parâmetro. Action merece atenção pois, provavelmente, não é a melhor implementação.
+    - Extração de helper function para fomatação de linhas de comando.
+    - A implementação atual da cmdWithParametersAction opera concatenando parâmetros com o commando (cmd ++ " " ++ arquivos)
+    - Avaliar o uso da instância show no tipo arquivo para serialização dos dados. Desta forma, posso usar show para 'formatar' os dados passados as actions
+- 08/06/2015:
+    - Ajuste no formato da execução de diversos comandos via --cmd. Ao invés de executa-los com && agora estes serão executados um a um sequencialmente.
+    - Módulo Utils.JSON para transformar objetos para formato JSON. Um bom candidato para ser refatorado posteriormente.
+    - Configurado novos textos para comando --cmd-p e atualizado o readme.md
