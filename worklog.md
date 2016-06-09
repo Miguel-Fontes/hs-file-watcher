@@ -28,9 +28,11 @@
 - [x] Atualizar Readme.md
 - [x] Criar action genérica que passe os arquivos alterados para um aplicativo arbitrário
 - [x] Adicionar módulo para transformar dados do tipo arquivo para formato JSON
-- [ ] Separar código Watcher da Library CLI via Cabal
-- [ ] Adicionar mensagem informando que foram lidas opções do arquivo de configuração e, talvez, quais foram estas opções ao iniciar a execução
+- [x] Adicionar mensagem informando que foram lidas opções do arquivo de configuração e, talvez, quais foram estas opções ao iniciar a execução
+- [ ] Incluir em readme.md informações sobre criação de arquivo de configuração .watcher-config
 - [ ] Adicionar Token de quebra de linha no módulo de print do texto help
+- [ ] Separar código Watcher da Library CLI via Cabal
+- [ ] Refatorar código de print do texto Help
 
 
 ## Log
@@ -98,3 +100,6 @@
     - Ajuste no formato da execução de diversos comandos via --cmd. Ao invés de executa-los com && agora estes serão executados um a um sequencialmente.
     - Módulo Utils.JSON para transformar objetos para formato JSON. Um bom candidato para ser refatorado posteriormente.
     - Configurado novos textos para comando --cmd-p e atualizado o readme.md
+- 09/06/2016:
+    - Atualizado módulo Watcher.Argumentos para imprimir os argumentos obtidos do arquivo de configuração, quando este for o cenário.
+    - Necessário alterar o módulo printer para incluir uma forma de aceitar que o usuário informe quebras de linhas.
