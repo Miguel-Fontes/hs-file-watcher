@@ -26,7 +26,7 @@ Para executar um buid local do aplicativo, é necessário possuir o [stack](http
 ## Opções
 O texto abaixo é retirado do texto impresso ao executar o comando com o flag ```--help```. Todas as opções são opcionais e podem ser combinadas sem problemas. Para que o aplicativo inicie a execucão, ao menos uma action deve ser informada.
 
-    hs-file-wacher [[Path]] [[--ed][--ef][--exts]] [[--p][--pc][--cmd]]
+    hs-file-wacher [[Path]] [[--d]] [[--ed][--ef][--exts]] [[--p][--pc][--cmd][--cmd-p][--st]]
 
 ####**Gerais**
 
@@ -51,5 +51,7 @@ __--p --print__ => Imprime o texto indicado quando mudanças forem identificadas
 __--pc --print-changed__ => Exibe lista  de arquivos que sofreram alterações. Comando não contém argumentos de entrada. ```Ex: hs-file-watcher --pc```
 
 __--cmd --command__ => Executa um conjunto de comandos a cada modificação detectada. Os argumentos de entrada são os comandos à executar separados por espaços (Usar " para comandos que contenham espaços). ```Ex: hs-file-watcher --cmd "stack build" "stack install"```
+
+__--cmd-p --command-with-params__ => Executa um conjunto de comandos a cada modificação detectada. O comando receberá como parâmetro uma lista dos arquivos alterados no formato JSON. Os argumentos de entrada são os comandos à executarseparados por espaços. ```Ex: hs-file-watcher --cmd-p echo ==> executará ==> echo [{"nome": "arquivo.hs" ...}]```
 
 __--st --stack-test__ => Executa o comando stack test. Não há argumentos de entrada. ```Ex: hs-file-watcher --st```
