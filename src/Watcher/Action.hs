@@ -43,7 +43,7 @@ printChangedAction :: [String] -> Action Arquivo
 printChangedAction _ = Action ("printChangedAction", mapM_ print)
 
 cmdWithParametersAction :: [String] -> Action Arquivo
-cmdWithParametersAction cmd = Action ("cmdWithParametersAction",
+cmdWithParametersAction cmd = Action ("cmdWithParametersAction: " ++ show cmd,
                                      (\fs -> catch (mapM_ callCommand (formatCmd (jStringfyList fs) cmd))
                                                    (\e -> putStrLn $ "\n-> Erro ao executar o comando \'"
                                                           ++ concat cmd ++ "\':\n"
@@ -67,8 +67,8 @@ actionsList = [(Extended ["--p", "--print"]
               ,(Extended ["--cmd", "--command"]
                          "Executa um conjunto de comandos a cada modificação detectada. Os argumentos de entrada são os comandos à executar separados por espaços (Usar \" para comandos que contenham espaços).    Ex: hs-file-watcher --cmd \"stack build\" \"stack install\" "
                          , cmdAction)
-              ,(Extended ["--cmd-p", "--command-params"]
-                         "Executa um conjunto de comandos a cada modificação detectada. O comando receberá como parâmetro uma lista dos arquivos alterados no formato JSON. Os argumentos de entrada são os comandos à executar separados por espaços (Usar \" para comandos que contenham espaços).    Ex: hs-file-watcher --cmd \"stack build\" \"stack install\" "
+              ,(Extended ["--cmd-p", "--command-with-params"]
+                         "Executa um conjunto de comandos a cada modificação detectada. O comando receberá como parâmetro uma lista dos arquivos alterados no formato JSON. Os argumentos de entrada são os comandos à executar separados por espaços.                                                                            Ex: hs-file-watcher --cmd-p echo ==> executará ==> echo [{\"nome\": \"arquivo.hs\" ...}]"
                          , cmdWithParametersAction)
               ,(Extended ["--st", "--stack-test"]
                          "Executa o comando stack test. Não há argumentos de entrada. Ex: hs-file-watcher --st"
