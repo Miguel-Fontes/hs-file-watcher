@@ -32,6 +32,7 @@
 - [x] Adicionar Token de quebra de linha no módulo de print do texto help
 - [x] Refatorar código de print do texto Help
 - [ ] Incluir em readme.md informações sobre criação de arquivo de configuração .watcher-config
+- [ ] Incluir em readme.md formato do Json usado no cmd-p
 - [ ] Separar código Watcher da Library CLI via Cabal
 
 
