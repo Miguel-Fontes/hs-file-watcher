@@ -16,4 +16,4 @@ margin :: Int -> String
 margin x = replicate x ' '
 
 identation :: Int -> String
-identation x = replicate (x * 2) ' '
+identation x = replicate (x * 4) ' '
