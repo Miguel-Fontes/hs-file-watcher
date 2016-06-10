@@ -23,7 +23,7 @@ Para executar um buid local do aplicativo, é necessário possuir o [stack](http
 
     $ stack build
 
-##TFM
+##Instruções e Informações (TFM)
 ### Opções
 As instruções abaixo são as mesmas impressas ao executar o ```hs-file-watcher --help```. Todas as opções são opcionais e podem ser combinadas. Para que o aplicativo inicie a execução, ao menos uma action deve ser informada.
 
@@ -32,8 +32,7 @@ As instruções abaixo são as mesmas impressas ao executar o ```hs-file-watcher
 ####**Gerais**
 __Path__ => Indica o diretório a ser monitorado. Ainda que seja opcional, quando informado deve ser o primeiro item. Caso não seja informado, o diretório atual será utilizado como alvo. ```Ex: hs-file-watcher c:\dev\myapp```
 
-**Modificadores**
-
+####**Modificadores**
 __--d --delay__ => Especifica a frequência das checagem por modificações (em segundos). Caso não seja informado, o valor default de 3 segundos será utilizado. ```Ex: hs-file-watcher --d 3```
 
 ####**Filters**
@@ -100,7 +99,7 @@ Para ilustrar, o comando ```hs-file-watcher --cmd-p echo``` executará o comando
 
      echo [{"nome": "Filter.hs" , "modificado": "02/06/2016 14:11:02" , "diretorio": "C:\\hs-file-watcher\\src\\Watcher\\"}]
 
-###Action --st --stack-test
-Esta action é simplesmente um shorthand para ```hs-file-watcher --cmd "stack test"``` e foi criada para agilizar a configuração do monitoramento para projetos Haskell que utilizem stack.
+###O Action --st --stack-test
+Esta action é simplesmente um shorthand para ```hs-file-watcher --cmd "stack test"``` e foi criada para agilizar a configuração do monitoramento para projetos Haskell que utilizem Stack.
 
-Para que a opção funcione, é necessário possuir o [Stack](www.haskellstack.org) instalado em sua estação e configurado corretamente para seu projeto.
+Para que a opção funcione, é necessário possuir o [Stack](http://www.haskellstack.org) instalado e configurado corretamente para seu projeto.
