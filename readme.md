@@ -39,7 +39,7 @@ Filters |--exts | --only-extensions | Limita o monitoramento aos arquivos com as
 Actions | --p | --print | Imprime o texto indicado quando mudanças forem identificadas. O argumento de entrada é o texto a ser impresso. ```Ex: hs-file-watcher --p "Alterações!"```
 Actions | --pc | --print-changed| Exibe lista  de arquivos que sofreram alterações. Comando não contém argumentos de entrada. ```Ex: hs-file-watcher --pc```
 Actions |--cmd | --command | Executa um conjunto de comandos a cada modificação detectada. Os argumentos de entrada são os comandos à executar separados por espaços (Usar " para comandos que contenham espaços). ```Ex: hs-file-watcher --cmd "stack build" "stack install"```
-Actions | --cmd-p | --command-with-params | Executa um conjunto de comandos a cada modificação detectada. O comando receberá como parâmetro uma lista dos arquivos alterados no formato JSON (Mais informações sobre os dados em seção anterior). Os argumentos de entrada são os comandos à executarseparados por espaços. ```Ex: hs-file-watcher --cmd-p echo ==> executará ==> echo [{"nome": "arquivo.hs" ...}]```
+Actions | --cmd-p | --command-with-params | Executa um conjunto de comandos a cada modificação detectada. O comando receberá como parâmetro uma lista dos arquivos alterados no formato JSON (Mais informações sobre a estrutura do JSON no readme). Os argumentos de entrada são os comandos à executar separados por espaços. ```Ex: hs-file-watcher --cmd-p echo ==> executará ==> echo [{"nome": "arquivo.hs" ...}]```
 Actions | --st | --stack-test | Executa o comando stack test. Não há argumentos de entrada. ```Ex: hs-file-watcher --st```
 
 ###Configurando opções para um projeto via arquivo .watcher-config
