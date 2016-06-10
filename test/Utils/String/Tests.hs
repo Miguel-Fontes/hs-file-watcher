@@ -52,4 +52,4 @@ test = hspec $ do
     context "identation" $ do
       it "should return the correct number of whitespaces for a level of identation " $ do
         identation 2
-        `shouldBe` "    "
+        `shouldBe` "        "
