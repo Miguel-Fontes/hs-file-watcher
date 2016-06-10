@@ -25,34 +25,9 @@ Para executar um buid local do aplicativo, é necessário possuir o [stack](http
 
 ##Instruções e Informações (TFM)
 ### Opções
-As instruções abaixo são as mesmas impressas ao executar o ```hs-file-watcher --help```. Todas as opções são opcionais e podem ser combinadas. Para que o aplicativo inicie a execução, ao menos uma action deve ser informada.
+As instruções abaixo são as mesmas impressas ao executar ```hs-file-watcher --help```. Todas as opções são opcionais e podem ser combinadas. Para que o aplicativo inicie a execução, ao menos uma action deve ser informada.
 
-    hs-file-wacher [[Path]] [[--d]] [[--ed][--ef][--exts]] [[--p][--pc][--cmd][--cmd-p][--st]]
-
-####**Gerais**
-__Path__ => Indica o diretório a ser monitorado. Ainda que seja opcional, quando informado deve ser o primeiro item. Caso não seja informado, o diretório atual será utilizado como alvo. ```Ex: hs-file-watcher c:\dev\myapp```
-
-####**Modificadores**
-__--d --delay__ => Especifica a frequência das checagem por modificações (em segundos). Caso não seja informado, o valor default de 3 segundos será utilizado. ```Ex: hs-file-watcher --d 3```
-
-####**Filters**
-__--ed --exclude-directories__ => Exclui os diretórios listados do monitoramento. Os argumentos de entrada são os nomes dos diretórios separados por espaços. ```Ex: hs-file-watcher --ed .stack-work dist log```
-
-__--ef --exclude-files__ => Exclui os arquivos listados do monitoramento. Os argumentos de entrada são os nomes dos arquivos separados por espaços. ```Ex: hs-file-watcher --ef readme.md myapp.cabal log.txt```
-
-__--exts --only-extensions__ => Limita o monitoramento aos arquivos com as extensões listadas. Os argumentos de entrada são as extensões separadas por espaços. ```Ex: hs-file-watcher --exts hs md cabal```
-
-####**Actions**
-__--p --print__ => Imprime o texto indicado quando mudanças forem identificadas. O argumento de entrada é o texto a ser impresso. ```Ex: hs-file-watcher --p "Alterações!"```
-
-__--pc --print-changed__ => Exibe lista  de arquivos que sofreram alterações. Comando não contém argumentos de entrada. ```Ex: hs-file-watcher --pc```
-
-__--cmd --command__ => Executa um conjunto de comandos a cada modificação detectada. Os argumentos de entrada são os comandos à executar separados por espaços (Usar " para comandos que contenham espaços). ```Ex: hs-file-watcher --cmd "stack build" "stack install"```
-
-__--cmd-p --command-with-params__ => Executa um conjunto de comandos a cada modificação detectada. O comando receberá como parâmetro uma lista dos arquivos alterados no formato JSON (Mais informações sobre os dados em seção anterior). Os argumentos de entrada são os comandos à executarseparados por espaços. ```Ex: hs-file-watcher --cmd-p echo ==> executará ==> echo [{"nome": "arquivo.hs" ...}]```
-
-__--st --stack-test__ => Executa o comando stack test. Não há argumentos de entrada. ```Ex: hs-file-watcher --st```
-
+    hs-file-wacher [Gerais [Path]] [Modificadores [--d]] [Filters [--ed][--ef][--exts]] [Actions [--p][--pc][--cmd][--cmd-p][--st]]
 
 Grupo | Shorthand | Comando | Descrição
 ----------|----------| --------|----------
