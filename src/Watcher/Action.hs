@@ -62,13 +62,13 @@ actionsList = [(Extended ["--p", "--print"]
                          "Imprime o texto indicado quando mudanças forem identificadas. O argumento de entrada é o texto a ser impresso. Ex: hs-file-watcher --p \"Alterações!\""
                          , textAction)
               ,(Extended ["--pc", "--print-changed"]
-                         "Exibe lista de arquivos que sofreram alterações. Não há argumentos de entrada.                     Ex: hs-file-watcher --pc"
+                         "Exibe lista de arquivos que sofreram alterações. Não há argumentos de entrada.\nEx: hs-file-watcher --pc"
                          , printChangedAction)
               ,(Extended ["--cmd", "--command"]
-                         "Executa um conjunto de comandos a cada modificação detectada. Os argumentos de entrada são os comandos à executar separados por espaços (Usar \" para comandos que contenham espaços).    Ex: hs-file-watcher --cmd \"stack build\" \"stack install\" "
+                         "Executa um conjunto de comandos a cada modificação detectada. Os argumentos de entrada são os comandos à executar separados por espaços (Usar \" para comandos que contenham espaços).\nEx: hs-file-watcher --cmd \"stack build\" \"stack install\" "
                          , cmdAction)
               ,(Extended ["--cmd-p", "--command-with-params"]
-                         "Executa um conjunto de comandos a cada modificação detectada. O comando receberá como parâmetro uma lista dos arquivos alterados no formato JSON. Os argumentos de entrada são os comandos à executar separados por espaços.                                                                            Ex: hs-file-watcher --cmd-p echo ==> executará ==> echo [{\"nome\": \"arquivo.hs\" ...}]"
+                         "Executa um conjunto de comandos a cada modificação detectada. O comando receberá como parâmetro uma lista dos arquivos alterados no formato JSON. Os argumentos de entrada são os comandos à executar separados por espaços.\nEx: hs-file-watcher --cmd-p echo ==> executará ==> echo [{\"nome\": \"arquivo.hs\" ...}]"
                          , cmdWithParametersAction)
               ,(Extended ["--st", "--stack-test"]
                          "Executa o comando stack test. Não há argumentos de entrada. Ex: hs-file-watcher --st"

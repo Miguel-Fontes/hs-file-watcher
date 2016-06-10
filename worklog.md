@@ -30,7 +30,7 @@
 - [x] Adicionar módulo para transformar dados do tipo arquivo para formato JSON
 - [x] Adicionar mensagem informando que foram lidas opções do arquivo de configuração e, talvez, quais foram estas opções ao iniciar a execução
 - [ ] Incluir em readme.md informações sobre criação de arquivo de configuração .watcher-config
-- [ ] Adicionar Token de quebra de linha no módulo de print do texto help
+- [x] Adicionar Token de quebra de linha no módulo de print do texto help
 - [ ] Separar código Watcher da Library CLI via Cabal
 - [ ] Refatorar código de print do texto Help
 
@@ -102,4 +102,4 @@
     - Configurado novos textos para comando --cmd-p e atualizado o readme.md
 - 09/06/2016:
     - Atualizado módulo Watcher.Argumentos para imprimir os argumentos obtidos do arquivo de configuração, quando este for o cenário.
-    - Necessário alterar o módulo printer para incluir uma forma de aceitar que o usuário informe quebras de linhas.
+    - Refatorado Help.Printer para que ele aceite o uso do caractere de quebra de linha. O código está funcional mas merece ser refatorado. Não está de acordo com o algoritmo que pensei inicialmente.
