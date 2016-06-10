@@ -5,7 +5,7 @@ O aplicativo possui uma interface CLI com opções para definição de seus par�
 
 Um dos motivos do desenvolvimento desta aplicação fora a necessidade de reexecução de uma suite de testes de unidade em cada alteração em um conjunto de arquivos de código fonte.
 
-    hs-file-wacher --ed .git dist --exts hs --cmd "runhaskell c:\dev\app\tests\spec.hs"
+    $ hs-file-wacher --ed .git dist --exts hs --cmd "runhaskell c:\dev\app\tests\spec.hs"
 
 Utilizando a instrução abaixo, o aplicativo irá monitorar o diretório atual selecionado no console e:
 - ignorar o diretório ".git" e "dist"
@@ -21,10 +21,62 @@ Utilizando a instrução abaixo, o aplicativo irá monitorar o diretório atual 
 ## Build Local
 Para executar um buid local do aplicativo, é necessário possuir o [stack](https://github.com/commercialhaskell/stack) instalado. Com isto fora do caminho, executar o build da aplicação é exatamente o esperado:
 
-    stack build
+    $ stack build
 
-## Opções
-O texto abaixo é retirado do texto impresso ao executar o comando com o flag ```--help```. Todas as opções são opcionais e podem ser combinadas sem problemas. Para que o aplicativo inicie a execucão, ao menos uma action deve ser informada.
+##TFM
+###Configurando opções para um projeto .watcher-config
+Para facilitar o uso do aplicativo, é possível criar um arquivo com o nome ".watcher.config" com as opções do hs-file-watcher. Isto evita a reescrita dos mesmos critérios.
+
+O arquivo deverá conter as opções exatamente da forma como usariamos na linha de comando. Após a criação do arquivo, precisamos simplesmente executar o comando sem informar opções.
+
+Como exemplo, para executar o comando indicado no início do readme:
+
+    -- Para executar o comando
+    hs-file-wacher "C:\myapp\" --ed .git dist --exts hs --cmd "runhaskell c:\dev\app\tests\spec.hs"
+
+    -- Podemos criar um arquivo .watcher-config no diretório C:\myapp com o conteúdo abaixo
+    --ed .git dist --exts hs --cmd "runhaskell c:\dev\app\tests\spec.hs"
+
+    -- Isto nos permitirá executar a aplicação sem informar opções
+    $ hs-file-wacher
+
+    -- Ao iniciar a execução, o aplicativo informará as opções lidas do arquivo com uma mensagem similar à:
+    -> Obtidos parâmetros do arquivo .watcher-config e construído comando: hs-file-watcher --ed .git dist --exts hs --cmd "runhaskell c:\dev\app\tests\spec.hs"
+
+Quando argumentos forem providos através da linha de comando, o arquivo será ignorado.
+
+###Formato JSON usado em arquivos no comando --cmd-p
+Ao usar o action --cmd-p o aplicativo irá executar o comando indicado e adicionar como argumento de entrada a lista dos arquivos modificados no formato JSON.
+
+Os dados contidos no JSON são os seguintes:
+
+- Nome: O nome do arquivo
+- Modificado: A data de modificação do arquivo
+- Diretório: O diretório do arquivo
+
+Exemplo de uma String JSON gerada pelo aplicativo:
+
+    [
+        {"nome": "Filter.hs"
+        ,"modificado": "02/06/2016 14:11:02"
+        ,"diretorio": "C:\\hs-file-watcher\\src\\Watcher\\"},
+
+        {"nome": "Action.hs"
+        ,"modificado": "10/06/2016 01:02:35"
+        ,"diretorio": "C:\\hs-file-watcher\\src\\Watcher\\"}
+    ]
+
+Para ilustrar, o comando ```hs-file-watcher --cmd-p echo``` executará o comando echo para cada modificação de arquivo identificada, informando como argumento a String JSON.
+
+     echo [{"nome": "Filter.hs" , "modificado": "02/06/2016 14:11:02" , "diretorio": "C:\\hs-file-watcher\\src\\Watcher\\"}]
+
+###Action --st --stack-test
+Esta action é simplesmente um shorthand para ```hs-file-watcher --cmd "stack test"``` e foi criada para agilizar a configuração do monitoramento para projetos Haskell que utilizem stack.
+
+Para que a opção funcione, é necessário possuir o [Stack](www.haskellstack.org) instalado em sua estação e configurado corretamente para seu projeto.
+
+### Opções
+As instruções abaixo são as mesmas impressas ao executar o ```hs-file-watcher --help```. Todas as opções são opcionais e podem ser combinadas. Para que o aplicativo inicie a execução, ao menos uma action deve ser informada.
 
     hs-file-wacher [[Path]] [[--d]] [[--ed][--ef][--exts]] [[--p][--pc][--cmd][--cmd-p][--st]]
 
@@ -52,6 +104,6 @@ __--pc --print-changed__ => Exibe lista  de arquivos que sofreram alterações. 
 
 __--cmd --command__ => Executa um conjunto de comandos a cada modificação detectada. Os argumentos de entrada são os comandos à executar separados por espaços (Usar " para comandos que contenham espaços). ```Ex: hs-file-watcher --cmd "stack build" "stack install"```
 
-__--cmd-p --command-with-params__ => Executa um conjunto de comandos a cada modificação detectada. O comando receberá como parâmetro uma lista dos arquivos alterados no formato JSON. Os argumentos de entrada são os comandos à executarseparados por espaços. ```Ex: hs-file-watcher --cmd-p echo ==> executará ==> echo [{"nome": "arquivo.hs" ...}]```
+__--cmd-p --command-with-params__ => Executa um conjunto de comandos a cada modificação detectada. O comando receberá como parâmetro uma lista dos arquivos alterados no formato JSON (Mais informações sobre os dados em seção anterior). Os argumentos de entrada são os comandos à executarseparados por espaços. ```Ex: hs-file-watcher --cmd-p echo ==> executará ==> echo [{"nome": "arquivo.hs" ...}]```
 
 __--st --stack-test__ => Executa o comando stack test. Não há argumentos de entrada. ```Ex: hs-file-watcher --st```
