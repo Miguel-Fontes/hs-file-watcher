@@ -19,8 +19,7 @@ instance Eq Arquivo where
 instance JSON Arquivo where
     jStringfy (Arquivo n m d isD) = toJSON [JGroup (JLabel "nome")       (JText n)
                                            ,JGroup (JLabel "modificado") (JText m)
-                                           ,JGroup (JLabel "diretorio")  (JText d)
-                                           ,JGroup (JLabel "isDiretory") (JBool isD)]
+                                           ,JGroup (JLabel "diretorio")  (JText d)]
     jStringfyList = brackets . unwords . intersperse "," . foldl step []
         where step acc x = jStringfy x : acc
               brackets s = "[" ++ s ++ "]"
