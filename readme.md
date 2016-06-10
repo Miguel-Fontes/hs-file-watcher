@@ -5,7 +5,7 @@ O aplicativo possui uma interface CLI com opções para definição de seus par�
 
 Um dos motivos do desenvolvimento desta aplicação fora a necessidade de reexecução de uma suite de testes de unidade em cada alteração em um conjunto de arquivos de código fonte.
 
-    hs-file-wacher --ed .git dist --exts hs --cmd "runhaskell c:\dev\app\tests\spec.hs"
+    $ hs-file-wacher --ed .git dist --exts hs --cmd "runhaskell c:\dev\app\tests\spec.hs"
 
 Utilizando a instrução abaixo, o aplicativo irá monitorar o diretório atual selecionado no console e:
 - ignorar o diretório ".git" e "dist"
@@ -21,37 +21,74 @@ Utilizando a instrução abaixo, o aplicativo irá monitorar o diretório atual 
 ## Build Local
 Para executar um buid local do aplicativo, é necessário possuir o [stack](https://github.com/commercialhaskell/stack) instalado. Com isto fora do caminho, executar o build da aplicação é exatamente o esperado:
 
-    stack build
+    $ stack build
 
-## Opções
-O texto abaixo é retirado do texto impresso ao executar o comando com o flag ```--help```. Todas as opções são opcionais e podem ser combinadas sem problemas. Para que o aplicativo inicie a execucão, ao menos uma action deve ser informada.
+##Instruções e Informações (TFM)
+### Opções
+As instruções abaixo são as mesmas impressas ao executar ```hs-file-watcher --help```. Todas são opcionais e podem ser combinadas. Para que o aplicativo inicie a execução, ao menos uma action deve ser informada.
 
-    hs-file-wacher [[Path]] [[--d]] [[--ed][--ef][--exts]] [[--p][--pc][--cmd][--cmd-p][--st]]
+    hs-file-wacher [Gerais [Path]] [Modificadores [--d]] [Filters [--ed][--ef][--exts]] [Actions [--p][--pc][--cmd][--cmd-p][--st]]
 
-####**Gerais**
+Grupo | Shorthand | Comando | Descrição
+----------|----------| --------|----------
+Gerais | - | - | Indica o diretório a ser monitorado. Ainda que seja opcional, quando informado deve ser o primeiro item. Caso não seja informado, o diretório atual será utilizado como alvo. ```Ex: hs-file-watcher c:\dev\myapp```
+Modificadores |--d | --delay | Especifica a frequência das checagem por modificações (em segundos). Caso não seja informado, o valor default de 3 segundos será utilizado. ```Ex: hs-file-watcher --d 3```
+Filters | --ed | --exclude-directories | Exclui os diretórios listados do monitoramento. Os argumentos de entrada são os nomes dos diretórios separados por espaços. ```Ex: hs-file-watcher --ed .stack-work dist log```
+Filters | --ef | --exclude-files | Exclui os arquivos listados do monitoramento. Os argumentos de entrada são os nomes dos  arquivos separados por espaços. ```Ex: hs-file-watcher --ef readme.md myapp.cabal log.txt```
+Filters |--exts | --only-extensions | Limita o monitoramento aos arquivos com as extensões listadas. Os argumentos de entrada são as extensões separadas por espaços. ```Ex: hs-file-watcher --exts hs md cabal```
+Actions | --p | --print | Imprime o texto indicado quando mudanças forem identificadas. O argumento de entrada é o texto a ser impresso. ```Ex: hs-file-watcher --p "Alterações!"```
+Actions | --pc | --print-changed| Exibe lista  de arquivos que sofreram alterações. Comando não contém argumentos de entrada. ```Ex: hs-file-watcher --pc```
+Actions |--cmd | --command | Executa um conjunto de comandos a cada modificação detectada. Os argumentos de entrada são os comandos à executar separados por espaços (Usar " para comandos que contenham espaços). ```Ex: hs-file-watcher --cmd "stack build" "stack install"```
+Actions | --cmd-p | --command-with-params | Executa um conjunto de comandos a cada modificação detectada. O comando receberá como parâmetro uma lista dos arquivos alterados no formato JSON (Mais informações sobre a estrutura do JSON no readme). Os argumentos de entrada são os comandos à executar separados por espaços. ```Ex: hs-file-watcher --cmd-p echo ==> executará ==> echo [{"nome": "arquivo.hs" ...}]```
+Actions | --st | --stack-test | Executa o comando stack test. Não há argumentos de entrada. ```Ex: hs-file-watcher --st```
 
-__Path__ => Indica o diretório a ser monitorado. Ainda que seja opcional, quando informado deve ser o primeiro item. Caso não seja informado, o diretório atual será utilizado como alvo. ```Ex: hs-file-watcher c:\dev\myapp```
+###Configurando opções para um projeto via arquivo .watcher-config
+Para facilitar o uso do aplicativo, é possível criar um arquivo com o nome ".watcher.config" com as opções do hs-file-watcher. Isto evita a reescrita dos mesmos critérios.
 
-####**Modificadores**
+O arquivo deverá conter as opções exatamente da forma como usariamos na linha de comando. Após a criação do arquivo, podemos executar o aplicativo sem informar opções.
 
-__--d --delay__ => Especifica a frequência das checagem por modificações (em segundos). Caso não seja informado, o valor default de 3 segundos será utilizado. ```Ex: hs-file-watcher --d 3```
+Como exemplo, para executar o comando indicado no início do readme:
 
-####**Filters**
+    -- Para executar o comando
+    hs-file-wacher "C:\myapp\" --ed .git dist --exts hs --cmd "runhaskell c:\dev\app\tests\spec.hs"
 
-__--ed --exclude-directories__ => Exclui os diretórios listados do monitoramento. Os argumentos de entrada são os nomes dos diretórios separados por espaços. ```Ex: hs-file-watcher --ed .stack-work dist log```
+    -- Podemos criar um arquivo .watcher-config no diretório C:\myapp com o conteúdo abaixo
+    --ed .git dist --exts hs --cmd "runhaskell c:\dev\app\tests\spec.hs"
 
-__--ef --exclude-files__ => Exclui os arquivos listados do monitoramento. Os argumentos de entrada são os nomes dos arquivos separados por espaços. ```Ex: hs-file-watcher --ef readme.md myapp.cabal log.txt```
+    -- Isto nos permitirá executar a aplicação sem informar opções
+    $ hs-file-wacher
 
-__--exts --only-extensions__ => Limita o monitoramento aos arquivos com as extensões listadas. Os argumentos de entrada são as extensões separadas por espaços. ```Ex: hs-file-watcher --exts hs md cabal```
+    -- Ao iniciar a execução, o aplicativo informará as opções lidas do arquivo com uma mensagem similar à:
+    -> Obtidos parâmetros do arquivo .watcher-config e construído comando: hs-file-watcher --ed .git dist --exts hs --cmd "runhaskell c:\dev\app\tests\spec.hs"
 
-####**Actions**
+Quando argumentos forem providos através da linha de comando, o arquivo será ignorado.
 
-__--p --print__ => Imprime o texto indicado quando mudanças forem identificadas. O argumento de entrada é o texto a ser impresso. ```Ex: hs-file-watcher --p "Alterações!"```
+###Formato JSON usado pelo comando --cmd-p
+Ao usar o action --cmd-p o aplicativo irá executar o comando indicado e adicionar como argumento de entrada a lista dos arquivos modificados no formato JSON.
 
-__--pc --print-changed__ => Exibe lista  de arquivos que sofreram alterações. Comando não contém argumentos de entrada. ```Ex: hs-file-watcher --pc```
+Os dados contidos no JSON são os seguintes:
 
-__--cmd --command__ => Executa um conjunto de comandos a cada modificação detectada. Os argumentos de entrada são os comandos à executar separados por espaços (Usar " para comandos que contenham espaços). ```Ex: hs-file-watcher --cmd "stack build" "stack install"```
+- Nome: O nome do arquivo
+- Modificado: A data de modificação do arquivo
+- Diretório: O diretório do arquivo
 
-__--cmd-p --command-with-params__ => Executa um conjunto de comandos a cada modificação detectada. O comando receberá como parâmetro uma lista dos arquivos alterados no formato JSON. Os argumentos de entrada são os comandos à executarseparados por espaços. ```Ex: hs-file-watcher --cmd-p echo ==> executará ==> echo [{"nome": "arquivo.hs" ...}]```
+Exemplo de uma String JSON gerada pelo aplicativo:
 
-__--st --stack-test__ => Executa o comando stack test. Não há argumentos de entrada. ```Ex: hs-file-watcher --st```
+    [
+        {"nome": "Filter.hs"
+        ,"modificado": "02/06/2016 14:11:02"
+        ,"diretorio": "C:\\hs-file-watcher\\src\\Watcher\\"},
+
+        {"nome": "Action.hs"
+        ,"modificado": "10/06/2016 01:02:35"
+        ,"diretorio": "C:\\hs-file-watcher\\src\\Watcher\\"}
+    ]
+
+Para ilustrar, o comando ```hs-file-watcher --cmd-p echo``` executará o comando echo para cada modificação de arquivo identificada, informando como argumento a String JSON.
+
+     echo [{"nome": "Filter.hs" , "modificado": "02/06/2016 14:11:02" , "diretorio": "C:\\hs-file-watcher\\src\\Watcher\\"}]
+
+###O Action --st --stack-test
+Esta action é simplesmente um shorthand para ```hs-file-watcher --cmd "stack test"``` e foi criada para agilizar a configuração do monitoramento para projetos Haskell que utilizem Stack.
+
+Para que a opção funcione, é necessário possuir o [Stack](http://www.haskellstack.org) instalado e configurado corretamente para seu projeto.

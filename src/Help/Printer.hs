@@ -8,15 +8,17 @@ import Utils.String
 data Layout = TwoColumns (Int, Int)
 larguras (TwoColumns l) = l
 
+data Column = Column Int [String]
+
 printHelp :: Layout -> Command -> String
 printHelp l c = "\n" ++ identation 1 ++ "Uso: " ++  usage c ++ details l (grupos c)
 
 usage :: Command -> String
-usage c = cmd c ++ " " ++ rtrim (concatMap (enbracket . concat . mapGroup parseOption) (grupos c)) ++ "\n\n"
+usage c = cmd c ++ " " ++ rtrim (concatMap (brackets . concat . mapGroup parseOption) (grupos c)) ++ "\n\n"
     where parseOption (FixedText x) = x
           parseOption (Single x _) = "[" ++ x ++ "]"
           parseOption (Extended xs _) =  "[" ++ head xs ++ "]"
-          enbracket x = "[" ++ x ++ "] "
+          brackets x = "[" ++ x ++ "] "
 
 details :: Layout -> [OptionGroup] -> String
 details l = concat . foldr step []
@@ -24,22 +26,36 @@ details l = concat . foldr step []
 
 optionsDetail :: Layout -> Option -> String
 optionsDetail _ (FixedText x) = ""
+
 optionsDetail (TwoColumns (a, b)) (Single x d) =
-    formatColumn 0 3 a x ++ formatColumn (a + length (identation 3)) 0 b d ++ "\n\n"
+    formatLines 3 (formatColumn a x) (formatColumn b d) ++ "\n"
+
 optionsDetail (TwoColumns (a, b)) (Extended xs d) =
-    formatColumn 0 3 a (unwords xs) ++ formatColumn (a + length (identation 3)) 0 b d ++ "\n\n"
+    formatLines 3 (formatColumn a (unwords xs)) (formatColumn b d) ++ "\n"
 
-formatColumn :: Int -> Int -> Int -> String -> String
-formatColumn m i col s
-    | length s > col = breaklines m i col s
-    | otherwise = identation i ++ rpad col s
+breaklines :: Int -> String -> String
+breaklines 0 _ = " Erro "
+breaklines col s = breaklineIter col s
+    where breaklineIter x s
+              | length s <= col = rpad col s
+              | s !! x == ' ' = take x s ++ "\n" ++ breaklines col (rpad col (drop (x + 1) s))
+              | otherwise = breaklines (x-1) s
 
-breaklines :: Int -> Int -> Int -> String -> String
-breaklines _ i 0 _ = " Erro "
-breaklines m i col s = breaklineIter m i col s
-    where breaklineIter m i x s
-              | length s <= col = s
-              | s !! x == ' ' = take x s ++ "\n" ++ margin m
-                                         ++ identation i
-                                         ++ breaklines m i col (rpad col (drop (x + 1) s))
-              | otherwise = breaklines m i (x-1) s
+formatColumn :: Int -> String -> Column
+formatColumn col s = Column col (foldr step [] textLines)
+    where textLines = lines s
+          step x acc
+              | length x > col = (lines $ breaklines col x) ++ acc
+              | otherwise = rpad col x : acc
+
+formatLines :: Int -> Column -> Column -> String
+formatLines i (Column _ []) (Column _ []) = ""
+
+formatLines i (Column colA (x:xs)) (Column colB (y:ys)) =
+    identation i ++ x ++ y ++ "\n" ++ formatLines i (Column colA xs) (Column colB ys)
+
+formatLines i (Column colA (x:xs)) (Column colB []) =
+    identation i ++ x ++ rpad colB "" ++ "\n" ++ formatLines i (Column colA xs) (Column colB [])
+
+formatLines i (Column colA []) (Column colB (y:ys)) =
+    identation i ++ rpad colA "" ++ y ++ "\n" ++ formatLines i (Column colA []) (Column colB ys)
