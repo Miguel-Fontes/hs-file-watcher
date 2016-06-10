@@ -25,7 +25,7 @@ Para executar um buid local do aplicativo, é necessário possuir o [stack](http
 
 ##Instruções e Informações (TFM)
 ### Opções
-As instruções abaixo são as mesmas impressas ao executar ```hs-file-watcher --help```. Todas as opções são opcionais e podem ser combinadas. Para que o aplicativo inicie a execução, ao menos uma action deve ser informada.
+As instruções abaixo são as mesmas impressas ao executar ```hs-file-watcher --help```. Todas são opcionais e podem ser combinadas. Para que o aplicativo inicie a execução, ao menos uma action deve ser informada.
 
     hs-file-wacher [Gerais [Path]] [Modificadores [--d]] [Filters [--ed][--ef][--exts]] [Actions [--p][--pc][--cmd][--cmd-p][--st]]
 
