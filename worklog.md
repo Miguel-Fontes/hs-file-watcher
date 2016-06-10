@@ -31,8 +31,8 @@
 - [x] Adicionar mensagem informando que foram lidas opções do arquivo de configuração e, talvez, quais foram estas opções ao iniciar a execução
 - [x] Adicionar Token de quebra de linha no módulo de print do texto help
 - [x] Refatorar código de print do texto Help
-- [ ] Incluir em readme.md informações sobre criação de arquivo de configuração .watcher-config
-- [ ] Incluir em readme.md formato do Json usado no cmd-p
+- [x] Incluir em readme.md informações sobre criação de arquivo de configuração .watcher-config
+- [x] Incluir em readme.md formato do Json usado no cmd-p
 - [ ] Separar código Watcher da Library CLI via Cabal
 
 
@@ -106,3 +106,5 @@
     - Refatorado Help.Printer para que ele aceite o uso do caractere de quebra de linha. O código está funcional mas merece ser refatorado. Não está de acordo com o algoritmo que pensei inicialmente.
 - 10/06/2016:
     - Refatorado Help.Printer para melhorar a forma como o texto é processado para impressão no comando Help.
+    - Remoção do campo isDirectory do JSON do tipo arquivo. Não fazia sentido informar este dado uma vez que sempre serão informados arquivos
+    - Atualizado readme.md com muitas informações novas
