@@ -33,7 +33,7 @@
 - [x] Refatorar código de print do texto Help
 - [x] Incluir em readme.md informações sobre criação de arquivo de configuração .watcher-config
 - [x] Incluir em readme.md formato do Json usado no cmd-p
-- [ ] Avaliar testes
+- [x] Avaliar testes
 - [ ] Separar código Watcher da Library CLI via Cabal
 
 
@@ -111,3 +111,5 @@
     - Atualizado readme.md com muitas informações novas
 - 11/06/2016:
     - Refatorada função usage do módulo Help.Printer para melhor semântica
+- 13/06/2016:
+    - Novo teste para função printhelp
