@@ -33,6 +33,7 @@
 - [x] Refatorar código de print do texto Help
 - [x] Incluir em readme.md informações sobre criação de arquivo de configuração .watcher-config
 - [x] Incluir em readme.md formato do Json usado no cmd-p
+- [x] Avaliar testes
 - [ ] Separar código Watcher da Library CLI via Cabal
 
 
@@ -108,3 +109,9 @@
     - Refatorado Help.Printer para melhorar a forma como o texto é processado para impressão no comando Help.
     - Remoção do campo isDirectory do JSON do tipo arquivo. Não fazia sentido informar este dado uma vez que sempre serão informados arquivos
     - Atualizado readme.md com muitas informações novas
+- 11/06/2016:
+    - Refatorada função usage do módulo Help.Printer para melhor semântica
+- 13/06/2016:
+    - Novo teste para função printhelp
+- 14/06/2016:
+    - Futuramente, verificar possibilidades de refatorar o pacote de instruções via linha de comando e mover responsabilidades entre as partes. Especialmente com relação à lista criada em ccada tipo de opçâo (Action, Filter, ...).

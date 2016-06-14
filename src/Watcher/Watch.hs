@@ -26,7 +26,7 @@ watch filters dir actions delay = do
 
 watchFiles :: [Filter] -> FilePath  -> [Arquivo] -> [Action Arquivo] -> Int -> IO()
 watchFiles filters dir ultLista actions delay = do
-    threadDelay delay
+    threadDelay (delay * 1000000)
 
     lista <- listaArquivos filters dir
 

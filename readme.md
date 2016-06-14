@@ -7,7 +7,7 @@ Um dos motivos do desenvolvimento desta aplicação fora a necessidade de reexec
 
     $ hs-file-wacher --ed .git dist --exts hs --cmd "runhaskell c:\dev\app\tests\spec.hs"
 
-Utilizando a instrução abaixo, o aplicativo irá monitorar o diretório atual selecionado no console e:
+Com as opções acima, o aplicativo irá monitorar o diretório atual do console e:
 - ignorar o diretório ".git" e "dist"
 - ignorar os arquivos com extensão diferente de "hs"
 - No caso de mudanças, executar o comando "runhaskell c:\dev\prj\tests\spec.hs".

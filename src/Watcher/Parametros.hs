@@ -28,7 +28,7 @@ instance Parameters Parametros where
     validate = validate'
 
 emptyParams :: Parametros
-emptyParams = Parametros {directory = "", actions = [], filters = [], delay = 3000000}
+emptyParams = Parametros {directory = "", actions = [], filters = [], delay = 3}
 
 addAction :: Parametros -> ([String] -> Action Arquivo) -> [String] -> Parametros
 addAction p a args = p { actions =  actions p ++ [a args] }
@@ -37,7 +37,7 @@ addFilter :: Parametros -> ([String] -> Filter) -> [String] -> Parametros
 addFilter p f args = p { filters = filters p ++ [f args] }
 
 addModificador :: Parametros -> ([String] -> Int) -> [String] -> Parametros
-addModificador p f args = p { delay = f args * 1000000 }
+addModificador p f args = p { delay = f args }
 
 keyMatch :: String -> [(Option, [String] -> a)] -> Maybe ([String] -> a)
 keyMatch _ [] = Nothing

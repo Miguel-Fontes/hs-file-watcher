@@ -2,6 +2,7 @@ module Help.Tests where
 
 import Test.Hspec
 import Test.QuickCheck
+import Data.List
 
 import Help.Command
 import Help.Printer
@@ -38,10 +39,8 @@ test = hspec $ do
                 `shouldBe` "hs-file-wacher [[Caminho]] [[--ed][--ef][--exts]] [[--p][--pc][--cmd]]\n\n"
       context "Printer" $ do
             it "should print the description of all commands " $ do
-                --printHelp (TwoColumns (40,100)) hsCommand
-                --`shouldBe` "meh"
-                pendingWith "Checar a documentação e identificar como construir uma condicional para percorrer a string e avaliar se esta possui todos os comandos em seu conteúdo."
-
+                printHelp (TwoColumns (40,100)) hsCommand
+                `shouldSatisfy` (\x -> isInfixOf "Imprime o texto indicado quando mudanças forem identificadas." x)
 
 hsCommand = Command "hs-file-wacher" [OptionGroup "Título" [FixedText "[Caminho] "]
                                      ,OptionGroup "Filters"  filtersList
