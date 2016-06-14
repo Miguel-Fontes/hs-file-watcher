@@ -113,3 +113,5 @@
     - Refatorada função usage do módulo Help.Printer para melhor semântica
 - 13/06/2016:
     - Novo teste para função printhelp
+- 14/06/2016:
+    - Futuramente, verificar possibilidades de refatorar o pacote de instruções via linha de comando e mover responsabilidades entre as partes. Especialmente com relação à lista criada em ccada tipo de opçâo (Action, Filter, ...).
